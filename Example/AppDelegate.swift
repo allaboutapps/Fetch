@@ -8,14 +8,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let url = URL(string: "https://f4a4ddde.ngrok.io")!
-        let authHandler = AuthHandler()
         
         APIClient.shared.setup(with: Fetch.Config(
             baseURL: url,
             cache: MemoryCache(defaultExpiration: .seconds(60)),
             shouldStub: false))
-        
-        CredentialsController.shared.resetOnNewInstallations()
         
         return true
     }

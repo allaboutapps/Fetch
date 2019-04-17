@@ -46,11 +46,11 @@ public struct StubResponse: Stub {
     ///
     /// - Parameters:
     ///   - statusCode: HTTP status code
-    ///   - filename: The name of the file (e.g. test.json). The content of the file is used as HTTP body
+    ///   - fileName: The name of the file (e.g. test.json). The content of the file is used as HTTP body
     ///   - delay: Simulated network delay
     ///   - bundle: The `Bundle` containing the file, default Bundle.main
-    public init(statusCode: StatusCode, filename: String, delay: TimeInterval, bundle: Bundle = Bundle.main) {
-        let split = filename.split(separator: ".")
+    public init(statusCode: StatusCode, fileName: String, delay: TimeInterval, bundle: Bundle = Bundle.main) {
+        let split = fileName.split(separator: ".")
         let name = String(split[0])
         let fileExtension = String(split[1])
         let path = bundle.path(forResource: name, ofType: fileExtension)!
