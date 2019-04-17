@@ -1,0 +1,46 @@
+# Find all the available rules by running:
+# swiftlint rules
+#
+
+# rule identifiers to exclude from running
+disabled_rules:
+    - valid_docs
+    - force_try
+    - todo
+    - trailing_whitespace
+    - type_name
+    - large_tuple
+    - redundant_optional_initialization
+    - force_cast
+    - superfluous_disable_command
+    - variable_name
+    - nesting
+    - cyclomatic_complexity
+    #- operator_whitespace
+    #- vertical_whitespace
+    #- function_parameter_count
+    #- cyclomatic_complexity
+    #- type_body_length
+    #- operator_whitespace
+    #- colon
+    #- comma
+    #- control_statement
+
+# paths to ignore during linting. Takes precedence over `included`.
+excluded:
+    - Carthage
+    - ReactiveExample
+
+# configurable rules can be customized from this configuration file
+line_length:
+    warning: 300
+    error: 500
+file_length:
+    warning: 800
+    error: 1200
+type_body_length:
+    warning: 600
+    error: 1000
+function_body_length:
+    warning: 100
+    error: 160

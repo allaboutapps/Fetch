@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "title": "json-server",
+        "author": "typicode"
+    },
+    {
+        "id": 2,
+        "author": "mheinzl",
+        "title": "new post"
+    }
+]

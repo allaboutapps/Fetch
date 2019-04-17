@@ -1,0 +1,11 @@
+{
+    "super": {
+        "deep": {
+            "nesting": {
+                "id": 1,
+                "title": "json-server",
+                "author": "typicode"
+            }
+        }
+    }
+}
