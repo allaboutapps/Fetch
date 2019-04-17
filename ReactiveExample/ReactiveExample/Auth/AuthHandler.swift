@@ -2,7 +2,7 @@ import Foundation
 import Alamofire
 import Fetch
 
-class AuthHandler: RequestInterceptor {
+public class AuthHandler: RequestInterceptor {
     
     private typealias RefreshCompletion = (_ succeeded: Bool, _ credentials: Credentials?) -> Void
     private typealias RequestRetryCompletion = (Alamofire.RetryResult) -> Void
@@ -21,7 +21,7 @@ class AuthHandler: RequestInterceptor {
     
     // MARK: - RequestAdapter
     
-    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
+    public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
         var urlRequest = urlRequest
         if let accessToken = CredentialsController.shared.currentCredentials?.accessToken {
             urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
@@ -31,7 +31,7 @@ class AuthHandler: RequestInterceptor {
     
     // MARK: - RequestRetrier
     
-    func retry(_ request: Alamofire.Request, for session: Alamofire.Session, dueTo error: Error, completion: @escaping (Alamofire.RetryResult) -> Void) {
+    public func retry(_ request: Alamofire.Request, for session: Alamofire.Session, dueTo error: Error, completion: @escaping (Alamofire.RetryResult) -> Void) {
         lock.lock() ; defer { lock.unlock() }
         
         guard let response = request.task?.response as? HTTPURLResponse,

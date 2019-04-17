@@ -16,7 +16,7 @@ class StubbedURLProtocol: URLProtocol {
         registeredStubs[id] = stub
     }
     
-    private let queue = DispatchQueue(label: "network.queue.stubbed")
+    private let queue = DispatchQueue(label: "at.allaboutapps.fetch.stubQueue")
     
     override func startLoading() {
         // Get the corresponding stub from the registry using the stubId set the header
@@ -28,24 +28,32 @@ class StubbedURLProtocol: URLProtocol {
             preconditionFailure("Stubbed request was not set correctly")
         }
         
-        queue.asyncAfter(deadline: .now() + stub.delay) { [weak self] in
-            guard let self = self, let client = self.client else { return }
-
-            switch stub.result {
-            case .success(let (statusCode, data)):
-                let urlResponse = HTTPURLResponse(
-                    url: URL(string: "https://mocked.com")!,
-                    statusCode: statusCode,
-                    httpVersion: nil,
-                    headerFields: [:])!
-
-                client.urlProtocol(self, didReceive: urlResponse, cacheStoragePolicy: .notAllowed)
-                client.urlProtocol(self, didLoad: data)
-                client.urlProtocolDidFinishLoading(self)
-
-            case .failure(let error):
-                client.urlProtocol(self, didFailWithError: error)
+        if stub.delay <= 0.0 {
+            handleStub(stub)
+        } else {
+            queue.asyncAfter(deadline: .now() + stub.delay) { [weak self] in
+                self?.handleStub(stub)
             }
+        }
+    }
+    
+    private func handleStub(_ stub: Stub) {
+        guard let client = client else { return }
+        
+        switch stub.result {
+        case .success(let (statusCode, data)):
+            let urlResponse = HTTPURLResponse(
+                url: URL(string: "https://mocked.com")!,
+                statusCode: statusCode,
+                httpVersion: nil,
+                headerFields: [:])!
+            
+            client.urlProtocol(self, didReceive: urlResponse, cacheStoragePolicy: .notAllowed)
+            client.urlProtocol(self, didLoad: data)
+            client.urlProtocolDidFinishLoading(self)
+            
+        case .failure(let error):
+            client.urlProtocol(self, didFailWithError: error)
         }
     }
     
