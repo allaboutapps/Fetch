@@ -102,7 +102,7 @@ class StubTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            stub: StubError(error: inputError, delay: 0.0))
+            stub: StubError(error: inputError, delay: 0.1))
         let expectation = self.expectation(description: "Fetch error")
         
         resource.request { (result) in

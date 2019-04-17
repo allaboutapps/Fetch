@@ -25,7 +25,7 @@ class MultipleStubsTests: XCTestCase {
         let stubs: [Stub] = [
             StubResponse(statusCode: 200, encodable: Foo(a: 0), delay: 0.1),
             StubResponse(statusCode: 200, encodable: Foo(a: 1), delay: 0.2),
-            StubError(error: NSError(domain: "TestDomain", code: 999, userInfo: nil), delay: 0.0),
+            StubError(error: NSError(domain: "TestDomain", code: 999, userInfo: nil), delay: 0.1),
             StubResponse(statusCode: 200, encodable: Foo(a: 3), delay: 0.1)
         ]
         let stub = AlternatingStub(stubs: stubs)
@@ -58,7 +58,7 @@ class MultipleStubsTests: XCTestCase {
         let stubs: [Stub] = [
             StubResponse(statusCode: 200, encodable: Foo(a: 0), delay: 0.1),
             StubResponse(statusCode: 200, encodable: Foo(a: 1), delay: 0.2),
-            StubError(error: NSError(domain: "TestDomain", code: 999, userInfo: nil), delay: 0.0),
+            StubError(error: NSError(domain: "TestDomain", code: 999, userInfo: nil), delay: 0.1),
             StubResponse(statusCode: 200, encodable: Foo(a: 3), delay: 0.1)
         ]
         let stub = RandomStub(stubs: stubs)

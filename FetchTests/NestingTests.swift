@@ -26,7 +26,7 @@ class NestingTests: XCTestCase {
             method: .get,
             path: "/test",
             rootKeys: ["deep", "5", "result"],
-            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.0))
+            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1))
         let expectation = self.expectation(description: "Fetch value")
         
         resource.request { (result) in
@@ -48,7 +48,7 @@ class NestingTests: XCTestCase {
             method: .get,
             path: "/test",
             rootKeys: ["deep", "5", "result", "asdf"],
-            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.0))
+            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1))
         let expectation = self.expectation(description: "Fetch error")
         
         resource.request { (result) in
@@ -69,7 +69,7 @@ class NestingTests: XCTestCase {
             method: .get,
             path: "/test",
             rootKeys: ["deep", "5"],
-            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.0))
+            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1))
         let expectation = self.expectation(description: "Fetch error")
         
         resource.request { (result) in
@@ -90,7 +90,7 @@ class NestingTests: XCTestCase {
             method: .get,
             path: "/test",
             rootKeys: [],
-            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.0))
+            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1))
         let expectation = self.expectation(description: "Fetch error")
         
         resource.request { (result) in
