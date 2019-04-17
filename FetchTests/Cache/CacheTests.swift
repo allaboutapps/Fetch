@@ -358,14 +358,14 @@ class CacheTests: XCTestCase {
             path: "/test",
             cachePolicy: .cacheFirstNetworkAlways,
             cacheGroup: "test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0))
+            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1))
         
         let resourcePost = Resource<ModelA>(
             apiClient: client,
             method: .post,
             path: "/test",
             cacheGroup: "test",
-            stub: StubResponse(statusCode: 200, data: Data(), delay: 0))
+            stub: StubResponse(statusCode: 200, data: Data(), delay: 0.1))
         
         let expectation = self.expectation(description: "")
         
@@ -388,14 +388,14 @@ class CacheTests: XCTestCase {
             path: "/test",
             cachePolicy: .cacheFirstNetworkAlways,
             cacheGroup: "test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0))
+            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1))
         
         let resourcePost = Resource<ModelA>(
             apiClient: client,
             method: .post,
             path: "/test",
             cacheGroup: "test",
-            stub: StubResponse(statusCode: 200, data: Data(), delay: 0))
+            stub: StubResponse(statusCode: 200, data: Data(), delay: 0.1))
         
         let expectation = self.expectation(description: "")
         
