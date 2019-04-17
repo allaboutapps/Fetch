@@ -24,7 +24,7 @@ class ShouldStubTests: XCTestCase {
             method: .get,
             path: "/test",
             shouldStub: true,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0))
+            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
         
         resource.request { (result) in
             switch result {
@@ -48,7 +48,7 @@ class ShouldStubTests: XCTestCase {
             apiClient: customApiClient,
             method: .get,
             path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0))
+            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
         
         resource.request { (result) in
             switch result {
@@ -73,7 +73,7 @@ class ShouldStubTests: XCTestCase {
             method: .get,
             path: "/test",
             shouldStub: true,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0))
+            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
         
         resource.request { (result) in
             switch result {

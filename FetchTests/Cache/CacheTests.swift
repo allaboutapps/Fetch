@@ -676,7 +676,7 @@ class CacheTests: XCTestCase {
         let resource = Resource<ModelA>(
             apiClient: client,
             path: "/a",
-            stub: StubResponse(statusCode: 200, encodable: ModelB(b: "asdaskdajs"), encoder: client.config.encoder, delay: 0)
+            stub: StubResponse(statusCode: 200, encodable: ModelB(b: "asdaskdajs"), encoder: client.config.encoder, delay: 0.1)
         )
         
         resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { result, _ in

@@ -24,7 +24,7 @@ class StubTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0))
+            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
         
         resource.request { (result) in
             switch result {
@@ -44,7 +44,7 @@ class StubTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            stub: StubResponse(statusCode: statusCode, encodable: ModelA(a: "a"), delay: 0))
+            stub: StubResponse(statusCode: statusCode, encodable: ModelA(a: "a"), delay: 0.1))
         
         resource.request { (result) in
             switch result {

@@ -24,7 +24,7 @@ class DispatchQueueTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0))
+            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
         let testQueue = DispatchQueue(label: "test-queue")
         let testQueueKey = DispatchSpecificKey<Void>()
         testQueue.setSpecific(key: testQueueKey, value: ())
@@ -45,7 +45,7 @@ class DispatchQueueTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            stub: StubResponse(statusCode: 500, encodable: ModelA(a: "a"), delay: 0))
+            stub: StubResponse(statusCode: 500, encodable: ModelA(a: "a"), delay: 0.1))
         let testQueue = DispatchQueue(label: "test-queue")
         let testQueueKey = DispatchSpecificKey<Void>()
         testQueue.setSpecific(key: testQueueKey, value: ())

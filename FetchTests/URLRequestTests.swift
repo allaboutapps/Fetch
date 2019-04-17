@@ -78,7 +78,7 @@ class URLRequestTests: XCTestCase {
         let seconds = date.timeIntervalSince1970
         let resource = Resource<Foo>(
             path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: Foo(seconds: seconds), delay: 0),
+            stub: StubResponse(statusCode: 200, encodable: Foo(seconds: seconds), delay: 0.1),
             decode: { (data: Data) throws -> Foo in
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .secondsSince1970
