@@ -1,7 +1,6 @@
 # Fetch
 
-TODO: use correct bitrise link
-![Bitrise](https://app.bitrise.io/app/510258d31172ba5c/status.svg?token=tJH0VF2nwL3r1uITxgXj5g)
+![Bitrise](https://app.bitrise.io/app/c7d1932e4398ffc9/status.svg?token=2gddfiJReIY_-JaeahuRAg&branch=master)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 Fetch is a resource based network abstraction based on [Alamofire](https://github.com/Alamofire/Alamofire) 
