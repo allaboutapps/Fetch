@@ -1,11 +1,3 @@
-//
-//  AuthHandler.swift
-//  Fetch
-//
-//  Created by Michael Heinzl on 04.04.19.
-//  Copyright © 2019 aaa - all about apps GmbH. All rights reserved.
-//
-
 import Foundation
 import Alamofire
 import Fetch
