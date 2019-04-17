@@ -93,6 +93,3 @@ Then run `carthage update`.
 * Commit all your changes to your branch
 * Submit a [pull request](http://help.github.com/pull-requests/)
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
