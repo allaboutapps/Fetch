@@ -68,7 +68,7 @@ public struct API {
                 path: "/mocked",
                 rootKeys: ["super", "deep", "nesting"],
                 shouldStub: true,
-                stub: StubResponse(statusCode: 200, filename: "nested-post.json", delay: 1))
+                stub: StubResponse(statusCode: 200, fileName: "nested-post.json", delay: 1))
         }
     }
 
