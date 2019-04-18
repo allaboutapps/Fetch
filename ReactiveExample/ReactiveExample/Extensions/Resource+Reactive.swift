@@ -11,7 +11,7 @@ import Fetch
 
 // MARK: - Request
 
-extension Resource {
+public extension Resource {
     
     func request() -> SignalProducer<NetworkResponse<T>, FetchError> {
         return SignalProducer { (observer, lifetime) in
@@ -39,7 +39,7 @@ extension Resource {
 
 // MARK: - Fetch
 
-extension Resource where T: Cacheable {
+public extension Resource where T: Cacheable {
     
     func fetch(cachePolicy: CachePolicy? = nil) -> SignalProducer<FetchResponse<T>, FetchError> {
         return SignalProducer { (observer, lifetime) in
