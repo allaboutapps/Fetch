@@ -11,16 +11,16 @@ import Alamofire
 
 /// A configuration object used to setup an `APIClient`
 public struct Config {
-    public let baseURL: URL
-    public let defaultHeaders: HTTPHeaders
-    public let timeout: TimeInterval
-    public let eventMonitors: [EventMonitor]
-    public let interceptor: RequestInterceptor?
-    public let decoder: ResourceDecoderProtocol
-    public let encoder: ResourceEncoderProtocol
-    public let cache: Cache?
-    public let cachePolicy: CachePolicy
-    public let shouldStub: Bool?
+    public var baseURL: URL
+    public var defaultHeaders: HTTPHeaders
+    public var timeout: TimeInterval
+    public var eventMonitors: [EventMonitor]
+    public var interceptor: RequestInterceptor?
+    public var decoder: ResourceDecoderProtocol
+    public var encoder: ResourceEncoderProtocol
+    public var cache: Cache?
+    public var cachePolicy: CachePolicy
+    public var shouldStub: Bool?
     
     /// Initializes a new `Config`
     ///

@@ -10,10 +10,10 @@ import Foundation
 
 public class HybridCache: Cache {
     
-    let primaryCache: Cache
-    let secondaryCache: Cache
+    public let primaryCache: Cache
+    public let secondaryCache: Cache
     
-    init(primaryCache: Cache, secondaryCache: Cache) {
+    public init(primaryCache: Cache, secondaryCache: Cache) {
         self.primaryCache = primaryCache
         self.secondaryCache = secondaryCache
     }

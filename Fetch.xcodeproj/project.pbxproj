@@ -43,6 +43,8 @@
 		5C1D60422265B6D40084F6E7 /* PageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C011DB02260D2CC00B7526C /* PageProtocol.swift */; };
 		5C1D60442265B71C0084F6E7 /* PagedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C011DB22260D43400B7526C /* PagedResource.swift */; };
 		5C1D607E2265D0850084F6E7 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1D607D2265D0850084F6E7 /* CacheTests.swift */; };
+		5C5E3E3E2268B10000101A4F /* post.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C5E3E3D2268B10000101A4F /* post.json */; };
+		5C5E3E412268BB4200101A4F /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5E3E402268BB4200101A4F /* ResultViewController.swift */; };
 		6482057655BEFFD01580D0AF1DFCE7E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F127ACF1B2327F2E08AF7842C675E48 /* Main.storyboard */; };
 		887E573A4A9215BF16BA95CF3BEF8D41 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9891D313D796C514ADEFDA0E93FB9424 /* Alamofire.framework */; };
 		BA6EE94559EA0B08439F15281E67CA93 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9891D313D796C514ADEFDA0E93FB9424 /* Alamofire.framework */; };
@@ -59,7 +61,7 @@
 		D84E96E622647E490095006A /* ShouldStubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84E96E522647E490095006A /* ShouldStubTests.swift */; };
 		D88B931922538FC800161DB0 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B931822538FC800161DB0 /* Resource.swift */; };
 		D88B931D2253900300161DB0 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B931C2253900300161DB0 /* APIClient.swift */; };
-		D88B93292253998800161DB0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B93282253998800161DB0 /* ViewController.swift */; };
+		D88B93292253998800161DB0 /* CacheDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B93282253998800161DB0 /* CacheDemoViewController.swift */; };
 		D88B932D22539D1C00161DB0 /* APILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B932C22539D1C00161DB0 /* APILogger.swift */; };
 		D88B9339225607C900161DB0 /* Decoder+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B9338225607C900161DB0 /* Decoder+Keys.swift */; };
 		D88B933D225640CE00161DB0 /* HTTPContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B933C225640CE00161DB0 /* HTTPContentType.swift */; };
@@ -163,6 +165,8 @@
 		5C011DB02260D2CC00B7526C /* PageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageProtocol.swift; sourceTree = "<group>"; };
 		5C011DB22260D43400B7526C /* PagedResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedResource.swift; sourceTree = "<group>"; };
 		5C1D607D2265D0850084F6E7 /* CacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
+		5C5E3E3D2268B10000101A4F /* post.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = post.json; sourceTree = "<group>"; };
+		5C5E3E402268BB4200101A4F /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		82FC85EA09AE5BFA043E4AE51F1EB638 /* Fetch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Fetch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F67E303E8991613A4D5FB3DFF62CD20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		958C4D8854808AC3BA9039533F7DF325 /* ResourceAPIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceAPIKit.h; sourceTree = "<group>"; };
@@ -187,7 +191,7 @@
 		D88B931A22538FDC00161DB0 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D88B931C2253900300161DB0 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		D88B931E2253902500161DB0 /* BlogPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPost.swift; sourceTree = "<group>"; };
-		D88B93282253998800161DB0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D88B93282253998800161DB0 /* CacheDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheDemoViewController.swift; sourceTree = "<group>"; };
 		D88B932C22539D1C00161DB0 /* APILogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILogger.swift; sourceTree = "<group>"; };
 		D88B93342255FB4400161DB0 /* nested-post.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "nested-post.json"; sourceTree = "<group>"; };
 		D88B9338225607C900161DB0 /* Decoder+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decoder+Keys.swift"; sourceTree = "<group>"; };
@@ -275,6 +279,7 @@
 		3948ADDE2267176F00DA0B85 /* Stubs */ = {
 			isa = PBXGroup;
 			children = (
+				5C5E3E3D2268B10000101A4F /* post.json */,
 				B4E367A897230D11650A284D56A96F6D /* posts.json */,
 				D88B93342255FB4400161DB0 /* nested-post.json */,
 			);
@@ -443,6 +448,15 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
+		5C5E3E3F2268BB3000101A4F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D88B93282253998800161DB0 /* CacheDemoViewController.swift */,
+				5C5E3E402268BB4200101A4F /* ResultViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		5CC973952264B64E00A5FB23 /* Paging */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,8 +554,8 @@
 				D88B931A22538FDC00161DB0 /* API.swift */,
 				C46633DE2D0EA0915FC71674994375A2 /* AppDelegate.swift */,
 				B8D0B3896584A2347CD7065E71D5ACDB /* Config.swift */,
-				D88B93282253998800161DB0 /* ViewController.swift */,
 				D88B9340225776A800161DB0 /* Models */,
+				5C5E3E3F2268BB3000101A4F /* ViewControllers */,
 				3948ADDE2267176F00DA0B85 /* Stubs */,
 				3948ADED2267194300DA0B85 /* Storyboards */,
 				BE3662EFF68615852F0D1591B986B646 /* SupportingFiles */,
@@ -716,6 +730,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C5E3E3E2268B10000101A4F /* post.json in Resources */,
 				D8BB8620225E03E300F21D45 /* nested-post.json in Resources */,
 				C6182E1666FB0E0913C499F5CAD06E56 /* Assets.xcassets in Resources */,
 				6482057655BEFFD01580D0AF1DFCE7E7 /* Main.storyboard in Resources */,
@@ -841,7 +856,8 @@
 				5C1D60442265B71C0084F6E7 /* PagedResource.swift in Sources */,
 				D88B934622577F8500161DB0 /* AppDelegate.swift in Sources */,
 				5C1D60422265B6D40084F6E7 /* PageProtocol.swift in Sources */,
-				D88B93292253998800161DB0 /* ViewController.swift in Sources */,
+				5C5E3E412268BB4200101A4F /* ResultViewController.swift in Sources */,
+				D88B93292253998800161DB0 /* CacheDemoViewController.swift in Sources */,
 				D834F4F9225F1A6200D1B3A2 /* BlogPost.swift in Sources */,
 				D88B9341225776EB00161DB0 /* API.swift in Sources */,
 				D88B93442257788300161DB0 /* Config.swift in Sources */,
@@ -961,7 +977,6 @@
 				);
 				INFOPLIST_FILE = Fetch/SupportingFiles/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -986,7 +1001,6 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Example/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1048,6 +1062,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1074,7 +1089,6 @@
 				);
 				INFOPLIST_FILE = Fetch/SupportingFiles/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1106,7 +1120,6 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/GithubExample/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1134,7 +1147,6 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/GithubExample/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1160,7 +1172,6 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Example/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1275,6 +1286,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
