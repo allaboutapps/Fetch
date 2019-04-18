@@ -15,6 +15,7 @@ public enum CachePolicy {
     case cacheFirstNetworkIfNotFoundOrExpired
     case cacheFirstNetworkAlways
     case cacheFirstNetworkRefresh
+    case networkFirstCacheIfFailed
 }
 
 public struct CacheEntry<T: Cacheable> {

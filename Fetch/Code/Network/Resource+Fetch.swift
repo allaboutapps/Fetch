@@ -15,7 +15,7 @@ public enum FetchResponse<T> {
     case cache(T, isExpired: Bool)
     case network(response: NetworkResponse<T>, updated: Bool)
     
-    public var model: T {
+    public var model: T? {
         switch self {
         case .cache(let model, _):
             return model
@@ -126,6 +126,14 @@ public extension Resource where T: Cacheable {
                     token += self.requestAndUpdateCache(cache: cache, queue: queue, completion: onResponse)
                 }
             }
+            
+        case .networkFirstCacheIfFailed:
+            // try network first
+            // if success: return network response
+            // if error: try cache
+            //      if cache success: return cache response
+            //      if cache error: return network (not cache) error
+            break
         }
         
         return token
