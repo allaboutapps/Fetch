@@ -92,7 +92,6 @@ public extension Resource where T: Cacheable {
 
         case .cacheFirstNetworkIfNotFoundOrExpired:
             token += readCacheAsync(queue: queue) { (entry) in
-                
                 if let entry = entry {
                     if entry.isExpired {
                         onResponse(.success(.cache(entry.data, isExpired: true)), false)
@@ -107,7 +106,6 @@ public extension Resource where T: Cacheable {
 
         case .cacheFirstNetworkAlways:
             token += readCacheAsync(queue: queue) {  (entry) in
-                
                 if let entry = entry {
                     onResponse(.success(.cache(entry.data, isExpired: entry.isExpired)), false)
                     token += self.requestAndUpdateCache(cache: cache, compareWith: entry.data, queue: queue, completion: onResponse)
@@ -118,7 +116,6 @@ public extension Resource where T: Cacheable {
 
         case .cacheFirstNetworkRefresh:
             token += readCacheAsync(queue: queue) {  (entry) in
-                
                 if let entry = entry {
                     onResponse(.success(.cache(entry.data, isExpired: entry.isExpired)), true)
                     token += self.requestAndUpdateCache(cache: cache, queue: queue, completion: nil)
@@ -128,12 +125,22 @@ public extension Resource where T: Cacheable {
             }
             
         case .networkFirstCacheIfFailed:
-            // try network first
-            // if success: return network response
-            // if error: try cache
-            //      if cache success: return cache response
-            //      if cache error: return network (not cache) error
-            break
+            token += requestAndUpdateCache(cache: cache, queue: queue) { (networkResult, isFinished) in
+                switch networkResult {
+                case .success:
+                    onResponse(networkResult, isFinished)
+                case .failure:
+                    token += self.readCacheAsync(queue: queue) { (entry) in
+                        if let entry = entry {
+                            // return the cached entry, ignoring the network error
+                            onResponse(.success(.cache(entry.data, isExpired: entry.isExpired)), true)
+                        } else {
+                            // return the network error
+                            onResponse(networkResult, true)
+                        }
+                    }
+                }
+            }
         }
         
         return token
