@@ -23,6 +23,11 @@ class UserListViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.refreshControl = {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: #selector(forceReloadData), for: .valueChanged)
+            return refreshControl
+            }()
         tableView.tableFooterView = UIView()
     }
     
@@ -35,12 +40,19 @@ class UserListViewController: UIViewController {
         disposable?.cancel()
     }
     
-    private func loadData() {
-        disposable = resource.fetch { [weak self] result, _ in
+    @objc private func forceReloadData() {
+        loadData(force: true)
+    }
+    
+    private func loadData(force: Bool = false) {
+        let cachePolicy: CachePolicy? = force ? CachePolicy.networkOnlyUpdateCache : nil
+        
+        disposable = resource.fetch(cachePolicy: cachePolicy) { [weak self] result, _ in
             if case let .success(value) = result {
                 self?.users = value.model
             }
             self?.tableView.reloadData()
+            self?.tableView.refreshControl?.endRefreshing()
         }
     }
 }
