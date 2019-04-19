@@ -11,85 +11,61 @@ import Fetch
 
 class CacheDemoViewController: UIViewController {
     
-    // MARK: Type definitions
-    enum CacheType: Int {
-        case memory = 0
-        case disk = 1
-        case hybrid = 2
-        case none = 3
-    }
-    
-    enum FetchBehaviour: Int {
-        case stub = 0
-        case fetchFromURL = 1
-    }
-    
-    enum DisplayBehaviour: Int {
-        case json = 0
-        case rawData = 1
-    }
-    
     // MARK: Outlets
     @IBOutlet private var fetchBehaviourSegmentedControl: UISegmentedControl!
     
     @IBOutlet private var scrollView: UIScrollView!
     
-    @IBOutlet private var displayBehaviourControl: UISegmentedControl!
-    
     @IBOutlet private var cacheTypeSegmentedControl: UISegmentedControl!
     
     @IBOutlet private var urlToFetchStackView: UIStackView!
     
-    @IBOutlet private var urlToFetchTextField: UITextField!
+    @IBOutlet private var delayStackView: UIStackView!
     
-    @IBOutlet private var fetchButtons: [UIButton]!
+    @IBOutlet private var delayTextField: UITextField!
+    
+    @IBOutlet private var urlToFetchTextField: UITextField!
     
     // MARK: Properties
     
-    private var currentCache: Cache? {
-        set {
-            var config = APIClient.shared.config
-            config.cache = newValue
-            APIClient.shared.setup(with: config)
-        } get {
-            return APIClient.shared.config.cache
-        }
-    }
-    
-    private var cacheExpiration: Expiration = .seconds(30)
-    
-    private var customURLComponents: URLComponents?
-    
-    private var resourceStubPath: String = "/stub"
-    
-    private var fetchDelay: TimeInterval = 2
-    
-    private var returnExpiredCacheItems: Bool = true
-    
-    private var maxDiskCacheSizeInBytes: UInt = 1024
+    private var viewModel: CacheDemoViewModel!
     
     private var keyboardAppearObserver: Any!
     
     private var keyboardDisappearObserver: Any!
-    
-    private var currentFetchBehaviour: FetchBehaviour {
-        return FetchBehaviour(rawValue: fetchBehaviourSegmentedControl.selectedSegmentIndex)!
-    }
-    
-    private var currentDisplayBehaviour: DisplayBehaviour {
-        return DisplayBehaviour(rawValue: displayBehaviourControl.selectedSegmentIndex)!
-    }
-    
-    private var currentCacheType: CacheType {
-        return CacheType(rawValue: cacheTypeSegmentedControl.selectedSegmentIndex)!
-    }
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       keyboardAppearObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] notification in
+        setupKeyboardObserver()
+        urlToFetchTextField.delegate = self
+        delayTextField.delegate = self
+        delayTextField.inputAccessoryView = {
+            let toolbar = UIToolbar()
+            toolbar.translatesAutoresizingMaskIntoConstraints = false
+            let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            let item = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyboard))
+            toolbar.setItems([space, item], animated: false)
+            return toolbar
+        }()
+        
+        viewModel = CacheDemoViewModel(fetchBehaviour: FetchBehaviour(rawValue: fetchBehaviourSegmentedControl.selectedSegmentIndex)!,
+                                       cacheType: CacheType(rawValue: cacheTypeSegmentedControl.selectedSegmentIndex)!)
+        
+        fetchBehaviourDidChange()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(keyboardAppearObserver!)
+        NotificationCenter.default.removeObserver(keyboardDisappearObserver!)
+    }
+    
+    // MARK: Keyboard
+    
+    private func setupKeyboardObserver() {
+        keyboardAppearObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] notification in
             let beginPoint = notification.userInfo?[UIWindow.keyboardFrameBeginUserInfoKey] as? CGRect ?? .zero
             let endPoint = notification.userInfo?[UIWindow.keyboardFrameEndUserInfoKey] as? CGRect ?? .zero
             let height = abs(beginPoint.origin.y - endPoint.origin.y)
@@ -99,106 +75,59 @@ class CacheDemoViewController: UIViewController {
         keyboardDisappearObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main, using: { [weak self] _ in
             self?.scrollView.contentInset.bottom = 0
         })
-        
-        urlToFetchTextField.delegate = self
-        
-        currentCache = createCache()
-        fetchBehaviourDidChange()
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(keyboardAppearObserver)
-        NotificationCenter.default.removeObserver(keyboardDisappearObserver)
     }
     
     // MARK: Actions
     
     @IBAction private func cacheTypeDidChange() {
-        currentCache = createCache()
+        viewModel.currentCacheType = CacheType(rawValue: cacheTypeSegmentedControl.selectedSegmentIndex)!
     }
     
     @IBAction private func fetchBehaviourDidChange() {
-        switch currentFetchBehaviour {
+        viewModel.currentFetchBehaviour = FetchBehaviour(rawValue: fetchBehaviourSegmentedControl.selectedSegmentIndex)!
+        switch viewModel.currentFetchBehaviour {
         case .stub:
+            _ = viewModel.setStubDelay(with: delayTextField.text)
             urlToFetchStackView.isHidden = true
+            delayStackView.isHidden = false
+            urlToFetchTextField.resignFirstResponder()
         case .fetchFromURL:
+            delayTextField.resignFirstResponder()
+            // Set url from prefilled textfield
+            _ = viewModel.setCustomURL(from: urlToFetchTextField.text)
+            delayStackView.isHidden = true
             urlToFetchStackView.isHidden = false
         }
     }
     
-    @IBAction private func displayBehaviourDidChange() {
+    @IBAction private func clearCache() {
+        viewModel.clearCache()
+    }
+    
+    private func presentAlertWithFeedback(title: String, message: String) {
+        let notificationGenerator = UINotificationFeedbackGenerator()
+        notificationGenerator.prepare()
+        notificationGenerator.notificationOccurred(.error)
         
-    }
-}
-
-// MARK: Cache functions
-extension CacheDemoViewController {
-    
-    @IBAction private func clearCache(_ sender: Any) {
-        try? currentCache?.removeAll()
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
-    private func createCache() -> Cache? {
-        switch currentCacheType {
-        case .memory: return createMemoryCache()
-        case .disk: return createDiskCache()
-        case .hybrid: return createCombinedCache()
-        case .none: return nil
-        }
-    }
-    
-    private func createDiskCache() -> DiskCache {
-        let diskCache = try! DiskCache(maxSize: Int(maxDiskCacheSizeInBytes), defaultExpiration: cacheExpiration)
-        try? diskCache.removeAll()
-        return diskCache
-    }
-    
-    private func createMemoryCache() -> MemoryCache {
-        let memoryCache = MemoryCache(defaultExpiration: cacheExpiration, returnIfExpired: returnExpiredCacheItems)
-        memoryCache.removeAll()
-        return memoryCache
-    }
-    
-    private func createCombinedCache() -> HybridCache {
-        let memoryCache = createMemoryCache()
-        let diskCache = createDiskCache()
-        return HybridCache(primaryCache: memoryCache, secondaryCache: diskCache)
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
 // MARK: Fetch functions
 extension CacheDemoViewController {
     
-    private func createResource(with cachePolicy: CachePolicy) -> Resource<String> {
-        
-        let client = APIClient.shared
-        
-        let baseURL = APIClient.shared.config.baseURL
-        
-        let parameters: [String: Any]? = nil
-        
-        var stubResponse: StubResponse? {
-            guard case .stub = currentFetchBehaviour else { return nil }
-            return StubResponse(statusCode: 200, fileName: "post.json", delay: fetchDelay)
-        }
-        
-        return Resource<String>(apiClient: client,
-                                baseURL: baseURL,
-                                path: resourceStubPath,
-                                urlParameters: parameters,
-                                cachePolicy: cachePolicy,
-                                cacheExpiration: cacheExpiration,
-                                shouldStub: stubResponse != nil,
-                                stub: stubResponse,
-                                decode: { data in
-                                    return String(decoding: data, as: UTF8.self)
-        })
-    }
-    
     private func showResult(with policy: CachePolicy) {
         guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ResultViewController") as? ResultViewController else { return }
         
-        vc.resource = createResource(with: policy)
+        viewModel.currentCachePolicy = policy
+        
+        vc.viewModel = viewModel
         
         show(vc, sender: nil)
     }
@@ -235,22 +164,34 @@ extension CacheDemoViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        if textField == urlToFetchTextField {
+            return shouldURLTextFieldReturn()
+        }
+        return true
+    }
+    
+    private func shouldURLTextFieldReturn() -> Bool {
+        guard viewModel.setCustomURL(from: urlToFetchTextField.text) else {
+            presentAlertWithFeedback(title: "No valid url", message: "Please enter a valid url e.g https://example.com/test")
+            return false
+        }
+        urlToFetchTextField.resignFirstResponder()
+        return true
+    }
+    
+    private func shouldDelayTextFieldReturn() -> Bool {
+        guard viewModel.setStubDelay(with: delayTextField.text) else {
+            delayTextField.text = "\(viewModel.fetchDelay)"
+            presentAlertWithFeedback(title: "No valid number", message: "Please enter a number greater than 0.0")
+            return false
+        }
+        
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let text = textField.text, !text.isEmpty, let components = URLComponents(string: text) else {
-            textField.text = nil
-        let notificationGenerator = UINotificationFeedbackGenerator()
-            notificationGenerator.prepare()
-            notificationGenerator.notificationOccurred(.error)
-            
-        let alert = UIAlertController(title: "No valid url", message: "Please enter a valid url", preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-            return
+        if textField == delayTextField {
+            _ = shouldDelayTextFieldReturn()
         }
-        customURLComponents = components
     }
 }

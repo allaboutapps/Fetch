@@ -19,13 +19,15 @@ class ResultViewController: UIViewController {
     
     @IBOutlet private var resourceValueLabel: UILabel!
     
+    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
+    
     private var disposable: RequestToken?
     
-    var resource: Resource<String>!
+    var viewModel: CacheDemoViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        usedCachePolicyLabel.text = "\(resource.cachePolicy.flatMap { "\($0)" } ?? "NONE" )"
+        usedCachePolicyLabel.text = "\(viewModel.currentCachePolicy.flatMap { "\($0)" } ?? "NONE" )"
         didFinishFetchingLabel.text = "NO"
     }
     
@@ -40,8 +42,9 @@ class ResultViewController: UIViewController {
     }
     
     private func loadData() {
-        disposable = resource.fetch { [weak self] result, didFinish in
+        disposable = viewModel.createResource().fetch { [weak self] result, didFinish in
             guard let self = self else { return }
+            self.activityIndicator.isHidden = true
             
             self.didFinishFetchingLabel.text = didFinish ? "YES" : "NO"
             
