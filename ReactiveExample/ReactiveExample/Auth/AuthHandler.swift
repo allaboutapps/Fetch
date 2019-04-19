@@ -71,7 +71,7 @@ public class AuthHandler: RequestInterceptor {
         
         isRefreshing = true
         
-        guard let urlRequest = try? API.Auth.tokenRefresh(refreshToken).asURLRequest() else {
+        guard let urlRequest = try? API.StubbedAuth.tokenRefresh(refreshToken).asURLRequest() else {
             completion(false, nil)
             return
         }

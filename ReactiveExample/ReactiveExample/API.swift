@@ -12,7 +12,7 @@ import Fetch
 
 public struct API {
     
-    public struct Auth {
+    public struct StubbedAuth {
         
         static let baseURL = URL(string: "")
         
@@ -24,7 +24,8 @@ public struct API {
                 body: [
                     "username": username,
                     "password": password
-                ])
+                ], shouldStub: true,
+                stub: StubResponse(statusCode: 200, fileName: "authresponse.json", delay: 3))
         }
         
         public static func tokenRefresh(_ refreshToken: String) -> Resource<Credentials> {
@@ -34,7 +35,19 @@ public struct API {
                 path: "/api/v1/auth/refresh",
                 body: [
                     "refreshToken": refreshToken
-                ])
+                ], shouldStub: true,
+                stub: StubResponse(statusCode: 200, fileName: "authresponse.json", delay: 4))
+        }
+        
+        public static func unauthorizedErrorRequest() -> Resource<Data> {
+            let failingStub = StubResponse(statusCode: 401, data: Data(), delay: 2)
+            let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)
+            
+            return Resource(
+                path: "/fail",
+                shouldStub: true,
+                stub: AlternatingStub(stubs: [failingStub, okStub])
+            )
         }
     }
     

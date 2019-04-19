@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,13 +13,73 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ReactiveExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="Ly0-aZ-kps">
+                                <rect key="frame" x="16" y="76" width="382" height="206"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIn-NE-L4C">
+                                        <rect key="frame" x="152.5" y="0.0" width="77" height="30"/>
+                                        <state key="normal" title="1.Authorize"/>
+                                        <connections>
+                                            <action selector="authorize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ojf-Yb-OtW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSo-ZO-foN">
+                                        <rect key="frame" x="88" y="44" width="206" height="30"/>
+                                        <state key="normal" title="2. invalidate and refresh token"/>
+                                        <connections>
+                                            <action selector="refreshToken:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hs7-gk-byG"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jZg-gv-G4X">
+                                        <rect key="frame" x="106" y="88" width="170" height="30"/>
+                                        <state key="normal" title="3. Authenticated request"/>
+                                        <connections>
+                                            <action selector="authenticatedRequest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Y2-6z-v4J"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7h-Fl-ao3">
+                                        <rect key="frame" x="134.5" y="132" width="113" height="30"/>
+                                        <state key="normal" title="Random request"/>
+                                        <connections>
+                                            <action selector="randomRequest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rra-66-IOt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PNn-it-zyV">
+                                        <rect key="frame" x="160.5" y="176" width="61" height="30"/>
+                                        <state key="normal" title="Clear log"/>
+                                        <connections>
+                                            <action selector="clearLog:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Df4-m8-VeL"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c6A-Ju-74W">
+                                <rect key="frame" x="0.0" y="290" width="414" height="606"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="c6A-Ju-74W" secondAttribute="trailing" id="Ipa-E9-Ofv"/>
+                            <constraint firstAttribute="bottom" secondItem="c6A-Ju-74W" secondAttribute="bottom" id="QQf-bK-Soj"/>
+                            <constraint firstItem="c6A-Ju-74W" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RBp-nl-h9q"/>
+                            <constraint firstItem="c6A-Ju-74W" firstAttribute="top" secondItem="Ly0-aZ-kps" secondAttribute="bottom" constant="8" id="XNi-t2-kKX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ly0-aZ-kps" secondAttribute="trailing" constant="16" id="jRo-uZ-Afd"/>
+                            <constraint firstItem="Ly0-aZ-kps" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="qQv-XV-I8j"/>
+                            <constraint firstItem="Ly0-aZ-kps" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="ysU-73-adc"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="logTextView" destination="c6A-Ju-74W" id="BgN-rx-AVY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
