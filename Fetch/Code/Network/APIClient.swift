@@ -98,7 +98,6 @@ public class APIClient {
     }
     
     private var session: Session!
-    private var mockedSession: Session!
     
     let decodingQueue = DispatchQueue(label: "at.allaboutapps.fetch.decodingQueue")
     
@@ -111,6 +110,7 @@ public class APIClient {
         self._config = config
         
         let configuration = URLSessionConfiguration.default
+        configuration.protocolClasses = [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
         
         session = Session(
@@ -118,13 +118,6 @@ public class APIClient {
             interceptor: config.interceptor,
             eventMonitors: config.eventMonitors)
         
-        let mockedConfiguration = URLSessionConfiguration.default
-        mockedConfiguration.protocolClasses = [StubbedURL.self]
-        
-        mockedSession = Session(
-            configuration: mockedConfiguration,
-            interceptor: config.interceptor,
-            eventMonitors: config.eventMonitors)
     }
     
     // MARK: - Resource
@@ -132,7 +125,7 @@ public class APIClient {
     @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping (Swift.Result<NetworkResponse<T>, FetchError>) -> Void) -> RequestToken {
         precondition(_config != nil, "Setup of APIClient was not called!")
         
-        let session = currentSession(for: resource)
+        let session = prepareSession(for: resource)
         
         let urlRequest: URLRequest
         do {
@@ -193,14 +186,10 @@ public class APIClient {
         }
     }
     
-    private func currentSession<T>(for resource: Resource<T>) -> Session {
-        if let stub = resource.stubIfNeeded {
-            // Register the stub is necessary
-            StubbedURL.registerStub(stub, for: stub.id.uuidString)
-            return mockedSession
-        } else {
-            return session
-        }
+    private func prepareSession<T>(for resource: Resource<T>) -> Session {
+        guard let stub = resource.stubIfNeeded else { return session }
+        
+        StubbedURL.registerStub(stub, for: stub.id.uuidString)
+        return session
     }
-    
 }

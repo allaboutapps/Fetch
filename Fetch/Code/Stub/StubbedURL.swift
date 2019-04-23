@@ -62,7 +62,7 @@ class StubbedURL: URLProtocol {
     // MARK: - Helper
     
     override class func canInit(with request: URLRequest) -> Bool {
-        return true
+        return request.headers[stubIdHeader] != nil
     }
     
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {

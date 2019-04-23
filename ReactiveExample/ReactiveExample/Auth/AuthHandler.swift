@@ -7,7 +7,6 @@ public class AuthHandler: RequestInterceptor {
     private typealias RefreshCompletion = (_ succeeded: Bool, _ credentials: Credentials?) -> Void
     private typealias RequestRetryCompletion = (Alamofire.RetryResult) -> Void
     
-    
     private let lock = NSLock()
     private let queue = DispatchQueue(label: "network.auth.queue")
     private var isRefreshing = false
@@ -83,5 +82,4 @@ public class AuthHandler: RequestInterceptor {
                 self.isRefreshing = false
             })
     }
-    
 }
