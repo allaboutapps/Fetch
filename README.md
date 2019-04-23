@@ -65,6 +65,66 @@ resource.request { (result) in
 
 ## Advanced usage
 
+### Stubbing
+
+Fetch gives you a versatile set of possibilities to perform stubbing.
+
+**Simulate a successful network request with a json response**
+```swift
+let stub = StubResponse(statusCode: 200, fileName: "success.json", delay: 2.0)
+        
+let resource = Resource<String>(
+            path: "/test",
+            shouldStub: true,
+            stub: stub)
+```
+The above stub will return a 200 status code with the content from the success json file loaded from your app's bundle and will be delayed by two seconds.
+
+**Simulate an unauthorized error**
+```swift
+let stub = StubResponse(statusCode: 401, fileName: "unauthorized.json", delay: 2.0)
+        
+let resource = Resource<String>(
+            path: "/unauthorized",
+            shouldStub: true,
+            stub: stub)
+```
+
+Stubbing is not limited to json only, you can also provide raw data or provide an instance which conforms to the Encodable protocol.
+
+**Stubbing with Encodable**
+
+```swift
+struct Person {
+    let name: String
+    let age: Int
+}
+    
+let peter = Person(name: "Peter", age: 18)
+
+let stub = StubResponse(statusCode: 200, encodable: peter, delay: 2.0)
+        
+let resource = Resource<String>(
+            path: "/peter",
+            shouldStub: true,
+            stub: stub)
+```
+
+**Alternating stubbing**
+ ```swift
+let successStub = StubResponse(statusCode: 200, fileName: "success.json", delay: 0.0)
+let failureStub = StubResponse(statusCode: 404, fileName: "notFound.json", delay: 0.0)
+
+let alternatingStub = AlternatingStub(stubs: [successStub, failureStub])
+        
+let resource = Resource<String>(
+            path: "/peter",
+            shouldStub: true,
+            stub: alternatingStub)
+```
+Every time the resource is executed it will iterate over the given stubs an always return a different stub than before.
+
+**Caching**
 
 
 ## Carthage
@@ -79,7 +139,7 @@ Then run `carthage update`.
 
 ## Requirements
 
-- iOS 12.0+
+- iOS 11.0+
 - Xcode 10.2+
 - Swift 5+
 
