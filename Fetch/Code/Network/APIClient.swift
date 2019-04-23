@@ -76,6 +76,8 @@ public struct NetworkResponse<T> {
 
 /// The `APIClient` is the interface to the network and it is used by a `Resource` to send http requests.
 public class APIClient {
+
+    typealias CompletionCallback<T> = ((Swift.Result<NetworkResponse<T>, FetchError>) -> Void)
     
     /// Initializes a new `APIClient`
     ///
@@ -122,10 +124,10 @@ public class APIClient {
     
     // MARK: - Resource
     
-    @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping (Swift.Result<NetworkResponse<T>, FetchError>) -> Void) -> RequestToken {
+    @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping CompletionCallback<T>) -> RequestToken {
         precondition(_config != nil, "Setup of APIClient was not called!")
         
-        let session = prepareSession(for: resource)
+        register(resource)
         
         let urlRequest: URLRequest
         do {
@@ -186,10 +188,9 @@ public class APIClient {
         }
     }
     
-    private func prepareSession<T>(for resource: Resource<T>) -> Session {
-        guard let stub = resource.stubIfNeeded else { return session }
+    private func register<T>(_ resource: Resource<T>) {
+        guard let stub = resource.stub else { return }
         
         StubbedURL.registerStub(stub, for: stub.id.uuidString)
-        return session
     }
 }

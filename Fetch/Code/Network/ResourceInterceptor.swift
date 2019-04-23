@@ -9,12 +9,12 @@
 import Foundation
 import Alamofire
 
-public protocol ResourceAdapter {
-    func adapt<T>(resource: Resource<T>, request: URLRequest, client: APIClient, handler: @escaping ((Result<T, Error>) -> Void))
+protocol ResourceAdapter {
+    func adapt(request: inout URLRequest, client: APIClient)
 }
 
-public protocol ResourceRetrier {
-    func retry<T>(resource: Resource<T>, client: APIClient, error: Error, completion: @escaping ((Alamofire.RetryResult) -> Void))
+protocol ResourceRetrier {
+    func retry<T>(request: Alamofire.Request, resource: Resource<T>, client: APIClient, completion: @escaping (Alamofire.RetryResult) -> Void)
 }
 
-public protocol ResourceInterceptor: ResourceAdapter, ResourceRetrier { }
+protocol ResourceInterceptor: ResourceAdapter, ResourceRetrier { }
