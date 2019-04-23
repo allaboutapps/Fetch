@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     
     @IBOutlet private var logTextView: UITextView!
     
+    private let failingResource: Resource<Data> = API.StubbedAuth.unauthorizedErrorRequest()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let logger = APIClient.shared.config.eventMonitors.first(where: { $0 is APILogger }) as? APILogger
@@ -35,7 +37,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func refreshToken(_ sender: Any) {
-        API.StubbedAuth.unauthorizedErrorRequest().request { result in
+        failingResource.request { result in
             
         }
     }

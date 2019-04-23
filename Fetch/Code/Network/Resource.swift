@@ -145,7 +145,7 @@ public class Resource<T: Decodable>: CacheableResource {
         
         // Add request is as http header for stubbing
         if let stub = stubIfNeeded {
-            headers[StubbedURLProtocol.stubIdHeader] = stub.id.uuidString
+            headers[StubbedURL.stubIdHeader] = stub.id.uuidString
         }
         
         // Create request from resource

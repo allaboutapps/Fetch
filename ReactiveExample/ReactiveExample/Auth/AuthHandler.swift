@@ -7,12 +7,6 @@ public class AuthHandler: RequestInterceptor {
     private typealias RefreshCompletion = (_ succeeded: Bool, _ credentials: Credentials?) -> Void
     private typealias RequestRetryCompletion = (Alamofire.RetryResult) -> Void
     
-    private static let apiLogger = APILogger(verbose: true)
-    
-    private let session: Session = {
-        let configuration = URLSessionConfiguration.default
-        return Session(configuration: configuration, eventMonitors: [apiLogger])
-    }()
     
     private let lock = NSLock()
     private let queue = DispatchQueue(label: "network.auth.queue")
@@ -44,7 +38,7 @@ public class AuthHandler: RequestInterceptor {
         requestsToRetry.append(completion)
         
         if !isRefreshing {
-            refreshCredentials(refreshToken) { [weak self] (succeeded, credentials) in
+            refreshCredentials(refreshToken, session: session) { [weak self] (succeeded, credentials) in
                 guard let self = self else { return }
                 
                 self.lock.lock() ; defer { self.lock.unlock() }
@@ -66,7 +60,7 @@ public class AuthHandler: RequestInterceptor {
     
     // MARK: - Private - Refresh Tokens
     
-    private func refreshCredentials(_ refreshToken: String, completion: @escaping RefreshCompletion) {
+    private func refreshCredentials(_ refreshToken: String, session: Session, completion: @escaping RefreshCompletion) {
         guard !isRefreshing else { return }
         
         isRefreshing = true

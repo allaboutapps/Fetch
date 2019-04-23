@@ -119,10 +119,11 @@ public class APIClient {
             eventMonitors: config.eventMonitors)
         
         let mockedConfiguration = URLSessionConfiguration.default
-        mockedConfiguration.protocolClasses = [StubbedURLProtocol.self]
+        mockedConfiguration.protocolClasses = [StubbedURL.self]
         
         mockedSession = Session(
             configuration: mockedConfiguration,
+            interceptor: config.interceptor,
             eventMonitors: config.eventMonitors)
     }
     
@@ -195,7 +196,7 @@ public class APIClient {
     private func currentSession<T>(for resource: Resource<T>) -> Session {
         if let stub = resource.stubIfNeeded {
             // Register the stub is necessary
-            StubbedURLProtocol.registerStub(stub, for: stub.id.uuidString)
+            StubbedURL.registerStub(stub, for: stub.id.uuidString)
             return mockedSession
         } else {
             return session

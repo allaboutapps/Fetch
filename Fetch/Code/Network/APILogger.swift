@@ -47,7 +47,7 @@ public class APILogger: EventMonitor {
         }
         
         var output = [String]()
-        let isStubbed = urlRequest.headers.dictionary.keys.contains(StubbedURLProtocol.stubIdHeader)
+        let isStubbed = urlRequest.headers.dictionary.keys.contains(StubbedURL.stubIdHeader)
         output.append("↗️\(isStubbed ? " [STUB]" : "") \(urlRequest.httpMethod ?? "") - \(urlRequest.url?.absoluteString ?? "")")
         
         let spacing = "         "
@@ -82,7 +82,7 @@ public class APILogger: EventMonitor {
         
         let range = 200...399
         let icon = range.contains(response.statusCode) ? "✅" : "❌"
-        let isStubbed = urlRequest.headers.dictionary.keys.contains(StubbedURLProtocol.stubIdHeader)
+        let isStubbed = urlRequest.headers.dictionary.keys.contains(StubbedURL.stubIdHeader)
 
         output.append("\(icon)\(isStubbed ? " [STUB]" : "") \(response.statusCode) \(urlRequest.httpMethod ?? "") - \(urlRequest.url?.absoluteString ?? "")")
 
