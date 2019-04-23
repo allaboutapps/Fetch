@@ -95,7 +95,7 @@ Stubbing is not limited to json only, you can also provide raw data or provide a
 **Stubbing with Encodable**
 
 ```swift
-struct Person {
+struct Person: Encodable {
     let name: String
     let age: Int
 }
