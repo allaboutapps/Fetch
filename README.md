@@ -65,6 +65,37 @@ resource.request { (result) in
 
 ## Advanced usage
 
+### Content parsing
+
+Per default the configuration uses the JSONDecoder and JSONEncoder provided by the standard library but is not limited to it, both of these types have been extended to conform to [ResourceDecoderProtocol](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Utilities/ResourceDecoderProtocol.swift) and [ResourceEncoderProtocol](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Utilities/ResourceEncoderProtocol.swift) that allows you to define your own custom decoder/encoder. The Resource provides decoding and encoding closures that use the decoder and encoder defined in the configuration. If you want to implement a different behaviour for a resource you can provide a closure during the creation of a resource. 
+
+**Payload unwrapping**
+
+Sometimes there is content that is packed in an envelop and makes parsing difficult. In this case you can define so called "root keys". Root keys define a path to the content in the envelop you want to parse. This means that only the content defined with the root keys will be parsed.
+
+**Example**
+
+This is a response that should be parsed.
+```json
+{
+  "data": {
+    "names": ["Alex", "Jeff", "Tom", "Xavier"]
+  }
+}
+```
+
+We only want the names which is an array of strings.
+Instead of defining a structure that models the hierachy we define "root keys" on a resource to only get the array.
+```swift
+let resource = Resource<[String]>(
+    path: "/names",
+    rootKeys: ["data", "names"]
+)
+resource.request { result in
+...
+}
+```
+
 ### Stubbing
 
 Fetch gives you a versatile set of possibilities to perform stubbing.
