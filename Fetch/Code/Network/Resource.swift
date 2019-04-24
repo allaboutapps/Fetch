@@ -205,6 +205,7 @@ public extension Resource {
     /// - Returns: A `RequestToken` to cancel the request
     ///
     /// If the HTTP method of the resource is .post, .patch, .put or .delete the corresponding cache groups are removed
+    /// IF YOU WANT TO STUB YOU NEED TO EXECUTE THE REQUEST ON THE RESOURCE(APICLIENT) NOT THE SESSION
     @discardableResult func request(queue: DispatchQueue = .main, completion: @escaping (_ result: Swift.Result<NetworkResponse<T>, FetchError>) -> Void) -> RequestToken? {
         return apiClient.request(self, queue: queue) { [weak self] (result) in
             defer { completion(result) }

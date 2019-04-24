@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func authorize(_ sender: Any) {
-        API.StubbedAuth.login(username: "TEST", password: "TEST").request { result in
+        API.StubbedAuth.login(username: "TEST", password: "TEST").request().startWithResult { result in
             let credentials: Credentials?
             switch result {
             case .success(let value):
@@ -34,20 +34,23 @@ class ViewController: UIViewController {
             }
             CredentialsController.shared.currentCredentials = credentials
         }
+
     }
     
     @IBAction private func refreshToken(_ sender: Any) {
-        failingResource.request { result in
-            
-        }
+        failingResource.request().start()
     }
     
     @IBAction private func authenticatedRequest(_ sender: Any) {
-        
+        API.StubbedAuth.authorizedRequest().request().start()
     }
     
     @IBAction private func randomRequest(_ sender: Any) {
-        
+        API.BlogPosts.list().request().start()
+    }
+    
+    @IBAction private func clearCredentials(_ sender: Any) {
+        CredentialsController.shared.currentCredentials = nil
     }
     
     @IBAction private func clearLog(_ sender: Any) {

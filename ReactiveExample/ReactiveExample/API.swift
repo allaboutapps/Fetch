@@ -39,6 +39,20 @@ public struct API {
                 stub: StubResponse(statusCode: 200, fileName: "authresponse.json", delay: 4))
         }
         
+        public static func authorizedRequest() -> Resource<Data> {
+            let conditionalStub = ClosureStub { () -> Stub in
+                let unauthorizedStub = StubResponse(statusCode: 401, data: Data(), delay: 2)
+                let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)
+                return CredentialsController.shared.currentCredentials == nil ? unauthorizedStub : okStub
+            }
+            
+            return Resource(
+                path: "/auth/secret",
+                shouldStub: true,
+                stub: conditionalStub
+            )
+        }
+        
         public static func unauthorizedErrorRequest() -> Resource<Data> {
             let failingStub = StubResponse(statusCode: 401, data: Data(), delay: 2)
             let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)

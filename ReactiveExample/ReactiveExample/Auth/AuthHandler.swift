@@ -24,7 +24,7 @@ public class AuthHandler: RequestInterceptor {
     
     // MARK: - RequestRetrier
     
-    public func retry(_ request: Alamofire.Request, for session: Alamofire.Session, dueTo error: Error, completion: @escaping (Alamofire.RetryResult) -> Void) {
+    public func retry(_ request: Alamofire.Request, for session: Session, dueTo error: Error, completion: @escaping (Alamofire.RetryResult) -> Void) {
         lock.lock() ; defer { lock.unlock() }
         
         guard let response = request.task?.response as? HTTPURLResponse,
@@ -64,22 +64,13 @@ public class AuthHandler: RequestInterceptor {
         
         isRefreshing = true
         
-        guard let urlRequest = try? API.StubbedAuth.tokenRefresh(refreshToken).asURLRequest() else {
-            completion(false, nil)
-            return
+        API.StubbedAuth.tokenRefresh(refreshToken).request { result in
+            switch result {
+            case .success(let credentials):
+                completion(true, credentials.model)
+            case .failure:
+                completion(false, nil)
+            }
         }
-        
-        session
-            .request(urlRequest)
-            .responseDecodable(queue: queue, completionHandler: { [weak self] (response: DataResponse<Credentials>) in
-                guard let self = self else { return }
-                switch response.result {
-                case .success(let credentials):
-                    completion(true, credentials)
-                case .failure:
-                    completion(false, nil)
-                }
-                self.isRefreshing = false
-            })
     }
 }

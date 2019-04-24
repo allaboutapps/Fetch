@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="Ly0-aZ-kps">
-                                <rect key="frame" x="16" y="76" width="382" height="206"/>
+                                <rect key="frame" x="16" y="76" width="382" height="250"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIn-NE-L4C">
                                         <rect key="frame" x="152.5" y="0.0" width="77" height="30"/>
@@ -49,8 +49,15 @@
                                             <action selector="randomRequest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rra-66-IOt"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fq9-0m-7fS">
+                                        <rect key="frame" x="133" y="176" width="116" height="30"/>
+                                        <state key="normal" title="Clear credentials"/>
+                                        <connections>
+                                            <action selector="clearCredentials:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lMk-kk-99Z"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PNn-it-zyV">
-                                        <rect key="frame" x="160.5" y="176" width="61" height="30"/>
+                                        <rect key="frame" x="160.5" y="220" width="61" height="30"/>
                                         <state key="normal" title="Clear log"/>
                                         <connections>
                                             <action selector="clearLog:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Df4-m8-VeL"/>
@@ -59,7 +66,7 @@
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c6A-Ju-74W">
-                                <rect key="frame" x="0.0" y="290" width="414" height="606"/>
+                                <rect key="frame" x="0.0" y="334" width="414" height="562"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
