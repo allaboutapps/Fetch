@@ -63,7 +63,7 @@ class StubTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            stub: StubResponse(statusCode: 200, fileName: "modela.json", delay: 0, bundle: Bundle(for: type(of: self))))
+            stub: StubResponse(statusCode: 200, fileName: "modela.json", delay: 0.1, bundle: Bundle(for: type(of: self))))
         resource.request { (result) in
             switch result {
             case .success(let response):
