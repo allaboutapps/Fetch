@@ -70,6 +70,7 @@ resource.request { (result) in
 Fetch gives you a versatile set of possibilities to perform stubbing.
 
 **Simulate a successful network request with a json response**
+
 ```swift
 let stub = StubResponse(statusCode: 200, fileName: "success.json", delay: 2.0)
         
@@ -81,6 +82,7 @@ let resource = Resource<String>(
 The above stub will return a 200 status code with the content from the success json file loaded from your app's bundle and will be delayed by two seconds.
 
 **Simulate an unauthorized error**
+
 ```swift
 let stub = StubResponse(statusCode: 401, fileName: "unauthorized.json", delay: 2.0)
         
@@ -111,6 +113,7 @@ let resource = Resource<String>(
 ```
 
 **Alternating stubbing**
+
  ```swift
 let successStub = StubResponse(statusCode: 200, fileName: "success.json", delay: 0.0)
 let failureStub = StubResponse(statusCode: 404, fileName: "notFound.json", delay: 0.0)
@@ -124,8 +127,89 @@ let resource = Resource<String>(
 ```
 Every time the resource is executed it will iterate over the given stubs an always return a different stub than before.
 
-**Caching**
+**Custom stubbing**
 
+You can create a custom stub by conforming to the [Stub](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Stub/Stub.swift) protocol.
+```swift
+struct CustomStub: Stub {
+...
+}
+```
+
+### Caching
+
+The following cache types are implemented:
+- [Memory](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/MemoryCache.swift)
+- [Disk](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/DiskCache.swift)
+- [Hybrid](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/HybridCache.swift)
+
+**Setting up a cache**
+
+```swift
+let cache = MemoryCache(defaultExpiration: .seconds(3600))
+        
+let config = Config(
+    baseURL: URL(string: "https://example.com")!,
+    cache: cache,
+    cachePolicy: .networkOnlyUpdateCache
+   )
+let client = APIClient(config: config)
+```
+
+**Note:** To make use of caching the model you load from a resource has to conform to Cacheable.
+
+**Hybrid Cache**
+
+The hybrid cache allows you to combine two separate caches, the cache types used are not limited.
+
+**Custom cache implementations**
+
+To implement a custom cache you have to create a class/struct which conforms to the [Cache](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/Cache.swift) protocol.
+
+```swift
+class SpecialCache: Cache {
+...
+}
+```
+
+**Caching Policies**
+
+A Cache Policy defines the loading behaviour of a resource. You can set a policy directly on a resource when it is created, in the configuration of an APIClient or you can pass it as an argument to the fetch function of the resource.
+
+**Note:** The policy defined in the resource is always preferred over the policy defined in the configuration.
+
+**Load from cache otherwise from network**
+
+This will first try to read the requested data from the cache, if the data is not available or expired the data will be loaded from the network.
+```swift
+let resource: Resource<X> = ...
+resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { result, finishedLoading in 
+...
+}
+```
+
+**Load from network and update cache**
+
+This will load the data from network and update the cache. The completion closure will only be called with the value from the network. 
+```swift
+let resource: Resource<X> = ...
+resource.fetch(cachePolicy: .networkOnlyUpdateCache) { result, finishedLoading in 
+...
+}
+```
+
+**Load data from cache and always from network**
+
+This will load data from the cache and load data from the network. You will get both values in the completion closure asynchronously. 
+
+```swift
+let resource: Resource<X> = ...
+resource.fetch(cachePolicy: .cacheFirstNetworkAlways) { result, finishedLoading in 
+...
+}
+```
+
+For an overview of policies check out the implementation in [Cache.swift](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/Cache.swift)
 
 ## Carthage
 
