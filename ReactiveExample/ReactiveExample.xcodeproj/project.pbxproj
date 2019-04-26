@@ -12,7 +12,6 @@
 		3948ADA12267146F00DA0B85 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3948AD9F2267146F00DA0B85 /* Main.storyboard */; };
 		3948ADA32267147000DA0B85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3948ADA22267147000DA0B85 /* Assets.xcassets */; };
 		3948ADA62267147000DA0B85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3948ADA42267147000DA0B85 /* LaunchScreen.storyboard */; };
-		3948ADCE2267158A00DA0B85 /* Fetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3948ADC8226714E500DA0B85 /* Fetch.framework */; };
 		3948ADD3226715DF00DA0B85 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3948ADD0226715DF00DA0B85 /* Alamofire.framework */; };
 		3948ADD4226715DF00DA0B85 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3948ADD1226715DF00DA0B85 /* ReactiveSwift.framework */; };
 		3948ADD5226715DF00DA0B85 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3948ADD2226715DF00DA0B85 /* KeychainAccess.framework */; };
@@ -24,6 +23,9 @@
 		3948ADE8226718E800DA0B85 /* nested-post.json in Resources */ = {isa = PBXBuildFile; fileRef = 3948ADE02267178500DA0B85 /* nested-post.json */; };
 		3948ADE9226718EA00DA0B85 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = 3948ADE12267178500DA0B85 /* posts.json */; };
 		3948ADEB2267192600DA0B85 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3948ADEA2267192600DA0B85 /* Config.swift */; };
+		5C0DDDD12269EEDD009A590A /* Fetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3948ADC8226714E500DA0B85 /* Fetch.framework */; };
+		5C0DDDD22269EEDD009A590A /* Fetch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3948ADC8226714E500DA0B85 /* Fetch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5C0DDDD72269EF98009A590A /* authresponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C0DDDD62269EF98009A590A /* authresponse.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +64,28 @@
 			remoteGlobalIDString = F8C358F62DCFA013A4E994E6A1DB050E;
 			remoteInfo = Fetch;
 		};
+		5C0DDDD32269EEDD009A590A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3948ADBC226714E500DA0B85 /* Fetch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F8C358F62DCFA013A4E994E6A1DB050E;
+			remoteInfo = Fetch;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5C0DDDD52269EEDD009A590A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5C0DDDD22269EEDD009A590A /* Fetch.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3948AD982267146F00DA0B85 /* ReactiveExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +107,7 @@
 		3948ADE3226717E500DA0B85 /* Resource+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource+Reactive.swift"; sourceTree = "<group>"; };
 		3948ADE6226718C300DA0B85 /* BlogPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPost.swift; sourceTree = "<group>"; };
 		3948ADEA2267192600DA0B85 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		5C0DDDD62269EF98009A590A /* authresponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = authresponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +115,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3948ADCE2267158A00DA0B85 /* Fetch.framework in Frameworks */,
 				3948ADD3226715DF00DA0B85 /* Alamofire.framework in Frameworks */,
+				5C0DDDD12269EEDD009A590A /* Fetch.framework in Frameworks */,
 				3948ADD5226715DF00DA0B85 /* KeychainAccess.framework in Frameworks */,
 				3948ADD4226715DF00DA0B85 /* ReactiveSwift.framework in Frameworks */,
 			);
@@ -169,6 +193,7 @@
 			children = (
 				3948ADE02267178500DA0B85 /* nested-post.json */,
 				3948ADE12267178500DA0B85 /* posts.json */,
+				5C0DDDD62269EF98009A590A /* authresponse.json */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -220,11 +245,13 @@
 				3948AD952267146F00DA0B85 /* Frameworks */,
 				3948AD962267146F00DA0B85 /* Resources */,
 				3948ADD6226715FC00DA0B85 /* Carthage */,
+				5C0DDDD52269EEDD009A590A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				3948ADCD2267155E00DA0B85 /* PBXTargetDependency */,
+				5C0DDDD42269EEDD009A590A /* PBXTargetDependency */,
 			);
 			name = ReactiveExample;
 			productName = ReactiveExample;
@@ -306,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C0DDDD72269EF98009A590A /* authresponse.json in Resources */,
 				3948ADA62267147000DA0B85 /* LaunchScreen.storyboard in Resources */,
 				3948ADE9226718EA00DA0B85 /* posts.json in Resources */,
 				3948ADA32267147000DA0B85 /* Assets.xcassets in Resources */,
@@ -366,6 +394,11 @@
 			isa = PBXTargetDependency;
 			name = Fetch;
 			targetProxy = 3948ADCC2267155E00DA0B85 /* PBXContainerItemProxy */;
+		};
+		5C0DDDD42269EEDD009A590A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Fetch;
+			targetProxy = 5C0DDDD32269EEDD009A590A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -440,7 +473,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -495,7 +528,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -508,6 +541,7 @@
 		3948ADAB2267147000DA0B85 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M8F9QH57A6;
@@ -530,6 +564,7 @@
 		3948ADAC2267147000DA0B85 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M8F9QH57A6;
