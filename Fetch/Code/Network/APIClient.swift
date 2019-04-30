@@ -189,7 +189,7 @@ public class APIClient {
     }
     
     private func register<T>(_ resource: Resource<T>) {
-        guard let stub = resource.stub else { return }
+        guard let stub = resource.stubIfNeeded else { return }
         
         StubbedURL.registerStub(stub, for: stub.id.uuidString)
     }
