@@ -40,8 +40,6 @@
 		5C011DA52260B79A00B7526C /* RepositoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C011DA42260B79A00B7526C /* RepositoryListViewController.swift */; };
 		5C011DA72260B7B400B7526C /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C011DA62260B7B400B7526C /* Repository.swift */; };
 		5C011DA92260BAD900B7526C /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C011DA82260BAD900B7526C /* RepositoryCell.swift */; };
-		5C1D60422265B6D40084F6E7 /* PageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C011DB02260D2CC00B7526C /* PageProtocol.swift */; };
-		5C1D60442265B71C0084F6E7 /* PagedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C011DB22260D43400B7526C /* PagedResource.swift */; };
 		5C1D607E2265D0850084F6E7 /* CacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1D607D2265D0850084F6E7 /* CacheTests.swift */; };
 		5C48F2E022708B6400B85D3D /* ClosureStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C48F2DF22708B6400B85D3D /* ClosureStub.swift */; };
 		5C5E3E3E2268B10000101A4F /* post.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C5E3E3D2268B10000101A4F /* post.json */; };
@@ -162,8 +160,6 @@
 		5C011DA42260B79A00B7526C /* RepositoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListViewController.swift; sourceTree = "<group>"; };
 		5C011DA62260B7B400B7526C /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		5C011DA82260BAD900B7526C /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
-		5C011DB02260D2CC00B7526C /* PageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageProtocol.swift; sourceTree = "<group>"; };
-		5C011DB22260D43400B7526C /* PagedResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedResource.swift; sourceTree = "<group>"; };
 		5C1D607D2265D0850084F6E7 /* CacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
 		5C48F2DF22708B6400B85D3D /* ClosureStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosureStub.swift; sourceTree = "<group>"; };
 		5C5E3E3D2268B10000101A4F /* post.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = post.json; sourceTree = "<group>"; };
@@ -378,7 +374,6 @@
 				5C011D852260A67400B7526C /* Storyboards */,
 				5C011D882260A6AB00B7526C /* ViewControllers */,
 				5C011D8C2260A6D900B7526C /* Networking */,
-				5C1D60482265BFCD0084F6E7 /* Utilities */,
 				5C011D8B2260A6CF00B7526C /* Models */,
 			);
 			path = Code;
@@ -429,14 +424,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5C1D60482265BFCD0084F6E7 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				5CC973952264B64E00A5FB23 /* Paging */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		5C1D607C2265D06C0084F6E7 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,15 +440,6 @@
 			children = (
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		5CC973952264B64E00A5FB23 /* Paging */ = {
-			isa = PBXGroup;
-			children = (
-				5C011DB02260D2CC00B7526C /* PageProtocol.swift */,
-				5C011DB22260D43400B7526C /* PagedResource.swift */,
-			);
-			path = Paging;
 			sourceTree = "<group>";
 		};
 		5CFD3BC92269B83000F92F97 /* ViewModels */ = {
@@ -861,9 +839,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C1D60442265B71C0084F6E7 /* PagedResource.swift in Sources */,
 				D88B934622577F8500161DB0 /* AppDelegate.swift in Sources */,
-				5C1D60422265B6D40084F6E7 /* PageProtocol.swift in Sources */,
 				D834F4F9225F1A6200D1B3A2 /* BlogPost.swift in Sources */,
 				D88B9341225776EB00161DB0 /* API.swift in Sources */,
 				D88B93442257788300161DB0 /* Config.swift in Sources */,
