@@ -79,7 +79,7 @@ Then run `carthage update`.
 
 ## Requirements
 
-- iOS 12.0+
+- iOS 11.0+
 - Xcode 10.2+
 - Swift 5+
 
