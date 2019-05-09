@@ -30,7 +30,7 @@ Call it in the `application(_:didFinishLaunchingWithOptions:)` function.
 APIClient.shared.setup(with: Config(baseURL: URL(string: "https://api.github.com")!))
 ```
 
-Lets create a struct named `Organisation` with a few properties.
+Lets create a struct named `Organization` with a few properties.
 The model will be parsed from the network response. 
 
 ```swift
@@ -79,17 +79,35 @@ This is a response that should be parsed.
 ```json
 {
   "data": {
-    "names": ["Alex", "Jeff", "Tom", "Xavier"]
+    "people": [
+        {
+        "name": "Alex"
+        },
+        {
+        "name": "Jeff"
+        },
+        {
+        "name": "Tom"
+        },
+        {
+        "name": "Xavier"
+        }
+    ]
   }
 }
 ```
 
-We only want the names which is an array of strings.
+We only want the people which is an array of Person.
 Instead of defining a structure that models the hierachy we define "root keys" on a resource to only get the array.
 ```swift
-let resource = Resource<[String]>(
-    path: "/names",
-    rootKeys: ["data", "names"]
+
+struct Person: Decodable {
+    let name: String
+}
+
+let resource = Resource<[Person]>(
+    path: "/people",
+    rootKeys: ["data", "people"]
 )
 resource.request { result in
 ...
@@ -105,7 +123,7 @@ Fetch gives you a versatile set of possibilities to perform stubbing.
 ```swift
 let stub = StubResponse(statusCode: 200, fileName: "success.json", delay: 2.0)
         
-let resource = Resource<String>(
+let resource = Resource<Person>(
             path: "/test",
             shouldStub: true,
             stub: stub)
@@ -117,7 +135,7 @@ The above stub will return a 200 status code with the content from the success j
 ```swift
 let stub = StubResponse(statusCode: 401, fileName: "unauthorized.json", delay: 2.0)
         
-let resource = Resource<String>(
+let resource = Resource<Person>(
             path: "/unauthorized",
             shouldStub: true,
             stub: stub)
@@ -137,7 +155,7 @@ let peter = Person(name: "Peter", age: 18)
 
 let stub = StubResponse(statusCode: 200, encodable: peter, delay: 2.0)
         
-let resource = Resource<String>(
+let resource = Resource<Person>(
             path: "/peter",
             shouldStub: true,
             stub: stub)
@@ -151,12 +169,22 @@ let failureStub = StubResponse(statusCode: 404, fileName: "notFound.json", delay
 
 let alternatingStub = AlternatingStub(stubs: [successStub, failureStub])
         
-let resource = Resource<String>(
+let resource = Resource<Person>(
             path: "/peter",
             shouldStub: true,
             stub: alternatingStub)
 ```
-Every time the resource is executed it will iterate over the given stubs an always return a different stub than before.
+Every time the resource is executed it will iterate over the given stubs and always return a different stub than before.
+
+**Conditional stubbing**
+Simulating behaviour based on specific conditions is something that can be realised with conditional stubbing.
+**Example**
+Simulate an endpoint that is protected by user authorization and return a success or an error based on the authorization state of your app
+
+```swift
+
+
+```
 
 **Custom stubbing**
 
