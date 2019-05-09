@@ -182,8 +182,17 @@ Simulating behaviour based on specific conditions is something that can be reali
 Simulate an endpoint that is protected by user authorization and return a success or an error based on the authorization state of your app
 
 ```swift
+let conditionalStub = ClosureStub { () -> Stub in
+let unauthorizedStub = StubResponse(statusCode: 401, data: Data(), delay: 2)
+let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)
+return CredentialsController.shared.currentCredentials == nil ? unauthorizedStub : okStub
+}
 
-
+return Resource(
+path: "/auth/secret",
+shouldStub: true,
+stub: conditionalStub
+)
 ```
 
 **Custom stubbing**
@@ -251,7 +260,7 @@ resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { result, fin
 
 This will load the data from network and update the cache. The completion closure will only be called with the value from the network. 
 ```swift
-let resource: Resource<X> = ...
+let resource: Resource<Person> = ...
 resource.fetch(cachePolicy: .networkOnlyUpdateCache) { result, finishedLoading in 
 ...
 }
@@ -262,7 +271,7 @@ resource.fetch(cachePolicy: .networkOnlyUpdateCache) { result, finishedLoading i
 This will load data from the cache and load data from the network. You will get both values in the completion closure asynchronously. 
 
 ```swift
-let resource: Resource<X> = ...
+let resource: Resource<Person> = ...
 resource.fetch(cachePolicy: .cacheFirstNetworkAlways) { result, finishedLoading in 
 ...
 }
