@@ -21,8 +21,12 @@ public class APILogger: EventMonitor {
     
     public typealias CustomLogClosure = ((_ timeStamp: Date, _ message: String, _ requestId: UUID) -> Void)
     
+    public typealias CustomOutputClosure = ((String) -> Void)
+    
     /// If `customLogClosure` is set every log entry is passed into `customLogClosure`
     public var customLogClosure: CustomLogClosure?
+    
+    public var customOutputClosure: CustomOutputClosure?
     
     /// Enables verbose logging if `true`
     public let verbose: Bool
@@ -43,7 +47,7 @@ public class APILogger: EventMonitor {
         }
         
         var output = [String]()
-        let isStubbed = urlRequest.headers.dictionary.keys.contains(StubbedURLProtocol.stubIdHeader)
+        let isStubbed = urlRequest.headers.dictionary.keys.contains(StubbedURL.stubIdHeader)
         output.append("↗️\(isStubbed ? " [STUB]" : "") \(urlRequest.httpMethod ?? "") - \(urlRequest.url?.absoluteString ?? "")")
         
         let spacing = "         "
@@ -78,7 +82,7 @@ public class APILogger: EventMonitor {
         
         let range = 200...399
         let icon = range.contains(response.statusCode) ? "✅" : "❌"
-        let isStubbed = urlRequest.headers.dictionary.keys.contains(StubbedURLProtocol.stubIdHeader)
+        let isStubbed = urlRequest.headers.dictionary.keys.contains(StubbedURL.stubIdHeader)
 
         output.append("\(icon)\(isStubbed ? " [STUB]" : "") \(response.statusCode) \(urlRequest.httpMethod ?? "") - \(urlRequest.url?.absoluteString ?? "")")
 
@@ -118,7 +122,11 @@ public class APILogger: EventMonitor {
                 output += "Request ID: \(requestId.uuidString)\n"
             }
             output += message
-            print(output)
+            if let out = customOutputClosure {
+                out(output)
+            } else {
+                print(output)
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
         <!--Organization View Controller-->
         <scene sceneID="T2P-Z8-eat">
             <objects>
-                <viewController storyboardIdentifier="GithubOrganizationViewController" id="hNv-IJ-SNn" customClass="OrganizationViewController" customModule="GithubExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hNv-IJ-SNn" customClass="OrganizationViewController" customModule="GithubExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bsA-rm-75t">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -94,7 +94,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Ze-za-VvU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="85.507246376811594" y="176.78571428571428"/>
+            <point key="canvasLocation" x="-539" y="177"/>
         </scene>
         <!--User List View Controller-->
         <scene sceneID="rEC-vg-Qnd">
@@ -161,7 +161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fvM-bf-euY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="843.47826086956525" y="176.78571428571428"/>
+            <point key="canvasLocation" x="196" y="177"/>
         </scene>
         <!--Repository List View Controller-->
         <scene sceneID="9cn-KO-3bG">
@@ -223,7 +223,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g0n-lp-1So" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1574" y="177"/>
+            <point key="canvasLocation" x="926" y="177"/>
         </scene>
     </scenes>
 </document>
