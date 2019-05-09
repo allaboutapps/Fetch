@@ -90,6 +90,10 @@ class ShouldStubTests: XCTestCase {
     func testShouldStubInResourceWithoutStubDoesNotStub() {
         let expectation = self.expectation(description: "Fetch model")
         let resource = Resource<ModelA>(
+            apiClient: APIClient(config: Config(
+                baseURL: URL(string: "https://www.asdf.at")!,
+                timeout: 3
+            )),
             method: .get,
             path: "/test",
             shouldStub: true)

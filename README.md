@@ -13,7 +13,7 @@ Fetch is a resource based network abstraction based on [Alamofire](https://githu
 - [x] Root keys: decode multiple wrapper container
 - [x] Logging
 - [x] Stubbing
-  - [x] Simple respnose or error
+  - [x] Simple response or error
   - [x] Random stub from array
   - [x] Cycle through stub array
 - [x] Caching

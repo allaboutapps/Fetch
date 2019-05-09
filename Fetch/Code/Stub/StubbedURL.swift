@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StubbedURLProtocol: URLProtocol {
+class StubbedURL: URLProtocol {
     
     private static var registeredStubs = [String: Stub]()
     
@@ -22,8 +22,8 @@ class StubbedURLProtocol: URLProtocol {
         // Get the corresponding stub from the registry using the stubId set the header
         // The stubId is set in the resource if necessary
         guard
-            let requestId = request.headers[StubbedURLProtocol.stubIdHeader],
-            let stub = StubbedURLProtocol.registeredStubs[requestId]
+            let requestId = request.headers[StubbedURL.stubIdHeader],
+            let stub = StubbedURL.registeredStubs[requestId]
         else {
             preconditionFailure("Stubbed request was not set correctly")
         }
@@ -62,7 +62,7 @@ class StubbedURLProtocol: URLProtocol {
     // MARK: - Helper
     
     override class func canInit(with request: URLRequest) -> Bool {
-        return true
+        return request.headers[stubIdHeader] != nil
     }
     
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {

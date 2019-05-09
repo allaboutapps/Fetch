@@ -36,8 +36,13 @@ public class Resource<T: Decodable>: CacheableResource {
     public let encode: EncodingClosure
 
     /// The final `URL` used in a network request, using the base URL from the resource or from the `APIClient` and the path
+    /// If path is an absolute URL, this URL is used without a base url
     public var url: URL {
-        return (baseURL ?? apiClient.config.baseURL).appendingPathComponent(path)
+        if let pathURL = URL(string: path), pathURL.scheme != nil {
+            return pathURL
+        } else {
+            return (baseURL ?? apiClient.config.baseURL).appendingPathComponent(path)
+        }
     }
     
     /// A helper to access the cache specified in the `APIClient`
@@ -66,7 +71,7 @@ public class Resource<T: Decodable>: CacheableResource {
     ///   - headers: The `HTTPHeaders`used for the request, overrides duplicated keys from the `APIClient`
     ///   - method: The HTTP method used for the request
     ///   - baseURL: The base URL used for the request, if nil uses the base URL from the `APIClient`
-    ///   - path: The url path additionally to the `baseURL`
+    ///   - path: The url path additionally to the `baseURL`, if path is an absolute URL, this URL is used without a base url
     ///   - urlParameters: The url paramters used for the query string of the request (URLEncoding(destination: .queryString))
     ///   - body: The object which will be encoded in the HTTP body
     ///   - rootKeys: The `rootKeys` are used to decode multiple wrapper containers, the last key contains the actual resource to decode
@@ -145,7 +150,7 @@ public class Resource<T: Decodable>: CacheableResource {
         
         // Add request is as http header for stubbing
         if let stub = stubIfNeeded {
-            headers[StubbedURLProtocol.stubIdHeader] = stub.id.uuidString
+            headers[StubbedURL.stubIdHeader] = stub.id.uuidString
         }
         
         // Create request from resource
@@ -205,6 +210,7 @@ public extension Resource {
     /// - Returns: A `RequestToken` to cancel the request
     ///
     /// If the HTTP method of the resource is .post, .patch, .put or .delete the corresponding cache groups are removed
+    /// IF YOU WANT TO STUB YOU NEED TO EXECUTE THE REQUEST ON THE RESOURCE(APICLIENT) NOT THE SESSION
     @discardableResult func request(queue: DispatchQueue = .main, completion: @escaping (_ result: Swift.Result<NetworkResponse<T>, FetchError>) -> Void) -> RequestToken? {
         return apiClient.request(self, queue: queue) { [weak self] (result) in
             defer { completion(result) }

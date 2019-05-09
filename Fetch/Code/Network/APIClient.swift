@@ -76,6 +76,8 @@ public struct NetworkResponse<T> {
 
 /// The `APIClient` is the interface to the network and it is used by a `Resource` to send http requests.
 public class APIClient {
+
+    typealias CompletionCallback<T> = ((Swift.Result<NetworkResponse<T>, FetchError>) -> Void)
     
     /// Initializes a new `APIClient`
     ///
@@ -98,7 +100,6 @@ public class APIClient {
     }
     
     private var session: Session!
-    private var mockedSession: Session!
     
     let decodingQueue = DispatchQueue(label: "at.allaboutapps.fetch.decodingQueue")
     
@@ -111,6 +112,7 @@ public class APIClient {
         self._config = config
         
         let configuration = URLSessionConfiguration.default
+        configuration.protocolClasses = [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
         
         session = Session(
@@ -118,20 +120,14 @@ public class APIClient {
             interceptor: config.interceptor,
             eventMonitors: config.eventMonitors)
         
-        let mockedConfiguration = URLSessionConfiguration.default
-        mockedConfiguration.protocolClasses = [StubbedURLProtocol.self]
-        
-        mockedSession = Session(
-            configuration: mockedConfiguration,
-            eventMonitors: config.eventMonitors)
     }
     
     // MARK: - Resource
     
-    @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping (Swift.Result<NetworkResponse<T>, FetchError>) -> Void) -> RequestToken {
+    @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping CompletionCallback<T>) -> RequestToken {
         precondition(_config != nil, "Setup of APIClient was not called!")
         
-        let session = currentSession(for: resource)
+        register(resource)
         
         let urlRequest: URLRequest
         do {
@@ -192,14 +188,9 @@ public class APIClient {
         }
     }
     
-    private func currentSession<T>(for resource: Resource<T>) -> Session {
-        if let stub = resource.stubIfNeeded {
-            // Register the stub is necessary
-            StubbedURLProtocol.registerStub(stub, for: stub.id.uuidString)
-            return mockedSession
-        } else {
-            return session
-        }
+    private func register<T>(_ resource: Resource<T>) {
+        guard let stub = resource.stubIfNeeded else { return }
+        
+        StubbedURL.registerStub(stub, for: stub.id.uuidString)
     }
-    
 }
