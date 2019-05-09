@@ -177,8 +177,11 @@ let resource = Resource<Person>(
 Every time the resource is executed it will iterate over the given stubs and always return a different stub than before.
 
 **Conditional stubbing**
+
 Simulating behaviour based on specific conditions is something that can be realised with conditional stubbing.
+
 **Example**
+
 Simulate an endpoint that is protected by user authorization and return a success or an error based on the authorization state of your app
 
 ```swift
