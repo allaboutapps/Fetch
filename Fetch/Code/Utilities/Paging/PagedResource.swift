@@ -31,9 +31,9 @@ public class PagedResource<Page: PageProtocol, MappedPageItem> {
     
     public typealias PageResultClosure = ((Result<Page, PagingError>) -> Void)
     
-    private let initialPage: Resource<Page>
+    private let initialResource: Resource<Page>
     
-    private var currentPage: Resource<Page>
+    private var currentResource: Resource<Page>
     
     public var hasMorePages: Bool {
         return pages.last?.hasNext ?? true
@@ -43,6 +43,7 @@ public class PagedResource<Page: PageProtocol, MappedPageItem> {
     
     public private(set) var mappedItems: [MappedPageItem] = []
     
+    #warning("Better naming for RequestToken")
     private var currentPageRequestToken: RequestToken?
     
     public let constructPageResource: PageResourceConstructor
@@ -53,8 +54,8 @@ public class PagedResource<Page: PageProtocol, MappedPageItem> {
     /// - Parameter mappingClosure: The closure that will be called to map a `Page.Item` to `MappedPageItem`
     /// - Parameter resourceConstructor: A closure which provides the next page for a given Resource
     public init(initialPage: Resource<Page>, mappingClosure: @escaping ItemMappingClosure, resourceConstructor: @escaping PageResourceConstructor) {
-        self.initialPage = initialPage
-        self.currentPage = initialPage
+        self.initialResource = initialPage
+        self.currentResource = initialPage
         self.mapPageItemClosure = mappingClosure
         self.constructPageResource = resourceConstructor
     }
@@ -62,6 +63,7 @@ public class PagedResource<Page: PageProtocol, MappedPageItem> {
     /// Loads the next page
     /// - Parameter reset: When true all loaded pages will be removed and the initialPage will be loaded
     /// - Parameter callback: The closure that will be called with a `Result`
+    #warning("Consider caching -> array of arrays in mappedItems")
     @discardableResult
     public func loadNext(reset: Bool = false, _ callback: @escaping PageResultClosure) -> RequestToken? {
         if reset {
@@ -78,7 +80,7 @@ public class PagedResource<Page: PageProtocol, MappedPageItem> {
             return nil
         }
         
-        currentPageRequestToken = currentPage.request(completion: { [weak self] result in
+        currentPageRequestToken = currentResource.request(completion: { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -87,7 +89,7 @@ public class PagedResource<Page: PageProtocol, MappedPageItem> {
                 let mappedItems = page.items.map { self.mapPageItemClosure($0) }
                 self.pages.append(page)
                 self.mappedItems.append(contentsOf: mappedItems)
-                self.currentPage = self.constructPageResource(self.currentPage, page)
+                self.currentResource = self.constructPageResource(self.currentResource, page)
                 callback(.success(page))
             case .failure(let error):
                 print(error)
@@ -103,7 +105,7 @@ public class PagedResource<Page: PageProtocol, MappedPageItem> {
     public func reset() {
         currentPageRequestToken?.cancel()
         currentPageRequestToken = nil
-        currentPage = initialPage
+        currentResource = initialResource
         pages.removeAll()
         mappedItems.removeAll()
     }
