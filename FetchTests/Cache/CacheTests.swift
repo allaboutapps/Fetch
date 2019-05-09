@@ -492,7 +492,7 @@ class CacheTests: XCTestCase {
     }
     
     func testCacheFirstNetworkRefreshWithNonEmptyCache() {
-        let delay: TimeInterval = 1
+        let delay: TimeInterval = 0.1
         let fetchExpectation = expectation(description: "Wait for fetch")
         
         let networkModel = ModelA(a: "LOADED FROM NETWORK")
