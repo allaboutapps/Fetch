@@ -30,7 +30,7 @@ Call it in the `application(_:didFinishLaunchingWithOptions:)` function.
 APIClient.shared.setup(with: Config(baseURL: URL(string: "https://api.github.com")!))
 ```
 
-Lets create a struct named `Organisation` with a few properties.
+Lets create a struct named `Organization` with a few properties.
 The model will be parsed from the network response. 
 
 ```swift
@@ -65,7 +65,223 @@ resource.request { (result) in
 
 ## Advanced usage
 
+### Content parsing
 
+Per default the configuration uses the JSONDecoder and JSONEncoder provided by the standard library but is not limited to it, both of these types have been extended to conform to [ResourceDecoderProtocol](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Utilities/ResourceDecoderProtocol.swift) and [ResourceEncoderProtocol](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Utilities/ResourceEncoderProtocol.swift) that allows you to define your own custom decoder/encoder. The Resource provides decoding and encoding closures that use the decoder and encoder defined in the configuration. If you want to implement a different behaviour for a resource you can provide a closure during the creation of a resource. 
+
+**Payload unwrapping**
+
+Sometimes there is content that is packed in an envelop and makes parsing difficult. In this case you can define so called "root keys". Root keys define a path to the content in the envelop you want to parse. This means that only the content defined with the root keys will be parsed.
+
+**Example**
+
+This is a response that should be parsed.
+```json
+{
+  "data": {
+    "people": [
+        {
+          "name": "Alex"
+        },
+        {
+          "name": "Jeff"
+        },
+        {
+          "name": "Tom"
+        },
+        {
+          "name": "Xavier"
+        }
+    ]
+  }
+}
+```
+
+We only want the people which is an array of Person.
+Instead of defining a structure that models the hierachy we define "root keys" on a resource to only get the array.
+```swift
+
+struct Person: Decodable {
+    let name: String
+}
+
+let resource = Resource<[Person]>(
+    path: "/people",
+    rootKeys: ["data", "people"]
+)
+resource.request { result in
+...
+}
+```
+
+### Stubbing
+
+Fetch gives you a versatile set of possibilities to perform stubbing.
+
+**Simulate a successful network request with a json response**
+
+```swift
+let stub = StubResponse(statusCode: 200, fileName: "success.json", delay: 2.0)
+        
+let resource = Resource<Person>(
+    path: "/test",
+    shouldStub: true,
+    stub: stub)
+```
+The above stub will return a 200 status code with the content from the success json file loaded from your app's bundle and will be delayed by two seconds.
+
+**Simulate an unauthorized error**
+
+```swift
+let stub = StubResponse(statusCode: 401, fileName: "unauthorized.json", delay: 2.0)
+        
+let resource = Resource<Person>(
+    path: "/unauthorized",
+    shouldStub: true,
+    stub: stub)
+```
+
+Stubbing is not limited to json only, you can also provide raw data or provide an instance which conforms to the Encodable protocol.
+
+**Stubbing with Encodable**
+
+```swift
+struct Person: Encodable {
+    let name: String
+    let age: Int
+}
+    
+let peter = Person(name: "Peter", age: 18)
+
+let stub = StubResponse(statusCode: 200, encodable: peter, delay: 2.0)
+        
+let resource = Resource<Person>(
+    path: "/peter",
+    shouldStub: true,
+    stub: stub)
+```
+
+**Alternating stubbing**
+
+ ```swift
+let successStub = StubResponse(statusCode: 200, fileName: "success.json", delay: 0.0)
+let failureStub = StubResponse(statusCode: 404, fileName: "notFound.json", delay: 0.0)
+
+let alternatingStub = AlternatingStub(stubs: [successStub, failureStub])
+        
+let resource = Resource<Person>(
+    path: "/peter",
+    shouldStub: true,
+    stub: alternatingStub)
+```
+
+Every time the resource is executed it will iterate over the given stubs and always return a different stub than before.
+
+**Conditional stubbing**
+
+Simulating behaviour based on specific conditions is something that can be realised with conditional stubbing.
+
+**Example**
+
+Simulate an endpoint that is protected by user authorization and return a success or an error based on the authorization state of your app
+
+```swift
+let conditionalStub = ClosureStub { () -> Stub in
+let unauthorizedStub = StubResponse(statusCode: 401, data: Data(), delay: 2)
+let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)
+  return CredentialsController.shared.currentCredentials == nil ? unauthorizedStub : okStub
+}
+
+return Resource(
+    path: "/auth/secret",
+    shouldStub: true,
+    stub: conditionalStub
+)
+```
+
+**Custom stubbing**
+
+You can create a custom stub by conforming to the [Stub](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Stub/Stub.swift) protocol.
+```swift
+struct CustomStub: Stub {
+...
+}
+```
+
+### Caching
+
+The following cache types are implemented:
+- [Memory](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/MemoryCache.swift)
+- [Disk](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/DiskCache.swift)
+- [Hybrid](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/HybridCache.swift)
+
+**Setting up a cache**
+
+```swift
+let cache = MemoryCache(defaultExpiration: .seconds(3600))
+        
+let config = Config(
+    baseURL: URL(string: "https://example.com")!,
+    cache: cache,
+    cachePolicy: .networkOnlyUpdateCache)
+
+let client = APIClient(config: config)
+```
+
+**Note:** To make use of caching the model you load from a resource has to conform to Cacheable.
+
+**Hybrid Cache**
+
+The hybrid cache allows you to combine two separate caches, the cache types used are not limited.
+
+**Custom cache implementations**
+
+To implement a custom cache you have to create a class/struct which conforms to the [Cache](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/Cache.swift) protocol.
+
+```swift
+class SpecialCache: Cache {
+    ...
+}
+```
+
+**Caching Policies**
+
+A Cache Policy defines the loading behaviour of a resource. You can set a policy directly on a resource when it is created, in the configuration of an APIClient or you can pass it as an argument to the fetch function of the resource.
+
+**Note:** The policy defined in the resource is always preferred over the policy defined in the configuration.
+
+**Load from cache otherwise from network**
+
+This will first try to read the requested data from the cache, if the data is not available or expired the data will be loaded from the network.
+```swift
+let resource: Resource<X> = ...
+resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { result, finishedLoading in 
+    ...
+}
+```
+
+**Load from network and update cache**
+
+This will load the data from network and update the cache. The completion closure will only be called with the value from the network. 
+```swift
+let resource: Resource<Person> = ...
+resource.fetch(cachePolicy: .networkOnlyUpdateCache) { result, finishedLoading in 
+...
+}
+```
+
+**Load data from cache and always from network**
+
+This will load data from the cache and load data from the network. You will get both values in the completion closure asynchronously. 
+
+```swift
+let resource: Resource<Person> = ...
+resource.fetch(cachePolicy: .cacheFirstNetworkAlways) { result, finishedLoading in 
+    ...
+}
+```
+
+For an overview of policies check out the implementation in [Cache.swift](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/Cache.swift)
 
 ## Carthage
 
@@ -79,7 +295,7 @@ Then run `carthage update`.
 
 ## Requirements
 
-- iOS 12.0+
+- iOS 11.0+
 - Xcode 10.2+
 - Swift 5+
 
