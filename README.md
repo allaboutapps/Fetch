@@ -81,16 +81,16 @@ This is a response that should be parsed.
   "data": {
     "people": [
         {
-        "name": "Alex"
+          "name": "Alex"
         },
         {
-        "name": "Jeff"
+          "name": "Jeff"
         },
         {
-        "name": "Tom"
+          "name": "Tom"
         },
         {
-        "name": "Xavier"
+          "name": "Xavier"
         }
     ]
   }
@@ -124,9 +124,9 @@ Fetch gives you a versatile set of possibilities to perform stubbing.
 let stub = StubResponse(statusCode: 200, fileName: "success.json", delay: 2.0)
         
 let resource = Resource<Person>(
-            path: "/test",
-            shouldStub: true,
-            stub: stub)
+    path: "/test",
+    shouldStub: true,
+    stub: stub)
 ```
 The above stub will return a 200 status code with the content from the success json file loaded from your app's bundle and will be delayed by two seconds.
 
@@ -136,9 +136,9 @@ The above stub will return a 200 status code with the content from the success j
 let stub = StubResponse(statusCode: 401, fileName: "unauthorized.json", delay: 2.0)
         
 let resource = Resource<Person>(
-            path: "/unauthorized",
-            shouldStub: true,
-            stub: stub)
+    path: "/unauthorized",
+    shouldStub: true,
+    stub: stub)
 ```
 
 Stubbing is not limited to json only, you can also provide raw data or provide an instance which conforms to the Encodable protocol.
@@ -156,9 +156,9 @@ let peter = Person(name: "Peter", age: 18)
 let stub = StubResponse(statusCode: 200, encodable: peter, delay: 2.0)
         
 let resource = Resource<Person>(
-            path: "/peter",
-            shouldStub: true,
-            stub: stub)
+    path: "/peter",
+    shouldStub: true,
+    stub: stub)
 ```
 
 **Alternating stubbing**
@@ -170,10 +170,11 @@ let failureStub = StubResponse(statusCode: 404, fileName: "notFound.json", delay
 let alternatingStub = AlternatingStub(stubs: [successStub, failureStub])
         
 let resource = Resource<Person>(
-            path: "/peter",
-            shouldStub: true,
-            stub: alternatingStub)
+    path: "/peter",
+    shouldStub: true,
+    stub: alternatingStub)
 ```
+
 Every time the resource is executed it will iterate over the given stubs and always return a different stub than before.
 
 **Conditional stubbing**
@@ -188,13 +189,13 @@ Simulate an endpoint that is protected by user authorization and return a succes
 let conditionalStub = ClosureStub { () -> Stub in
 let unauthorizedStub = StubResponse(statusCode: 401, data: Data(), delay: 2)
 let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)
-return CredentialsController.shared.currentCredentials == nil ? unauthorizedStub : okStub
+  return CredentialsController.shared.currentCredentials == nil ? unauthorizedStub : okStub
 }
 
 return Resource(
-path: "/auth/secret",
-shouldStub: true,
-stub: conditionalStub
+    path: "/auth/secret",
+    shouldStub: true,
+    stub: conditionalStub
 )
 ```
 
@@ -222,8 +223,8 @@ let cache = MemoryCache(defaultExpiration: .seconds(3600))
 let config = Config(
     baseURL: URL(string: "https://example.com")!,
     cache: cache,
-    cachePolicy: .networkOnlyUpdateCache
-   )
+    cachePolicy: .networkOnlyUpdateCache)
+
 let client = APIClient(config: config)
 ```
 
@@ -239,7 +240,7 @@ To implement a custom cache you have to create a class/struct which conforms to 
 
 ```swift
 class SpecialCache: Cache {
-...
+    ...
 }
 ```
 
@@ -255,7 +256,7 @@ This will first try to read the requested data from the cache, if the data is no
 ```swift
 let resource: Resource<X> = ...
 resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { result, finishedLoading in 
-...
+    ...
 }
 ```
 
@@ -276,7 +277,7 @@ This will load data from the cache and load data from the network. You will get 
 ```swift
 let resource: Resource<Person> = ...
 resource.fetch(cachePolicy: .cacheFirstNetworkAlways) { result, finishedLoading in 
-...
+    ...
 }
 ```
 
