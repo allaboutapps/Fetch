@@ -41,12 +41,12 @@ class StubbedURL: URLProtocol {
         guard let client = client else { return }
         
         switch stub.result {
-        case .success(let (statusCode, data)):
+        case .success(let (statusCode, data, headers)):
             let urlResponse = HTTPURLResponse(
                 url: URL(string: "https://mocked.com")!,
                 statusCode: statusCode,
                 httpVersion: nil,
-                headerFields: [:])!
+                headerFields: headers.dictionary)!
             
             client.urlProtocol(self, didReceive: urlResponse, cacheStoragePolicy: .notAllowed)
             client.urlProtocol(self, didLoad: data)
