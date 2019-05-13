@@ -15,7 +15,7 @@ public enum FetchResponse<T> {
     case cache(T, isExpired: Bool)
     case network(response: NetworkResponse<T>, updated: Bool)
     
-    public var model: T? {
+    public var model: T {
         switch self {
         case .cache(let model, _):
             return model
