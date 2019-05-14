@@ -177,6 +177,10 @@ let resource = Resource<Person>(
 
 Every time the resource is executed it will iterate over the given stubs and always return a different stub than before.
 
+**Random stubbing**
+
+The `RandomStub` works similar to the `AlternatingStub` but always returns a random stub from the array.
+
 **Conditional stubbing**
 
 Simulating behaviour based on specific conditions is something that can be realised with conditional stubbing.
@@ -255,7 +259,7 @@ A Cache Policy defines the loading behaviour of a resource. You can set a policy
 This will first try to read the requested data from the cache, if the data is not available or expired the data will be loaded from the network.
 ```swift
 let resource: Resource<X> = ...
-resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { result, finishedLoading in 
+resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { (result, finishedLoading) in 
     ...
 }
 ```
@@ -265,7 +269,7 @@ resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { result, fin
 This will load the data from network and update the cache. The completion closure will only be called with the value from the network. 
 ```swift
 let resource: Resource<Person> = ...
-resource.fetch(cachePolicy: .networkOnlyUpdateCache) { result, finishedLoading in 
+resource.fetch(cachePolicy: .networkOnlyUpdateCache) { (result, finishedLoading) in 
 ...
 }
 ```
@@ -276,7 +280,7 @@ This will load data from the cache and load data from the network. You will get 
 
 ```swift
 let resource: Resource<Person> = ...
-resource.fetch(cachePolicy: .cacheFirstNetworkAlways) { result, finishedLoading in 
+resource.fetch(cachePolicy: .cacheFirstNetworkAlways) { (result, finishedLoading) in 
     ...
 }
 ```
