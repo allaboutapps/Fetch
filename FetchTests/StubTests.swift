@@ -76,6 +76,29 @@ class StubTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
+    func testStubbedHTTPHeaders() {
+        let expectation = self.expectation(description: "Fetch model")
+        let headers = HTTPHeaders([
+            "httpHeaderKey1": "httpHeaderValue1",
+            "httpHeaderKey2": "httpHeaderValue2"
+            ])
+        let resource = Resource<ModelA>(
+            method: .get,
+            path: "/test",
+            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), headers: headers, delay: 0.1))
+        
+        resource.request { (result) in
+            switch result {
+            case let .success(response):
+                XCTAssertEqual(response.urlResponse.headers.dictionary, headers.dictionary)
+                expectation.fulfill()
+            default:
+                XCTFail("Request did not return value")
+            }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
     func testMultipleStubsReturnCorrectResult() {
         let requestCount = 5
         for i in 1...requestCount {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 /// A `Stub` representing a list of `Stubs`.
 /// The `AlternatingStub` cycles through the list.
@@ -39,7 +40,7 @@ public class AlternatingStub: Stub {
     }
     
     /// The `Result` of the current stub
-    public var result: Result<(StatusCode, Data), Error> {
+    public var result: Result<(StatusCode, Data, HTTPHeaders), Error> {
         let stub = currentStub.result
         setNextIndex()
         return stub

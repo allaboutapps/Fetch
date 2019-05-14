@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 public struct ClosureStub: Stub {
     
@@ -14,7 +15,7 @@ public struct ClosureStub: Stub {
     
     public let stubClosure: StubClosure
     
-    public var result: Result<(StatusCode, Data), Error> {
+    public var result: Result<(StatusCode, Data, HTTPHeaders), Error> {
         return stubClosure().result
     }
     
