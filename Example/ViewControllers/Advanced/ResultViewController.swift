@@ -17,9 +17,9 @@ class ResultViewController: UIViewController {
     
     @IBOutlet private var didFinishFetchingLabel: UILabel!
     
-    @IBOutlet private var resourceValueLabel: UILabel!
-    
     @IBOutlet private var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet private var resultStackView: UIStackView!
     
     private var disposable: RequestToken?
     
@@ -28,7 +28,7 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         usedCachePolicyLabel.text = "\(viewModel.currentCachePolicy.flatMap { "\($0)" } ?? "NONE" )"
-        didFinishFetchingLabel.text = "NO"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(loadData))
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -41,25 +41,44 @@ class ResultViewController: UIViewController {
         loadData()
     }
     
-    private func loadData() {
-        disposable = viewModel.createResource().fetch { [weak self] result, didFinish in
+    private let resultFont = UIFont(name: "CourierNewPSMT", size: 14)
+    
+    @objc private func loadData() {
+        var number = 0
+        activityIndicator.isHidden = false
+        didFinishFetchingLabel.text = "NO"
+        resultStackView.subviews.forEach { $0.removeFromSuperview() }
+        disposable = viewModel.createResource().fetch { [weak self] (result, didFinish) in
             guard let self = self else { return }
-            self.activityIndicator.isHidden = true
-            
+            number += 1
+            self.activityIndicator.isHidden = didFinish
             self.didFinishFetchingLabel.text = didFinish ? "YES" : "NO"
             
-            let fontSize = self.resourceValueLabel.font.pointSize
+            let infoLabel = UILabel(frame: .zero)
+            infoLabel.numberOfLines = 0
+            infoLabel.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+            
+            let resultLabel = UILabel(frame: .zero)
+            resultLabel.numberOfLines = 0
+            resultLabel.font = self.resultFont
             
             switch result {
             case .success(let value):
-                self.resourceValueLabel.text = value.model
-                self.resourceValueLabel.textColor = .black
-                self.resourceValueLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
+                let responseText = "\(number). Response from"
+                switch value {
+                case .cache(_, let isExpired):
+                    infoLabel.text = "\(responseText) cache \n\t- expired: \(isExpired)"
+                case .network(let response, let updated):
+                    infoLabel.text = "\(responseText) network \n\t- status code: \(response.urlResponse.statusCode) \n\t- did response change: \(updated)"
+                }
+                resultLabel.text = value.model
+                resultLabel.textColor = .black
             case .failure(let error):
-                self.resourceValueLabel.text = "Error: \(error)"
-                self.resourceValueLabel.textColor = .red
-                self.resourceValueLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
+                resultLabel.text = "Error: \(error)"
+                resultLabel.textColor = .red
             }
+            self.resultStackView.addArrangedSubview(infoLabel)
+            self.resultStackView.addArrangedSubview(resultLabel)
         }
     }
 }

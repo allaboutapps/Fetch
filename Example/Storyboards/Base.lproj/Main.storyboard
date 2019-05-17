@@ -375,7 +375,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fzI-pB-hw1">
-                                        <rect key="frame" x="16" y="32" width="343" height="180.5"/>
+                                        <rect key="frame" x="16" y="32" width="343" height="242.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="1WU-Ti-Jy5">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
@@ -403,7 +403,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DID_FINISH_FETCHING" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wN2-t5-FyA">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wN2-t5-FyA">
                                                         <rect key="frame" x="0.0" y="24.5" width="343" height="19.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                         <nil key="textColor"/>
@@ -411,25 +411,25 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="yZ8-CF-gni">
-                                                <rect key="frame" x="0.0" y="120" width="343" height="24.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tFp-Tu-ZPc">
+                                                <rect key="frame" x="0.0" y="120" width="343" height="20.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aau-38-yRd">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Results" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aau-38-yRd">
                                                         <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X9W-zq-YhF">
-                                                        <rect key="frame" x="0.0" y="24.5" width="343" height="0.0"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                             </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="yZ8-CF-gni">
+                                                <rect key="frame" x="0.0" y="156.5" width="343" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" placeholder="YES" id="WEf-L2-qrm"/>
+                                                </constraints>
+                                            </stackView>
                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="czR-4S-oum">
-                                                <rect key="frame" x="0.0" y="160.5" width="343" height="20"/>
+                                                <rect key="frame" x="0.0" y="222.5" width="343" height="20"/>
                                             </activityIndicatorView>
                                         </subviews>
                                     </stackView>
@@ -457,7 +457,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="czR-4S-oum" id="UXH-w8-9qX"/>
                         <outlet property="didFinishFetchingLabel" destination="wN2-t5-FyA" id="0nX-dZ-pAn"/>
-                        <outlet property="resourceValueLabel" destination="X9W-zq-YhF" id="cdA-KK-a64"/>
+                        <outlet property="resultStackView" destination="yZ8-CF-gni" id="4Od-sX-wqn"/>
                         <outlet property="usedCachePolicyLabel" destination="yKL-Gq-eP7" id="je2-h2-WzN"/>
                     </connections>
                 </viewController>
