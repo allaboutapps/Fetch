@@ -150,7 +150,13 @@ public class APIClient {
             .validate() // Validate response (status codes + content types)
             .responseData(queue: self.decodingQueue, completionHandler: { (dataResponse) in
                 // Map and decode Data to Object
-                let decodedResponse = dataResponse.flatMap { try resource.decode($0) }
+                let decodedResponse = dataResponse.flatMap { (data) throws -> T in
+                    if T.self == IgnoreBody.self {
+                        return IgnoreBody() as! T
+                    } else {
+                        return try resource.decode(data)
+                    }
+                }
                 
                 switch decodedResponse.result {
                 case .success(let model):
