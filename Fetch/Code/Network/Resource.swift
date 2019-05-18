@@ -26,6 +26,7 @@ public class Resource<T: Decodable>: CacheableResource {
     public let body: Encodable?
     public let rootKeys: [String]?
     public let multipartFormData: MultipartFormData?
+    public let customValidation: DataRequest.Validation?
     public let cachePolicy: CachePolicy?
     public let cacheGroup: String?
     public let cacheExpiration: Expiration?
@@ -99,6 +100,7 @@ public class Resource<T: Decodable>: CacheableResource {
                 cacheGroup: String? = nil,
                 cacheExpiration: Expiration? = nil,
                 multipartFormData: MultipartFormData? = nil,
+                customValidation: DataRequest.Validation? = nil,
                 shouldStub: Bool? = nil,
                 stub: Stub? = nil,
                 decode: DecodingClosure? = nil,
@@ -116,6 +118,7 @@ public class Resource<T: Decodable>: CacheableResource {
         self.cacheGroup = cacheGroup
         self.cacheExpiration = cacheExpiration
         self.multipartFormData = multipartFormData
+        self.customValidation = customValidation
         self.shouldStub = shouldStub
         self.stub = stub
         

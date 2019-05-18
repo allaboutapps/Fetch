@@ -60,6 +60,7 @@
 		D834F505225F389D00D1B3A2 /* CancelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D834F504225F389D00D1B3A2 /* CancelTests.swift */; };
 		D84633EA228EB4870050C3A2 /* IgnoreBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84633E9228EB4870050C3A2 /* IgnoreBody.swift */; };
 		D84633EC228EB8D50050C3A2 /* IgnoreBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84633EB228EB8D40050C3A2 /* IgnoreBodyTests.swift */; };
+		D8463434229058920050C3A2 /* CustomValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8463433229058920050C3A2 /* CustomValidationTests.swift */; };
 		D84E96E422646C820095006A /* DispatchQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84E96E322646C820095006A /* DispatchQueueTests.swift */; };
 		D84E96E622647E490095006A /* ShouldStubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84E96E522647E490095006A /* ShouldStubTests.swift */; };
 		D88B931922538FC800161DB0 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88B931822538FC800161DB0 /* Resource.swift */; };
@@ -190,6 +191,7 @@
 		D834F504225F389D00D1B3A2 /* CancelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTests.swift; sourceTree = "<group>"; };
 		D84633E9228EB4870050C3A2 /* IgnoreBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreBody.swift; sourceTree = "<group>"; };
 		D84633EB228EB8D40050C3A2 /* IgnoreBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoreBodyTests.swift; sourceTree = "<group>"; };
+		D8463433229058920050C3A2 /* CustomValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomValidationTests.swift; sourceTree = "<group>"; };
 		D84E96E322646C820095006A /* DispatchQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueTests.swift; sourceTree = "<group>"; };
 		D84E96E522647E490095006A /* ShouldStubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldStubTests.swift; sourceTree = "<group>"; };
 		D88B931822538FC800161DB0 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 				D88B9356225784BF00161DB0 /* TestAPI.swift */,
 				D834F4FA225F225B00D1B3A2 /* URLRequestTests.swift */,
 				D84633EB228EB8D40050C3A2 /* IgnoreBodyTests.swift */,
+				D8463433229058920050C3A2 /* CustomValidationTests.swift */,
 			);
 			path = FetchTests;
 			sourceTree = "<group>";
@@ -894,6 +897,7 @@
 				D834F501225F37EA00D1B3A2 /* NestingTests.swift in Sources */,
 				D834F4FB225F225B00D1B3A2 /* URLRequestTests.swift in Sources */,
 				D84633EC228EB8D50050C3A2 /* IgnoreBodyTests.swift in Sources */,
+				D8463434229058920050C3A2 /* CustomValidationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

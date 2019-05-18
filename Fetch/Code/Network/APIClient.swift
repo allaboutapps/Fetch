@@ -139,11 +139,15 @@ public class APIClient {
             return RequestToken({})
         }
         
-        let dataRequest: DataRequest
+        var dataRequest: DataRequest
         if let multipartFormData = resource.multipartFormData {
             dataRequest = session.upload(multipartFormData: multipartFormData, with: urlRequest)
         } else {
             dataRequest = session.request(urlRequest)
+        }
+        
+        if let customValidation = resource.customValidation {
+            dataRequest = dataRequest.validate(customValidation)
         }
         
         dataRequest
