@@ -18,7 +18,6 @@ let package = Package(
     ],
     targets: [
         .target(name: "Fetch", path: "Fetch/Code")
-        .testTarget(name: "FetchTests", dependencies: ["Fetch"]),
     ],
     swiftLanguageVersions: [.v5]
 )
