@@ -13,12 +13,12 @@ let package = Package(
     products: [
         .library(name: "Fetch", targets: ["Fetch"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0-beta.6"),
+    ],
     targets: [
         .target(name: "Fetch", path: "Fetch/Code")
         .testTarget(name: "FetchTests", dependencies: ["Fetch"]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0-beta.6"),
     ],
     swiftLanguageVersions: [.v5]
 )
