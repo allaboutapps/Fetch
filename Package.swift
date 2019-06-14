@@ -6,8 +6,8 @@ let package = Package(
     name: "Fetch",
     platforms: [
         .macOS(.v10_12),
-        .iOS(.v10),
-        .tvOS(.v10),
+        .iOS(.v11),
+        .tvOS(.v11),
         .watchOS(.v3)
     ],
     products: [
@@ -17,7 +17,7 @@ let package = Package(
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0-beta.6"),
     ],
     targets: [
-        .target(name: "Fetch", path: "Fetch/Code")
+        .target(name: "Fetch", dependencies: ["Alamofire"], path: "Fetch/Code")
     ],
     swiftLanguageVersions: [.v5]
 )
