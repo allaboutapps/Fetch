@@ -297,6 +297,26 @@ github "allaboutapps/Fetch", ~> 1.0
 
 Then run `carthage update`.
 
+## Swift Package Manager
+
+Add with Xcode 11+:
+Go to project > Swift Packages > "+" and enter `git@github.com:allaboutapps/Fetch.git`
+
+or with package.swift file update with
+
+```swift
+dependencies: [
+    .package(url: "git@github.com:allaboutapps/Fetch.git", from: "1.0.9"),
+    ....
+],
+targets: [
+    .target(name: "YourApp", dependencies: ["Fetch"]),
+]
+```
+
+Then run `carthage update`.
+
+
 ## Requirements
 
 - iOS 11.0+
