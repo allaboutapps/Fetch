@@ -314,9 +314,6 @@ targets: [
 ]
 ```
 
-Then run `carthage update`.
-
-
 ## Requirements
 
 - iOS 11.0+
