@@ -54,9 +54,14 @@ public struct StubResponse: Stub {
         let split = fileName.split(separator: ".")
         let name = String(split[0])
         let fileExtension = String(split[1])
-        let path = bundle.path(forResource: name, ofType: fileExtension)!
+        let path = bundle.path(forResource: name, ofType: fileExtension)!        
+        var headersToUse = headers
         
-        self.init(statusCode: statusCode, data: try! Data(contentsOf: URL(fileURLWithPath: path)), headers: headers, delay: delay)
+        if fileExtension == "json" {
+            headersToUse.add(HTTPHeader.contentType("application/json"))
+        }
+        
+        self.init(statusCode: statusCode, data: try! Data(contentsOf: URL(fileURLWithPath: path)), headers: headersToUse, delay: delay)
     }
     
     /// Initializes a new `StubResponse` using a `Encodable` and a `JSONEncoder`

@@ -183,8 +183,10 @@ public class APIClient {
                             fetchError = .network(error: afError, responseData: decodedResponse.data)
                         }
                     case let decodingError as DecodingError:
+                        // TODO: log decoding error
                         fetchError = .decoding(error: decodingError)
                     default:
+                         // TODO: log other error
                         fetchError = .other(error: error)
                     }
                     queue.async {
