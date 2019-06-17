@@ -299,10 +299,10 @@ Then run `carthage update`.
 
 ## Swift Package Manager
 
-Add with Xcode 11+:
-Go to project > Swift Packages > "+" and enter `git@github.com:allaboutapps/Fetch.git`
+Use Xcode 11+:
+Go to `Project > Swift Packages > +` and enter `git@github.com:allaboutapps/Fetch.git`
 
-or with package.swift file update with
+Or update your Package.swift file manually:
 
 ```swift
 dependencies: [
