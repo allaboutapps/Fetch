@@ -19,10 +19,10 @@ public enum CachePolicy {
 }
 
 public struct CacheEntry<T: Cacheable> {
-    let data: T
-    let expirationDate: Date
+    public let data: T
+    public let expirationDate: Date
     
-    var isExpired: Bool {
+    public var isExpired: Bool {
         return expirationDate.timeIntervalSinceNow < 0
     }
 }
