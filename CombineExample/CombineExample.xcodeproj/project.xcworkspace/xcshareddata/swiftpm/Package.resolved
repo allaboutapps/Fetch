@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "a6241748b5c5f38ca53fa8286788d2f90fa9c666",
+          "version": "5.0.0-beta.7"
+        }
+      },
+      {
+        "package": "Fetch",
+        "repositoryURL": "https://github.com/allaboutapps/Fetch.git",
+        "state": {
+          "branch": "master",
+          "revision": "7236503878ee0a2720330cab4f7061bf41e81256",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
