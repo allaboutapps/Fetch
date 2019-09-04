@@ -133,9 +133,14 @@ class StubTests: XCTestCase {
             case .success:
                 XCTFail("Request did not return error")
             case .failure(let error):
-                if case .other(error: let otherError) = error {
-                    XCTAssertEqual((otherError as NSError).domain, inputError.domain, "Same error domain as input")
-                    XCTAssertEqual((otherError as NSError).code, inputError.code, "Same error code as input")
+                if case .network(let afError, _) = error {
+                    guard let nsError = afError.underlyingError as NSError? else {
+                        XCTFail("Expect error is not set")
+                        return
+                    }
+                    
+                    XCTAssertEqual(nsError.domain, inputError.domain, "Same error domain as input")
+                    XCTAssertEqual(nsError.code, inputError.code, "Same error code as input")
                 } else {
                     XCTFail("Expect error is not set")
                 }

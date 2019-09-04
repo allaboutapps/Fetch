@@ -40,8 +40,8 @@ class CustomValidationTests: XCTestCase {
         
         resource.request { (result) in
             switch result {
-            case .failure(.other(error: let otherError)):
-                XCTAssertEqual((otherError as? ValidationError), .wrongStatusCode)
+            case .failure(.network(let afError, _)):
+                XCTAssertEqual((afError.underlyingError as? ValidationError), .wrongStatusCode)
                 expectation.fulfill()
             default:
                 XCTFail("Request did not return error")
