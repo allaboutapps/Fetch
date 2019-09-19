@@ -67,7 +67,7 @@ public class APILogger: EventMonitor {
         printMessage(output.joined(separator: "\n"), with: request.id)
     }
     
-    public func request(_ request: Alamofire.Request, didCompleteTask task: URLSessionTask, with error: Error?) {
+    public func request(_ request: Alamofire.Request, didCompleteTask task: URLSessionTask, with error: AFError?) {
         guard let response = task.response as? HTTPURLResponse else {
             printMessage("🔸 No HTTPURLResponse", with: request.id)
             return

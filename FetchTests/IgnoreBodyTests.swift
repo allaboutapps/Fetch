@@ -29,7 +29,7 @@ class IgnoreBodyTests: XCTestCase {
         
         resource.request { (result) in
             switch result {
-            case .success(let value):
+            case .success:
                 expectation.fulfill()
             default:
                 XCTFail("Request did not return value")
