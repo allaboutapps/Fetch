@@ -21,6 +21,7 @@
 		19E1DF6322F4354A00ACF220 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF6022F4354A00ACF220 /* Organization.swift */; };
 		19E1DF6422F4354A00ACF220 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF6122F4354A00ACF220 /* Repository.swift */; };
 		19E1DF6622F4358700ACF220 /* OrganizationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF6522F4358700ACF220 /* OrganizationListViewModel.swift */; };
+		3945386123AA2B61004B59F8 /* Fetch+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3945386023AA2B61004B59F8 /* Fetch+Combine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		19E1DF6022F4354A00ACF220 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Organization.swift; path = ../../../GithubExample/Code/Models/Organization.swift; sourceTree = "<group>"; };
 		19E1DF6122F4354A00ACF220 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Repository.swift; path = ../../../GithubExample/Code/Models/Repository.swift; sourceTree = "<group>"; };
 		19E1DF6522F4358700ACF220 /* OrganizationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationListViewModel.swift; sourceTree = "<group>"; };
+		3945386023AA2B61004B59F8 /* Fetch+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fetch+Combine.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				19E1DF5722F4339500ACF220 /* Resource+Combine.swift */,
+				3945386023AA2B61004B59F8 /* Fetch+Combine.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			files = (
 				19E1DF3122F4331600ACF220 /* AppDelegate.swift in Sources */,
 				19E1DF5C22F4343900ACF220 /* GithubAPI.swift in Sources */,
+				3945386123AA2B61004B59F8 /* Fetch+Combine.swift in Sources */,
 				19E1DF6222F4354A00ACF220 /* User.swift in Sources */,
 				19E1DF6422F4354A00ACF220 /* Repository.swift in Sources */,
 				19E1DF5822F4339500ACF220 /* Resource+Combine.swift in Sources */,
@@ -549,7 +553,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/allaboutapps/Fetch.git";
 			requirement = {
-				branch = master;
+				branch = combine;
 				kind = branch;
 			};
 		};

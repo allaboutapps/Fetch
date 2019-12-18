@@ -6,16 +6,16 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
         "state": {
           "branch": null,
-          "revision": "a6241748b5c5f38ca53fa8286788d2f90fa9c666",
-          "version": "5.0.0-beta.7"
+          "revision": "2cbf59935fbb1f26e352ce4db53f1cf9408d5313",
+          "version": "5.0.0-rc.3"
         }
       },
       {
         "package": "Fetch",
         "repositoryURL": "https://github.com/allaboutapps/Fetch.git",
         "state": {
-          "branch": "master",
-          "revision": "7236503878ee0a2720330cab4f7061bf41e81256",
+          "branch": "combine",
+          "revision": "5efce3558bf1bafe7d78d30873f71ea07adff60b",
           "version": null
         }
       }
