@@ -20,7 +20,6 @@
 		19E1DF6322F4354A00ACF220 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF6022F4354A00ACF220 /* Organization.swift */; };
 		19E1DF6422F4354A00ACF220 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF6122F4354A00ACF220 /* Repository.swift */; };
 		19E1DF6622F4358700ACF220 /* OrganizationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF6522F4358700ACF220 /* OrganizationListViewModel.swift */; };
-		3945386123AA2B61004B59F8 /* Fetch+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3945386023AA2B61004B59F8 /* Fetch+Combine.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +49,6 @@
 		19E1DF6022F4354A00ACF220 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		19E1DF6122F4354A00ACF220 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		19E1DF6522F4358700ACF220 /* OrganizationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationListViewModel.swift; sourceTree = "<group>"; };
-		3945386023AA2B61004B59F8 /* Fetch+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fetch+Combine.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +96,6 @@
 				19E1DF3222F4331600ACF220 /* SceneDelegate.swift */,
 				19E1DF3422F4331600ACF220 /* ContentView.swift */,
 				19E1DF3B22F4331700ACF220 /* LaunchScreen.storyboard */,
-				19E1DF5622F4337E00ACF220 /* Extensions */,
 				19E1DF5922F4340200ACF220 /* Models */,
 				19E1DF5A22F4342700ACF220 /* Networking */,
 				19E1DF5E22F4349A00ACF220 /* SupportingFiles */,
@@ -122,14 +119,6 @@
 				19E1DF4922F4331700ACF220 /* Info.plist */,
 			);
 			path = CombineExampleTests;
-			sourceTree = "<group>";
-		};
-		19E1DF5622F4337E00ACF220 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				3945386023AA2B61004B59F8 /* Fetch+Combine.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		19E1DF5922F4340200ACF220 /* Models */ = {
@@ -277,7 +266,6 @@
 			files = (
 				19E1DF3122F4331600ACF220 /* AppDelegate.swift in Sources */,
 				19E1DF5C22F4343900ACF220 /* GithubAPI.swift in Sources */,
-				3945386123AA2B61004B59F8 /* Fetch+Combine.swift in Sources */,
 				19E1DF6222F4354A00ACF220 /* User.swift in Sources */,
 				19E1DF6422F4354A00ACF220 /* Repository.swift in Sources */,
 				19E1DF6322F4354A00ACF220 /* Organization.swift in Sources */,
