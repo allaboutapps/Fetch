@@ -15,7 +15,6 @@
 		19E1DF3D22F4331700ACF220 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19E1DF3B22F4331700ACF220 /* LaunchScreen.storyboard */; };
 		19E1DF4822F4331700ACF220 /* CombineExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF4722F4331700ACF220 /* CombineExampleTests.swift */; };
 		19E1DF5522F4335400ACF220 /* Fetch in Frameworks */ = {isa = PBXBuildFile; productRef = 19E1DF5422F4335400ACF220 /* Fetch */; };
-		19E1DF5822F4339500ACF220 /* Resource+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF5722F4339500ACF220 /* Resource+Combine.swift */; };
 		19E1DF5C22F4343900ACF220 /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF5B22F4343900ACF220 /* GithubAPI.swift */; };
 		19E1DF6222F4354A00ACF220 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF5F22F4354A00ACF220 /* User.swift */; };
 		19E1DF6322F4354A00ACF220 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF6022F4354A00ACF220 /* Organization.swift */; };
@@ -46,11 +45,10 @@
 		19E1DF4322F4331700ACF220 /* CombineExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombineExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		19E1DF4722F4331700ACF220 /* CombineExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineExampleTests.swift; sourceTree = "<group>"; };
 		19E1DF4922F4331700ACF220 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		19E1DF5722F4339500ACF220 /* Resource+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource+Combine.swift"; sourceTree = "<group>"; };
 		19E1DF5B22F4343900ACF220 /* GithubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
-		19E1DF5F22F4354A00ACF220 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../../../GithubExample/Code/Models/User.swift; sourceTree = "<group>"; };
-		19E1DF6022F4354A00ACF220 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Organization.swift; path = ../../../GithubExample/Code/Models/Organization.swift; sourceTree = "<group>"; };
-		19E1DF6122F4354A00ACF220 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Repository.swift; path = ../../../GithubExample/Code/Models/Repository.swift; sourceTree = "<group>"; };
+		19E1DF5F22F4354A00ACF220 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		19E1DF6022F4354A00ACF220 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
+		19E1DF6122F4354A00ACF220 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		19E1DF6522F4358700ACF220 /* OrganizationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationListViewModel.swift; sourceTree = "<group>"; };
 		3945386023AA2B61004B59F8 /* Fetch+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fetch+Combine.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,7 +127,6 @@
 		19E1DF5622F4337E00ACF220 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				19E1DF5722F4339500ACF220 /* Resource+Combine.swift */,
 				3945386023AA2B61004B59F8 /* Fetch+Combine.swift */,
 			);
 			path = Extensions;
@@ -142,7 +139,8 @@
 				19E1DF6122F4354A00ACF220 /* Repository.swift */,
 				19E1DF5F22F4354A00ACF220 /* User.swift */,
 			);
-			path = Models;
+			name = Models;
+			path = ../../GithubExample/Code/Models;
 			sourceTree = "<group>";
 		};
 		19E1DF5A22F4342700ACF220 /* Networking */ = {
@@ -282,7 +280,6 @@
 				3945386123AA2B61004B59F8 /* Fetch+Combine.swift in Sources */,
 				19E1DF6222F4354A00ACF220 /* User.swift in Sources */,
 				19E1DF6422F4354A00ACF220 /* Repository.swift in Sources */,
-				19E1DF5822F4339500ACF220 /* Resource+Combine.swift in Sources */,
 				19E1DF6322F4354A00ACF220 /* Organization.swift in Sources */,
 				19E1DF3322F4331600ACF220 /* SceneDelegate.swift in Sources */,
 				19E1DF3522F4331600ACF220 /* ContentView.swift in Sources */,

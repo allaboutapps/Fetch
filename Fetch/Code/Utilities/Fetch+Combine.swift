@@ -1,17 +1,19 @@
 //
 //  Fetch+Combine.swift
-//  CombineExample
+//  Fetch
 //
 //  Created by Matthias Buchetics on 18.12.19.
-//  Copyright © 2019 allaboutapps GmbH. All rights reserved.
+//  Copyright © 2019 aaa - all about apps GmbH. All rights reserved.
 //
+
+#if canImport(Combine)
 
 import Foundation
 import Combine
-import Fetch
 
 // MARK: - FetchPublisher
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 class FetchPublisher<Output>: Publisher {
 
     internal typealias Failure = FetchError
@@ -45,10 +47,12 @@ class FetchPublisher<Output>: Publisher {
     }
 }
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension RequestToken: Cancellable { }
 
 // MARK: - Resource+Request
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Resource {
     
     func requestPublisher(callbackQueue: DispatchQueue = .main) -> AnyPublisher<NetworkResponse<T>, FetchError> {
@@ -73,7 +77,8 @@ public extension Resource {
 }
 
 // MARK: - Resource+Fetch
-    
+
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Resource where T: Cacheable {
     
     func fetchPublisher(cachePolicy: CachePolicy? = nil, callbackQueue: DispatchQueue = .main) -> AnyPublisher<FetchResponse<T>, FetchError> {
@@ -98,3 +103,5 @@ public extension Resource where T: Cacheable {
             .eraseToAnyPublisher()
     }
 }
+
+#endif

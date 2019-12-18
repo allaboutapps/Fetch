@@ -17,17 +17,23 @@ class OrganizationListViewModel: ObservableObject {
     @Published
     var organisation: Organization? = nil
     
-    @discardableResult
-    func loadData() -> AnyPublisher<Organization, FetchError> {
-        return GithubAPI.Org
+    var cancellable: Cancellable?
+    
+    func loadData() {
+        cancellable = GithubAPI.Org
             .organization(with: organizationName)
             .requestModel()
-            .handleEvents(receiveOutput: { [weak self] (organisation) in
-                DispatchQueue.main.async {
-                    self?.organisation = organisation
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    print("finished")
+                case .failure(let error):
+                    print("error", error)
                 }
+            }, receiveValue: { [weak self] (organization) in
+                self?.organisation = organization
+                print("Received value")
             })
-            .eraseToAnyPublisher()
     }
     
 }
