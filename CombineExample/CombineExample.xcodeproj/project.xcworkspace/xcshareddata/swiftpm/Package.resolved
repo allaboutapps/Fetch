@@ -14,8 +14,8 @@
         "package": "Fetch",
         "repositoryURL": "https://github.com/allaboutapps/Fetch.git",
         "state": {
-          "branch": "combine",
-          "revision": "136463096d3ddf04507530a02342643ab1a929a3",
+          "branch": "master",
+          "revision": "7f56c4e1bc8a286b53738df1267d8276f14e9172",
           "version": null
         }
       }

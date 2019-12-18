@@ -538,7 +538,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/allaboutapps/Fetch.git";
 			requirement = {
-				branch = combine;
+				branch = master;
 				kind = branch;
 			};
 		};
