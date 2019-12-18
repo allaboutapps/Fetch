@@ -70,4 +70,3 @@ public extension Resource where T: Cacheable {
     }
     
 }
-
