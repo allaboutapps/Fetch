@@ -24,7 +24,7 @@ class URLRequestTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .post,
             path: "/test",
-            body: ModelA(a: "a"))
+            body: .encodable(ModelA(a: "a")))
         let urlRequest = try! resource.asURLRequest()
         let contains = urlRequest.allHTTPHeaderFields?.contains(where: { (arg) -> Bool in
             let (key, value) = arg
@@ -54,7 +54,7 @@ class URLRequestTests: XCTestCase {
         let inputModel = ModelA(a: "asdfasd")
         let resource = Resource<ModelA>(
             path: "/test",
-            body: inputModel,
+            body: .encodable(inputModel),
             encode: { (encodable: Encodable) throws -> (Data, HTTPContentType?) in
                 let data = try PropertyListEncoder().encode(AnyEncodable(encodable))
                 return (data, HTTPContentType.custom(value: "property-list"))

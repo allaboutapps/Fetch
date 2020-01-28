@@ -14,6 +14,11 @@ import Alamofire
 
 public class Resource<T: Decodable>: CacheableResource {
     
+    public enum Body {
+        case encodable(Encodable)
+        case data(Data)
+    }
+    
     public typealias DecodingClosure = (Data) throws -> T
     public typealias EncodingClosure = (Encodable) throws -> (Data, HTTPContentType?)
     
@@ -23,7 +28,7 @@ public class Resource<T: Decodable>: CacheableResource {
     public let baseURL: URL?
     public let path: String
     public let urlParameters: Parameters?
-    public let body: Encodable?
+    public let body: Body?
     public let rootKeys: [String]?
     public let multipartFormData: MultipartFormData?
     public let customValidation: DataRequest.Validation?
@@ -93,7 +98,7 @@ public class Resource<T: Decodable>: CacheableResource {
                 baseURL: URL? = nil,
                 path: String,
                 urlParameters: Parameters? = nil,
-                body: Encodable? = nil,
+                body: Body? = nil,
                 rootKeys: [String]? = nil,
                 cacheKey: String? = nil,
                 cachePolicy: CachePolicy? = nil,
@@ -163,7 +168,7 @@ public class Resource<T: Decodable>: CacheableResource {
         
         // Body
         if let body = body {
-            let (data, contentType) = try encode(body)
+            let (data, contentType) = try encode(body: body)
             urlRequest.httpBody = data
             if let contentType = contentType {
                  urlRequest.addValue(contentType.description, forHTTPHeaderField: "Content-Type")
@@ -177,6 +182,15 @@ public class Resource<T: Decodable>: CacheableResource {
         }
         
         return urlRequest
+    }
+    
+    private func encode(body: Body) throws -> (data: Data, contentType: HTTPContentType?) {
+        switch body {
+        case .encodable(let encodable):
+            return try encode(encodable)
+        case .data(let data):
+            return (data, .json)
+        }
     }
     
     // MARK: Caching

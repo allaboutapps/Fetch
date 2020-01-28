@@ -30,10 +30,10 @@ public struct API {
             return Resource(
                 method: .post,
                 path: "/posts",
-                body: [
+                body: .encodable([
                     "title": post.title,
                     "author": post.author
-                ])
+                ]))
         }
         
         public static func nestedTest() -> Resource<BlogPost> {
