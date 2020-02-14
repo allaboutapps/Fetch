@@ -13,6 +13,8 @@ public enum HTTPContentType: CustomStringConvertible {
     case json
     case xml
     case yaml
+    case imageJpeg
+    case imagePng
     case custom(value: String)
     
     public var description: String {
@@ -23,6 +25,10 @@ public enum HTTPContentType: CustomStringConvertible {
             return "application/xml"
         case .yaml:
             return "text/yaml"
+        case .imageJpeg:
+            return "image/jpeg"
+        case .imagePng:
+            return "image/png"
         case .custom(let value):
             return value
         }

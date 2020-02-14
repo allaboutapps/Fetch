@@ -16,7 +16,7 @@ public class Resource<T: Decodable>: CacheableResource {
     
     public enum Body {
         case encodable(Encodable)
-        case data(Data)
+        case data(Data, HTTPContentType)
     }
     
     public typealias DecodingClosure = (Data) throws -> T
@@ -186,10 +186,10 @@ public class Resource<T: Decodable>: CacheableResource {
     
     private func encode(body: Body) throws -> (data: Data, contentType: HTTPContentType?) {
         switch body {
-        case .encodable(let encodable):
+        case let .encodable(encodable):
             return try encode(encodable)
-        case .data(let data):
-            return (data, .json)
+        case let .data(data, contentType):
+            return (data, contentType)
         }
     }
     
