@@ -79,8 +79,8 @@ public class Resource<T: Decodable>: CacheableResource {
     ///   - method: The HTTP method used for the request
     ///   - baseURL: The base URL used for the request, if nil uses the base URL from the `APIClient`
     ///   - path: The url path additionally to the `baseURL`, if path is an absolute URL, this URL is used without a base url
-    ///   - urlParameters: The url paramters used for the query string of the request
-    ///   - urlEncoding: Encoding method to encode urlParameters. Defalt: URLEncoding(destination: .queryString)
+    ///   - urlParameters: The url parameters used for the query string of the request
+    ///   - urlEncoding: Encoding method to encode urlParameters. Default: URLEncoding(destination: .queryString)
     ///   - body: The object which will be encoded in the HTTP body
     ///   - rootKeys: The `rootKeys` are used to decode multiple wrapper containers, the last key contains the actual resource to decode
     ///   - cacheKey: The `cacheKey` is used to identify the object in the cache
