@@ -28,6 +28,7 @@ public class Resource<T: Decodable>: CacheableResource {
     public let baseURL: URL?
     public let path: String
     public let urlParameters: Parameters?
+    public let urlEncoding: URLEncoding?
     public let body: Body?
     public let rootKeys: [String]?
     public let multipartFormData: MultipartFormData?
@@ -78,7 +79,8 @@ public class Resource<T: Decodable>: CacheableResource {
     ///   - method: The HTTP method used for the request
     ///   - baseURL: The base URL used for the request, if nil uses the base URL from the `APIClient`
     ///   - path: The url path additionally to the `baseURL`, if path is an absolute URL, this URL is used without a base url
-    ///   - urlParameters: The url paramters used for the query string of the request (URLEncoding(destination: .queryString))
+    ///   - urlParameters: The url parameters used for the query string of the request
+    ///   - urlEncoding: Encoding method to encode urlParameters. Default: URLEncoding(destination: .queryString)
     ///   - body: The object which will be encoded in the HTTP body
     ///   - rootKeys: The `rootKeys` are used to decode multiple wrapper containers, the last key contains the actual resource to decode
     ///   - cacheKey: The `cacheKey` is used to identify the object in the cache
@@ -98,6 +100,7 @@ public class Resource<T: Decodable>: CacheableResource {
                 baseURL: URL? = nil,
                 path: String,
                 urlParameters: Parameters? = nil,
+                urlEncoding: URLEncoding? = nil,
                 body: Body? = nil,
                 rootKeys: [String]? = nil,
                 cacheKey: String? = nil,
@@ -116,6 +119,7 @@ public class Resource<T: Decodable>: CacheableResource {
         self.baseURL = baseURL
         self.path = path
         self.urlParameters = urlParameters
+        self.urlEncoding = urlEncoding
         self.body = body
         self.rootKeys = rootKeys
         self.customCacheKey = cacheKey
@@ -176,7 +180,7 @@ public class Resource<T: Decodable>: CacheableResource {
         }
         
         // URL parameter
-        let urlEncoding = URLEncoding(destination: .queryString)
+        let urlEncoding = self.urlEncoding ?? URLEncoding(destination: .queryString)
         if let urlParameters = urlParameters {
             urlRequest = try urlEncoding.encode(urlRequest, with: urlParameters)
         }
