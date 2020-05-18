@@ -11,6 +11,7 @@ import Alamofire
 
 /// A configuration object used to setup an `APIClient`
 public struct Config {
+    
     public var baseURL: URL
     public var defaultHeaders: HTTPHeaders
     public var timeout: TimeInterval
@@ -20,6 +21,7 @@ public struct Config {
     public var encoder: ResourceEncoderProtocol
     public var cache: Cache?
     public var cachePolicy: CachePolicy
+    public var protocolClasses: [AnyClass]
     public var shouldStub: Bool?
     
     /// Initializes a new `Config`
@@ -35,6 +37,7 @@ public struct Config {
     ///   - jsonEncoder: The `JSONEncoder` used for all `Resources`, if not specified by the `Resource`
     ///   - cache: The `Cache` used for all `Resources`
     ///   - cachePolicy: The `CachePolicy` used for all `Resources`
+    ///   - protocolClasses: Custom protocolClasses for URLSessionConfiguration
     ///   - shouldStub: Indicates if requests should be stubbed, can be overwritten by the resource
     public init(baseURL: URL,
                 defaultHeaders: HTTPHeaders = HTTPHeaders.default,
@@ -45,6 +48,7 @@ public struct Config {
                 jsonEncoder: ResourceEncoderProtocol = JSONEncoder(),
                 cache: Cache? = nil,
                 cachePolicy: CachePolicy = .networkOnlyUpdateCache,
+                protocolClasses: [AnyClass] = [],
                 shouldStub: Bool? = nil) {
         self.baseURL = baseURL
         self.defaultHeaders = defaultHeaders
@@ -55,6 +59,7 @@ public struct Config {
         self.encoder = jsonEncoder
         self.cache = cache
         self.cachePolicy = cachePolicy
+        self.protocolClasses = protocolClasses
         self.shouldStub = shouldStub
     }
 }
@@ -112,14 +117,21 @@ public class APIClient {
         self._config = config
         
         let configuration = URLSessionConfiguration.default
-        configuration.protocolClasses = [StubbedURL.self]
+        configuration.protocolClasses = config.protocolClasses + [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
         
         session = Session(
             configuration: configuration,
             interceptor: config.interceptor,
             eventMonitors: config.eventMonitors)
-        
+    }
+    
+    public func registerURLProtocolClass(_ someClass: AnyClass) {
+        URLProtocol.registerClass(someClass)
+    }
+    
+    public func unregisterClassURLProtocolClass(_ someClass: AnyClass) {
+        URLProtocol.unregisterClass(someClass)
     }
     
     // MARK: - Resource
