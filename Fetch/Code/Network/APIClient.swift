@@ -104,7 +104,7 @@ public class APIClient {
         return _config!
     }
     
-    private var session: Session!
+    public var session: Session!
     
     let decodingQueue = DispatchQueue(label: "at.allaboutapps.fetch.decodingQueue")
     
