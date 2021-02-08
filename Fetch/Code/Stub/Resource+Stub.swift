@@ -25,7 +25,7 @@ public extension Resource {
                         cacheExpiration: cacheExpiration,
                         multipartFormData: multipartFormData,
                         customValidation: customValidation,
-                        shouldStub: shouldStub,
+                        shouldStub: true,
                         stub: stub,
                         decode: decode,
                         encode: encode)
