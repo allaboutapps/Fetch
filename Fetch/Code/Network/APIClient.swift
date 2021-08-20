@@ -31,6 +31,7 @@ public struct Config {
     ///   - baseURL: The base `URL` used for all request, if not specified by the `Resource`
     ///   - defaultHeaders: The `HTTPHeaders` used for all request, if not specified by the `Resource`
     ///   - timeout: The request timeout interval controls how long (in seconds) a task should wait for additional data to arrive before giving up
+    ///   - urlSession: The `URLSessionConfiguration` passed to the Alamofire `Session`
     ///   - eventMonitors: The `EventMonitor` array passed to the Alamofire `Session`
     ///   - adapter: The `RequestAdapter` passed to the Alamofire `Session`
     ///   - retrier: The `RequestRetrier` passed to the Alamofire `Session`
