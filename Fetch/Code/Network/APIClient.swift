@@ -15,6 +15,7 @@ public struct Config {
     public var baseURL: URL
     public var defaultHeaders: HTTPHeaders
     public var timeout: TimeInterval
+    public var urlSession: URLSessionConfiguration
     public var eventMonitors: [EventMonitor]
     public var interceptor: RequestInterceptor?
     public var decoder: ResourceDecoderProtocol
@@ -42,6 +43,7 @@ public struct Config {
     public init(baseURL: URL,
                 defaultHeaders: HTTPHeaders = HTTPHeaders.default,
                 timeout: TimeInterval = 60 * 2,
+                urlSession: URLSessionConfiguration = URLSessionConfiguration.default,
                 eventMonitors: [EventMonitor] = [APILogger(verbose: true)],
                 interceptor: RequestInterceptor? = nil,
                 jsonDecoder: ResourceDecoderProtocol = JSONDecoder(),
@@ -53,6 +55,7 @@ public struct Config {
         self.baseURL = baseURL
         self.defaultHeaders = defaultHeaders
         self.timeout = timeout
+        self.urlSession = urlSession
         self.eventMonitors = eventMonitors
         self.interceptor = interceptor
         self.decoder = jsonDecoder
@@ -116,7 +119,7 @@ public class APIClient {
     public func setup(with config: Config) {
         self._config = config
         
-        let configuration = URLSessionConfiguration.default
+        let configuration = config.urlSession
         configuration.protocolClasses = config.protocolClasses + [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
         
