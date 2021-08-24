@@ -15,6 +15,7 @@ public struct Config {
     public var baseURL: URL
     public var defaultHeaders: HTTPHeaders
     public var timeout: TimeInterval
+    public var urlSession: URLSessionConfiguration
     public var eventMonitors: [EventMonitor]
     public var interceptor: RequestInterceptor?
     public var decoder: ResourceDecoderProtocol
@@ -30,6 +31,7 @@ public struct Config {
     ///   - baseURL: The base `URL` used for all request, if not specified by the `Resource`
     ///   - defaultHeaders: The `HTTPHeaders` used for all request, if not specified by the `Resource`
     ///   - timeout: The request timeout interval controls how long (in seconds) a task should wait for additional data to arrive before giving up
+    ///   - urlSession: The `URLSessionConfiguration` passed to the Alamofire `Session`
     ///   - eventMonitors: The `EventMonitor` array passed to the Alamofire `Session`
     ///   - adapter: The `RequestAdapter` passed to the Alamofire `Session`
     ///   - retrier: The `RequestRetrier` passed to the Alamofire `Session`
@@ -42,6 +44,7 @@ public struct Config {
     public init(baseURL: URL,
                 defaultHeaders: HTTPHeaders = HTTPHeaders.default,
                 timeout: TimeInterval = 60 * 2,
+                urlSession: URLSessionConfiguration = URLSessionConfiguration.default,
                 eventMonitors: [EventMonitor] = [APILogger(verbose: true)],
                 interceptor: RequestInterceptor? = nil,
                 jsonDecoder: ResourceDecoderProtocol = JSONDecoder(),
@@ -53,6 +56,7 @@ public struct Config {
         self.baseURL = baseURL
         self.defaultHeaders = defaultHeaders
         self.timeout = timeout
+        self.urlSession = urlSession
         self.eventMonitors = eventMonitors
         self.interceptor = interceptor
         self.decoder = jsonDecoder
@@ -116,7 +120,7 @@ public class APIClient {
     public func setup(with config: Config) {
         self._config = config
         
-        let configuration = URLSessionConfiguration.default
+        let configuration = config.urlSession
         configuration.protocolClasses = config.protocolClasses + [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
         
