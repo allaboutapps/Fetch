@@ -9,6 +9,11 @@
 import Foundation
 import Alamofire
 
+extension DispatchQueue {
+    static let asyncCompletionQueue = DispatchQueue(label: "at.allaboutapps.fetch.asyncCompletionQueue", attributes: .concurrent)
+    static let decodingQueue = DispatchQueue(label: "at.allaboutapps.fetch.decodingQueue")
+}
+
 /// A configuration object used to setup an `APIClient`
 public struct Config {
     
@@ -109,9 +114,7 @@ public class APIClient {
     }
     
     public var session: Session!
-    
-    let decodingQueue = DispatchQueue(label: "at.allaboutapps.fetch.decodingQueue")
-    
+
     /// Configures an `APIClient` with the given `config`
     ///
     /// - Parameter config: used to setup the `APIClient`
@@ -168,7 +171,7 @@ public class APIClient {
         
         dataRequest
             .validate() // Validate response (status codes + content types)
-            .responseData(queue: self.decodingQueue, completionHandler: { (dataResponse) in
+            .responseData(queue: DispatchQueue.decodingQueue, completionHandler: { (dataResponse) in
                 // Map and decode Data to Object
                 let decodedResponse = dataResponse.tryMap { (data) throws -> T in
                     if T.self == IgnoreBody.self {

@@ -147,7 +147,7 @@ public extension Resource where T: Cacheable {
     }
     
     private func requestAndUpdateCache(cache: Cache?, compareWith cached: T? = nil, queue: DispatchQueue, completion: ((Swift.Result<FetchResponse<T>, FetchError>, Bool) -> Void)?) -> RequestToken {
-        return apiClient.request(self, queue: apiClient.decodingQueue) { (result) in
+        return apiClient.request(self, queue: DispatchQueue.decodingQueue) { (result) in
             if let cache = cache, let data = try? result.get().model {
                 do {
                     try cache.set(data, for: self)
@@ -172,7 +172,7 @@ public extension Resource where T: Cacheable {
     private func readCacheAsync(queue: DispatchQueue, completion: @escaping (CacheEntry<T>?) -> Void) -> RequestToken {
         let token = RequestToken()
         
-        apiClient.decodingQueue.async {
+        DispatchQueue.decodingQueue.async {
             queue.async {
                 if !token.isCancelled {
                     if let entry: CacheEntry<T> = try? self.cache?.get(for: self) {
