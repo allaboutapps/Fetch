@@ -14,30 +14,46 @@ import Foundation
 public extension Resource {
     
     func requestAsync() async throws -> NetworkResponse<T> {
-        return try await withCheckedThrowingContinuation { (continuation) in
-            self.request(queue: DispatchQueue.asyncCompletionQueue) { result in
-                switch result {
-                case let .success(response):
-                    continuation.resume(returning: response)
-                case let .failure(error):
-                    continuation.resume(throwing: error)
+        var requestToken: RequestToken?
+        
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            
+            return try await withCheckedThrowingContinuation { (continuation) in
+                requestToken = self.request(queue: .asyncCompletionQueue) { (result) in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
-        }
+          } onCancel: { [requestToken] in
+              requestToken?.cancel() // runs immediately when cancelled
+          }
     }
     
     // this will only return the first available response (given the specified cache policy), e.g. the cached model but NOT the updated model from the network
     func fetchAsync(cachePolicy: CachePolicy? = nil) async throws -> FetchResponse<T> where T: Cacheable {
-        return try await withCheckedThrowingContinuation { (continuation) in
-            self.fetch(cachePolicy: cachePolicy, queue: DispatchQueue.asyncCompletionQueue) { (result, _) in
-                switch result {
-                case let .success(response):
-                    continuation.resume(returning: response)
-                case let .failure(error):
-                    continuation.resume(throwing: error)
+        var requestToken: RequestToken?
+        
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            
+            return try await withCheckedThrowingContinuation { (continuation) in
+                requestToken = self.fetch(cachePolicy: cachePolicy, queue: .asyncCompletionQueue) { (result, _) in
+                    switch result {
+                    case let .success(response):
+                        continuation.resume(returning: response)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
-        }
+          } onCancel: { [requestToken] in
+              requestToken?.cancel() // runs immediately when cancelled
+          }
     }
 }
 
