@@ -84,7 +84,7 @@ public struct NetworkResponse<T> {
 }
 
 /// The `APIClient` is the interface to the network and it is used by a `Resource` to send http requests.
-public class APIClient {
+open class APIClient {
 
     typealias CompletionCallback<T> = ((Swift.Result<NetworkResponse<T>, FetchError>) -> Void)
     

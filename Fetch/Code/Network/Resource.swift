@@ -12,7 +12,7 @@ import Alamofire
 /// A `Resource` represents all data necessary for a network request combined with the decoding of the response.
 /// Additionally, caching behaviour can be specified
 
-public class Resource<T: Decodable>: CacheableResource {
+open class Resource<T: Decodable>: CacheableResource {
     
     public enum Body {
         case encodable(Encodable)
