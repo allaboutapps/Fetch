@@ -10,18 +10,18 @@ import Foundation
 
 /// A `RequestToken` can be used to cancel a running network request
 public class RequestToken {
-    internal let onCancel: (() -> Void)
-    internal var requestTokens = [RequestToken]()
+    public let onCancel: (() -> Void)
+    private var requestTokens = [RequestToken]()
     
     /// Indicates if the request is cancelled
     public private(set) var isCancelled: Bool = false
     
-    internal init(_ onCancel: @escaping (() -> Void) = {}) {
+    public init(_ onCancel: @escaping (() -> Void) = {}) {
         self.onCancel = onCancel
     }
     
     /// Appends a `RequestToken` and cancels it if self is already cancelled
-    internal func append(_ requestToken: RequestToken) {
+    public func append(_ requestToken: RequestToken) {
         requestTokens.append(requestToken)
         
         if isCancelled {
@@ -30,7 +30,7 @@ public class RequestToken {
     }
     
     @discardableResult
-    internal static func += (lhs: RequestToken, rhs: RequestToken) -> RequestToken {
+    public static func += (lhs: RequestToken, rhs: RequestToken) -> RequestToken {
         lhs.append(rhs)
         return lhs
     }
