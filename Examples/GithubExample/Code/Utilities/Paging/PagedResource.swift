@@ -30,7 +30,7 @@ class PagedResource<Page: PageProtocol> {
         if let constructor = resourceConstructor {
             self.constructPageResource = constructor
         } else {
-            self.constructPageResource = { latestResource, latestPage in
+            self.constructPageResource = { latestResource, _ in
                 return latestResource
             }
         }

@@ -4,7 +4,6 @@
 
 # rule identifiers to exclude from running
 disabled_rules:
-    - valid_docs
     - force_try
     - todo
     - trailing_whitespace
@@ -13,7 +12,7 @@ disabled_rules:
     - redundant_optional_initialization
     - force_cast
     - superfluous_disable_command
-    - variable_name
+    - identifier_name
     - nesting
     - cyclomatic_complexity
     #- operator_whitespace

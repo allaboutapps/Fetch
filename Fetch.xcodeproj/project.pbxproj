@@ -50,6 +50,7 @@
 		5C6F8D5925CAC110009675AD /* Resource+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6F8D5825CAC110009675AD /* Resource+Stub.swift */; };
 		6482057655BEFFD01580D0AF1DFCE7E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F127ACF1B2327F2E08AF7842C675E48 /* Main.storyboard */; };
 		C6182E1666FB0E0913C499F5CAD06E56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C369C92266286A4292809F7ADD231550 /* Assets.xcassets */; };
+		C81002FC2733CC1100F8E34D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C81002FB2733CC1100F8E34D /* .swiftlint.yml */; };
 		D81B06542268A14200688B45 /* FullPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81B06532268A14200688B45 /* FullPathTests.swift */; };
 		D834F4F1225E325B00D1B3A2 /* AlternatingStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D834F4F0225E325B00D1B3A2 /* AlternatingStub.swift */; };
 		D834F4F3225E327A00D1B3A2 /* RandomStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D834F4F2225E327A00D1B3A2 /* RandomStub.swift */; };
@@ -181,6 +182,7 @@
 		B8D0B3896584A2347CD7065E71D5ACDB /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		C369C92266286A4292809F7ADD231550 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C46633DE2D0EA0915FC71674994375A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C81002FB2733CC1100F8E34D /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CAB9545096304FE07C47099D0E7B674D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D335CAE788547E462F0DC50CFA1B3E46 /* AnyEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
 		D81B06532268A14200688B45 /* FullPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPathTests.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 		B35403319B2E8DB8EEBF20F115F39A00 = {
 			isa = PBXGroup;
 			children = (
+				C81002FB2733CC1100F8E34D /* .swiftlint.yml */,
 				0E8E0F07E8BD7723AAFE80843261248D /* Fetch */,
 				D88B934C2257849700161DB0 /* FetchTests */,
 				39C55AE826DFB40200A2CEBF /* Examples */,
@@ -701,6 +704,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C81002FC2733CC1100F8E34D /* .swiftlint.yml in Resources */,
 				5C011D7F2260A65A00B7526C /* LaunchScreen.storyboard in Resources */,
 				5C011D7C2260A65A00B7526C /* Assets.xcassets in Resources */,
 				5C011D7A2260A65900B7526C /* Main.storyboard in Resources */,
