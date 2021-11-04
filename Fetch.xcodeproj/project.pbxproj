@@ -51,6 +51,8 @@
 		6482057655BEFFD01580D0AF1DFCE7E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F127ACF1B2327F2E08AF7842C675E48 /* Main.storyboard */; };
 		C6182E1666FB0E0913C499F5CAD06E56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C369C92266286A4292809F7ADD231550 /* Assets.xcassets */; };
 		C81002FC2733CC1100F8E34D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C81002FB2733CC1100F8E34D /* .swiftlint.yml */; };
+		C81002FF2733CF5300F8E34D /* AsyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81002FE2733CF5300F8E34D /* AsyncTests.swift */; };
+		C81003012733D68500F8E34D /* AsyncCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81003002733D68500F8E34D /* AsyncCacheTests.swift */; };
 		D81B06542268A14200688B45 /* FullPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81B06532268A14200688B45 /* FullPathTests.swift */; };
 		D834F4F1225E325B00D1B3A2 /* AlternatingStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D834F4F0225E325B00D1B3A2 /* AlternatingStub.swift */; };
 		D834F4F3225E327A00D1B3A2 /* RandomStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = D834F4F2225E327A00D1B3A2 /* RandomStub.swift */; };
@@ -183,6 +185,8 @@
 		C369C92266286A4292809F7ADD231550 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C46633DE2D0EA0915FC71674994375A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C81002FB2733CC1100F8E34D /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		C81002FE2733CF5300F8E34D /* AsyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTests.swift; sourceTree = "<group>"; };
+		C81003002733D68500F8E34D /* AsyncCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCacheTests.swift; sourceTree = "<group>"; };
 		CAB9545096304FE07C47099D0E7B674D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D335CAE788547E462F0DC50CFA1B3E46 /* AnyEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
 		D81B06532268A14200688B45 /* FullPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPathTests.swift; sourceTree = "<group>"; };
@@ -503,6 +507,15 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		C81002FD2733CF2400F8E34D /* Async Await */ = {
+			isa = PBXGroup;
+			children = (
+				C81002FE2733CF5300F8E34D /* AsyncTests.swift */,
+				C81003002733D68500F8E34D /* AsyncCacheTests.swift */,
+			);
+			path = "Async Await";
+			sourceTree = "<group>";
+		};
 		D88B9340225776A800161DB0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,6 +527,7 @@
 		D88B934C2257849700161DB0 /* FetchTests */ = {
 			isa = PBXGroup;
 			children = (
+				C81002FD2733CF2400F8E34D /* Async Await */,
 				5C1D607C2265D06C0084F6E7 /* Cache */,
 				D834F504225F389D00D1B3A2 /* CancelTests.swift */,
 				D84E96E322646C820095006A /* DispatchQueueTests.swift */,
@@ -825,7 +839,9 @@
 				D81B06542268A14200688B45 /* FullPathTests.swift in Sources */,
 				D84E96E622647E490095006A /* ShouldStubTests.swift in Sources */,
 				D834F505225F389D00D1B3A2 /* CancelTests.swift in Sources */,
+				C81003012733D68500F8E34D /* AsyncCacheTests.swift in Sources */,
 				D834F501225F37EA00D1B3A2 /* NestingTests.swift in Sources */,
+				C81002FF2733CF5300F8E34D /* AsyncTests.swift in Sources */,
 				D834F4FB225F225B00D1B3A2 /* URLRequestTests.swift in Sources */,
 				D84633EC228EB8D50050C3A2 /* IgnoreBodyTests.swift in Sources */,
 				D8463434229058920050C3A2 /* CustomValidationTests.swift in Sources */,
