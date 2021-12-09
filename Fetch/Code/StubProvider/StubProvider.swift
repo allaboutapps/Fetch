@@ -13,13 +13,13 @@ public typealias ResourceStubKey = String
 /// StubProvider does hold all registered stubs and provide it if needed by resource
 public protocol StubProvider {
     
-    func stub(for resourceStubKey: ResourceStubKey) -> Stub?
-    
-    func register(stub: Stub, for resourceStubKey: ResourceStubKey)
+    func register<T>(stub: Stub, for resource: Resource<T>)
     
     func remove(stub: Stub)
     
-//    func removeAllStubs(from resource: Resource)
+    func removeStub<T>(for resource: Resource<T>)
+    
+    func stub<T>(for resource: Resource<T>) -> Stub?
     
 }
 
@@ -29,15 +29,21 @@ public class DefaultStubProvider: StubProvider {
     
     public init() { }
 
-    public func stub(for resourceStubKey: ResourceStubKey) -> Stub? {
-        return store[resourceStubKey]
+    public func stub<T>(for resource: Resource<T>) -> Stub? {
+        return store[resource.stubKey]
     }
     
-    public func register(stub: Stub, for resourceStubKey: ResourceStubKey) {
-        store[resourceStubKey] = stub
+    public func register<T>(stub: Stub, for resource: Resource<T>) {
+        store[resource.stubKey] = stub
     }
     
     public func remove(stub: Stub) {
+        guard let element = store.first(where: { $0.value.id == stub.id }) else { return }
+        store[element.key] = nil
+    }
+    
+    public func removeStub<T>(for resource: Resource<T>) {
+        store[resource.stubKey] = nil
     }
     
 }

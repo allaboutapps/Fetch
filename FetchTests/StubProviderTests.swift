@@ -17,14 +17,14 @@ class StubProviderTests: XCTestCase {
         ))
     }
 
-    func testSuccessfulStubbingOfDecodable() {
+    func testChangeStubForSameResource() {
         let expectation1 = self.expectation(description: "Fetch model")
         
         let resource = Resource<ModelA>(method: .get, path: "/test")
         
         let stubA = StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1)
         
-        APIClient.shared.config.stubProvider.register(stub: stubA, for: resource.stubKey)
+        APIClient.shared.stubProvider.register(stub: stubA, for: resource)
         
         resource.request { (result) in
             switch result {
@@ -40,7 +40,7 @@ class StubProviderTests: XCTestCase {
         
         let stubB = StubResponse(statusCode: 200, encodable: ModelA(a: "b"), delay: 0.1)
         
-        APIClient.shared.config.stubProvider.register(stub: stubB, for: resource.stubKey)
+        APIClient.shared.stubProvider.register(stub: stubB, for: resource)
         
         resource.request { (result) in
             switch result {
@@ -50,6 +50,48 @@ class StubProviderTests: XCTestCase {
             default:
                 XCTFail("Request did not return value")
             }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testRemoveStub() {
+        let expectation = self.expectation(description: "Fetch model")
+        
+        let resource = Resource<ModelA>(method: .get, path: "/test")
+        
+        let stub = StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1)
+        APIClient.shared.stubProvider.register(stub: stub, for: resource)
+        APIClient.shared.stubProvider.remove(stub: stub)
+        
+        resource.request { (result) in
+            switch result {
+            case .success:
+                XCTFail("No stub data expected")
+            case .failure(let error):
+                XCTAssertNotNil(error, "Expected an error for no valid response")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testRemoveStubFromResource() {
+        let expectation = self.expectation(description: "Fetch model")
+        
+        let resource = Resource<ModelA>(method: .get, path: "/test")
+        
+        let stub = StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1)
+        APIClient.shared.stubProvider.register(stub: stub, for: resource)
+        APIClient.shared.stubProvider.removeStub(for: resource)
+        
+        resource.request { (result) in
+            switch result {
+            case .success:
+                XCTFail("No stub data expected")
+            case .failure(let error):
+                XCTAssertNotNil(error, "Expected an error for no valid response")
+            }
+            expectation.fulfill()
         }
         waitForExpectations(timeout: 5, handler: nil)
     }

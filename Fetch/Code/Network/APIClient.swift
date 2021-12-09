@@ -114,6 +114,10 @@ open class APIClient {
     
     public var session: Session!
     
+    public var stubProvider: StubProvider {
+        config.stubProvider
+    }
+    
     let decodingQueue = DispatchQueue(label: "at.allaboutapps.fetch.decodingQueue")
     
     /// Configures an `APIClient` with the given `config`
@@ -154,7 +158,7 @@ open class APIClient {
             urlRequest = try resource.asURLRequest()
             
             // register stub
-            if let stub = config.stubProvider.stub(for: resource.stubKey) {
+            if let stub = config.stubProvider.stub(for: resource) {
                 urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: stub.id.uuidString)
                 StubbedURL.registerStub(stub, for: stub.id.uuidString)
             }
