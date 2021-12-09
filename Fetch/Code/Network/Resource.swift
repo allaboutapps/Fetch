@@ -37,7 +37,10 @@ open class Resource<T: Decodable>: CacheableResource {
     public let cacheGroup: String?
     public let cacheExpiration: Expiration?
     public let customCacheKey: String?
+    public let stubKey: ResourceStubKey
+    @available(*, deprecated, message: "Use StubProvider instead")
     public let shouldStub: Bool?
+    @available(*, deprecated, message: "Use StubProvider instead")
     public let stub: Stub?
     public let decode: DecodingClosure
     public let encode: EncodingClosure
@@ -109,6 +112,7 @@ open class Resource<T: Decodable>: CacheableResource {
                 cacheExpiration: Expiration? = nil,
                 multipartFormData: MultipartFormData? = nil,
                 customValidation: DataRequest.Validation? = nil,
+                stubKey: ResourceStubKey? = nil,
                 shouldStub: Bool? = nil,
                 stub: Stub? = nil,
                 decode: DecodingClosure? = nil,
@@ -151,6 +155,12 @@ open class Resource<T: Decodable>: CacheableResource {
                 return (data, .json)
             }
         }
+        
+        if let stubKey = stubKey {
+            self.stubKey = stubKey
+        } else {
+            self.stubKey = Self.generateSubKey(path: path)
+        }
     }
     
     // MARK: URLRequestConvertible
@@ -161,6 +171,7 @@ open class Resource<T: Decodable>: CacheableResource {
         var headers = apiClient.config.defaultHeaders.dictionary.merging(resourceHeaders) { (_, new) in new }
         
         // Add request is as http header for stubbing
+        #warning("TODO: remove old stubbing")
         if let stub = stubIfNeeded {
             headers[StubbedURL.stubIdHeader] = stub.id.uuidString
         }
@@ -216,6 +227,14 @@ open class Resource<T: Decodable>: CacheableResource {
         
         return str.sha1 ?? ""
     }
+}
+
+extension Resource {
+    
+    static func generateSubKey(path: String) -> ResourceStubKey {
+        return path.sha1 ?? ""
+    }
+    
 }
 
 // MARK: - Request

@@ -9,6 +9,8 @@
 import Foundation
 
 public extension Resource {
+    
+    @available(*, deprecated, message: "Use new StubProvider instead")
     func stubbed(withStub stub: Stub) -> Resource {
         return Resource(apiClient: apiClient,
                         headers: headers,

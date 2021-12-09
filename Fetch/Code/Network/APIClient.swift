@@ -23,6 +23,8 @@ public struct Config {
     public var cache: Cache?
     public var cachePolicy: CachePolicy
     public var protocolClasses: [AnyClass]
+    public var stubProvider: StubProvider
+    @available(*, deprecated, message: "Use StubProvider instead")
     public var shouldStub: Bool?
     
     /// Initializes a new `Config`
@@ -52,6 +54,7 @@ public struct Config {
                 cache: Cache? = nil,
                 cachePolicy: CachePolicy = .networkOnlyUpdateCache,
                 protocolClasses: [AnyClass] = [],
+                stubProvider: StubProvider = DefaultStubProvider(),
                 shouldStub: Bool? = nil) {
         self.baseURL = baseURL
         self.defaultHeaders = defaultHeaders
@@ -64,6 +67,7 @@ public struct Config {
         self.cache = cache
         self.cachePolicy = cachePolicy
         self.protocolClasses = protocolClasses
+        self.stubProvider = stubProvider
         self.shouldStub = shouldStub
     }
 }
@@ -145,9 +149,16 @@ open class APIClient {
         
         register(resource)
         
-        let urlRequest: URLRequest
+        var urlRequest: URLRequest
         do {
             urlRequest = try resource.asURLRequest()
+            
+            // register stub
+            if let stub = config.stubProvider.stub(for: resource.stubKey) {
+                urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: stub.id.uuidString)
+                StubbedURL.registerStub(stub, for: stub.id.uuidString)
+            }
+            
         } catch {
             queue.async {
                 completion(.failure(.other(error: error)))
@@ -216,9 +227,11 @@ open class APIClient {
         }
     }
     
+    #warning("TODO: remove")
     private func register<T>(_ resource: Resource<T>) {
         guard let stub = resource.stubIfNeeded else { return }
         
         StubbedURL.registerStub(stub, for: stub.id.uuidString)
     }
+    
 }
