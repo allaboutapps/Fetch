@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19A24D682761F613008EC55C /* Fetch in Frameworks */ = {isa = PBXBuildFile; productRef = 19A24D672761F613008EC55C /* Fetch */; };
 		19E1DF3122F4331600ACF220 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF3022F4331600ACF220 /* AppDelegate.swift */; };
 		19E1DF3322F4331600ACF220 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF3222F4331600ACF220 /* SceneDelegate.swift */; };
 		19E1DF3522F4331600ACF220 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF3422F4331600ACF220 /* ContentView.swift */; };
@@ -14,7 +15,6 @@
 		19E1DF3A22F4331700ACF220 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19E1DF3922F4331700ACF220 /* Preview Assets.xcassets */; };
 		19E1DF3D22F4331700ACF220 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19E1DF3B22F4331700ACF220 /* LaunchScreen.storyboard */; };
 		19E1DF4822F4331700ACF220 /* CombineExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF4722F4331700ACF220 /* CombineExampleTests.swift */; };
-		19E1DF5522F4335400ACF220 /* Fetch in Frameworks */ = {isa = PBXBuildFile; productRef = 19E1DF5422F4335400ACF220 /* Fetch */; };
 		19E1DF5C22F4343900ACF220 /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF5B22F4343900ACF220 /* GithubAPI.swift */; };
 		19E1DF6222F4354A00ACF220 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF5F22F4354A00ACF220 /* User.swift */; };
 		19E1DF6322F4354A00ACF220 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E1DF6022F4354A00ACF220 /* Organization.swift */; };
@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19A24D652761F5B6008EC55C /* Fetch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fetch; path = ..; sourceTree = "<group>"; };
 		19E1DF2D22F4331600ACF220 /* CombineExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CombineExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19E1DF3022F4331600ACF220 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19E1DF3222F4331600ACF220 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19E1DF5522F4335400ACF220 /* Fetch in Frameworks */,
+				19A24D682761F613008EC55C /* Fetch in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +71,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19A24D662761F613008EC55C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		19E1DF2422F4331600ACF220 = {
 			isa = PBXGroup;
 			children = (
+				19A24D652761F5B6008EC55C /* Fetch */,
 				19E1DF2F22F4331600ACF220 /* CombineExample */,
 				19E1DF4622F4331700ACF220 /* CombineExampleTests */,
 				19E1DF2E22F4331600ACF220 /* Products */,
+				19A24D662761F613008EC55C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -174,7 +184,7 @@
 			);
 			name = CombineExample;
 			packageProductDependencies = (
-				19E1DF5422F4335400ACF220 /* Fetch */,
+				19A24D672761F613008EC55C /* Fetch */,
 			);
 			productName = CombineExample;
 			productReference = 19E1DF2D22F4331600ACF220 /* CombineExample.app */;
@@ -205,7 +215,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = "allaboutapps GmbH";
 				TargetAttributes = {
 					19E1DF2C22F4331600ACF220 = {
@@ -227,7 +237,6 @@
 			);
 			mainGroup = 19E1DF2422F4331600ACF220;
 			packageReferences = (
-				19E1DF5322F4335400ACF220 /* XCRemoteSwiftPackageReference "Fetch" */,
 			);
 			productRefGroup = 19E1DF2E22F4331600ACF220 /* Products */;
 			projectDirPath = "";
@@ -331,6 +340,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -391,6 +401,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -533,21 +544,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		19E1DF5322F4335400ACF220 /* XCRemoteSwiftPackageReference "Fetch" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/allaboutapps/Fetch.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		19E1DF5422F4335400ACF220 /* Fetch */ = {
+		19A24D672761F613008EC55C /* Fetch */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 19E1DF5322F4335400ACF220 /* XCRemoteSwiftPackageReference "Fetch" */;
 			productName = Fetch;
 		};
 /* End XCSwiftPackageProductDependency section */
