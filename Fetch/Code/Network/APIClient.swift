@@ -24,7 +24,6 @@ public struct Config {
     public var cachePolicy: CachePolicy
     public var protocolClasses: [AnyClass]
     public var stubProvider: StubProvider
-    @available(*, deprecated, message: "Use StubProvider instead")
     public var shouldStub: Bool?
     
     /// Initializes a new `Config`
@@ -158,7 +157,7 @@ open class APIClient {
             urlRequest = try resource.asURLRequest()
             
             // register stub
-            if let stub = config.stubProvider.stub(for: resource) {
+            if config.shouldStub ?? false, let stub = config.stubProvider.stub(for: resource) {
                 urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: stub.id.uuidString)
                 StubbedURL.registerStub(stub, for: stub.id.uuidString)
             }
@@ -231,7 +230,7 @@ open class APIClient {
         }
     }
     
-    #warning("TODO: remove")
+    @available(*, deprecated, message: "Use stubprovider to register stubs")
     private func register<T>(_ resource: Resource<T>) {
         guard let stub = resource.stubIfNeeded else { return }
         

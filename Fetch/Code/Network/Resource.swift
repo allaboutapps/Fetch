@@ -156,11 +156,7 @@ open class Resource<T: Decodable>: CacheableResource {
             }
         }
         
-        if let stubKey = stubKey {
-            self.stubKey = stubKey
-        } else {
-            self.stubKey = Self.generateSubKey(path: path)
-        }
+        self.stubKey = stubKey ?? Self.defaultStubKey(method: method, path: path)
     }
     
     // MARK: URLRequestConvertible
@@ -231,8 +227,9 @@ open class Resource<T: Decodable>: CacheableResource {
 
 extension Resource {
     
-    static func generateSubKey(path: String) -> ResourceStubKey {
-        return path.sha1 ?? ""
+    public static func defaultStubKey(method: HTTPMethod, path: String) -> ResourceStubKey {
+        let string = method.rawValue + path
+        return string.sha1 ?? ""
     }
     
 }
