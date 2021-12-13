@@ -117,16 +117,17 @@ resource.request { result in
 ### Stubbing
 
 Fetch gives you a versatile set of possibilities to perform stubbing.
+To perform stubbing `shouldStub` on APIClients Config have to be enabled and a stub have to be registered for a resource.
 
 **Simulate a successful network request with a json response**
 
 ```swift
 let stub = StubResponse(statusCode: 200, fileName: "success.json", delay: 2.0)
         
-let resource = Resource<Person>(
-    path: "/test",
-    shouldStub: true,
-    stub: stub)
+let resource = Resource<Person>(path: "/test")
+    
+APIClient.shared.stubProvider.register(stub: stub, for: resource)
+    
 ```
 The above stub will return a 200 status code with the content from the success json file loaded from your app's bundle and will be delayed by two seconds.
 
@@ -135,10 +136,9 @@ The above stub will return a 200 status code with the content from the success j
 ```swift
 let stub = StubResponse(statusCode: 401, fileName: "unauthorized.json", delay: 2.0)
         
-let resource = Resource<Person>(
-    path: "/unauthorized",
-    shouldStub: true,
-    stub: stub)
+let resource = Resource<Person>(path: "/unauthorized")
+    
+APIClient.shared.stubProvider.register(stub: stub, for: resource)
 ```
 
 Stubbing is not limited to json only, you can also provide raw data or provide an instance which conforms to the Encodable protocol.
@@ -155,10 +155,9 @@ let peter = Person(name: "Peter", age: 18)
 
 let stub = StubResponse(statusCode: 200, encodable: peter, delay: 2.0)
         
-let resource = Resource<Person>(
-    path: "/peter",
-    shouldStub: true,
-    stub: stub)
+let resource = Resource<Person>(path: "/peter")
+    
+APIClient.shared.stubProvider.register(stub: stub, for: resource)
 ```
 
 **Alternating stubbing**
@@ -169,10 +168,9 @@ let failureStub = StubResponse(statusCode: 404, fileName: "notFound.json", delay
 
 let alternatingStub = AlternatingStub(stubs: [successStub, failureStub])
         
-let resource = Resource<Person>(
-    path: "/peter",
-    shouldStub: true,
-    stub: alternatingStub)
+let resource = Resource<Person>(path: "/peter")
+    
+APIClient.shared.stubProvider.register(stub: alternatingStub, for: resource)
 ```
 
 Every time the resource is executed it will iterate over the given stubs and always return a different stub than before.
@@ -196,11 +194,9 @@ let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)
   return CredentialsController.shared.currentCredentials == nil ? unauthorizedStub : okStub
 }
 
-return Resource(
-    path: "/auth/secret",
-    shouldStub: true,
-    stub: conditionalStub
-)
+let resource = Resource(path: "/auth/secret")
+    
+APIClient.shared.stubProvider.register(stub: conditionalStub, for: resource)
 ```
 
 **Custom stubbing**
@@ -210,6 +206,24 @@ You can create a custom stub by conforming to the [Stub](https://github.com/alla
 struct CustomStub: Stub {
 ...
 }
+```
+
+**Custom StubProvider**
+
+You can create a custom stubProvider by conforming to the [Stub](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/StubProvider/StubProvider.swift) protocol.
+```swift
+struct CustomStubProvider: StubProvider {
+...
+}
+```
+Init APIClient with custom stubProvider
+```
+let client = APIClient(config: Config(stubProvider: customStubProvider))
+```
+
+Replace default StubProvider on APIClient
+```
+APIClient.shared.setStubProvider(customStubProvider)
 ```
 
 ### Caching
