@@ -16,13 +16,13 @@ class StubProviderTests: XCTestCase {
             baseURL: URL(string: "https://www.asdf.at")!,
             shouldStub: true
         ))
+        APIClient.shared.stubProvider.removeAll()
     }
-
+    
     func testChangeStubForSameResource() {
-        let expectation1 = self.expectation(description: "Fetch model")
-        
         let resource = Resource<ModelA>(method: .get, path: "/test")
         
+        let expectationA = self.expectation(description: "Fetch model a")
         let stubA = StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1)
         
         APIClient.shared.stubProvider.register(stub: stubA, for: resource)
@@ -31,27 +31,29 @@ class StubProviderTests: XCTestCase {
             switch result {
             case let .success(value):
                 XCTAssertEqual(value.model.a, "a")
-                expectation1.fulfill()
+                expectationA.fulfill()
             default:
                 XCTFail("Request did not return value")
             }
+            
         }
         
-        let expectation2 = self.expectation(description: "Fetch model")
-        
+        // update stub
+        waitForExpectations(timeout: 5, handler: nil)
+        let expectationB = self.expectation(description: "Fetch model b")
         let stubB = StubResponse(statusCode: 200, encodable: ModelA(a: "b"), delay: 0.1)
-        
         APIClient.shared.stubProvider.register(stub: stubB, for: resource)
         
         resource.request { (result) in
             switch result {
             case let .success(value):
                 XCTAssertEqual(value.model.a, "b")
-                expectation2.fulfill()
+                expectationB.fulfill()
             default:
                 XCTFail("Request did not return value")
             }
         }
+        
         waitForExpectations(timeout: 5, handler: nil)
     }
     

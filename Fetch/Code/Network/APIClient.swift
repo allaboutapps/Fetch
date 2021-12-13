@@ -117,6 +117,11 @@ open class APIClient {
         config.stubProvider
     }
     
+    public func setStubProvider(_ stubProvider: StubProvider) {
+        _config?.stubProvider = stubProvider
+        StubbedURL.stubProvider = _config?.stubProvider
+    }
+    
     let decodingQueue = DispatchQueue(label: "at.allaboutapps.fetch.decodingQueue")
     
     /// Configures an `APIClient` with the given `config`
@@ -130,6 +135,8 @@ open class APIClient {
         let configuration = config.urlSession
         configuration.protocolClasses = config.protocolClasses + [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
+        
+        StubbedURL.stubProvider = config.stubProvider
         
         session = Session(
             configuration: configuration,
@@ -150,16 +157,13 @@ open class APIClient {
     @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping CompletionCallback<T>) -> RequestToken {
         precondition(_config != nil, "Setup of APIClient was not called!")
         
-        register(resource)
-        
         var urlRequest: URLRequest
         do {
             urlRequest = try resource.asURLRequest()
             
-            // register stub
-            if config.shouldStub ?? false, let stub = config.stubProvider.stub(for: resource) {
-                urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: stub.id.uuidString)
-                StubbedURL.registerStub(stub, for: stub.id.uuidString)
+            // register stub if needed
+            if config.shouldStub ?? false && stubProvider.stub(for: resource) != nil {
+                urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: resource.stubKey)
             }
             
         } catch {
@@ -228,13 +232,6 @@ open class APIClient {
         return RequestToken {
             dataRequest.cancel()
         }
-    }
-    
-    @available(*, deprecated, message: "Use stubprovider to register stubs")
-    private func register<T>(_ resource: Resource<T>) {
-        guard let stub = resource.stubIfNeeded else { return }
-        
-        StubbedURL.registerStub(stub, for: stub.id.uuidString)
     }
     
 }

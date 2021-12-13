@@ -31,11 +31,6 @@ public protocol StubProvider {
     /// Also set the same stubKey on `Resource<T>`
     func register(stub: Stub, forStubKey stubKey: ResourceStubKey)
     
-    /// Remove a registered stub from provider
-    ///
-    /// - Parameter stub: Registered stub to remove
-    func remove(stub: Stub)
-    
     /// Remove all registered stubs in provider
     func removeAll()
     
@@ -55,6 +50,12 @@ public protocol StubProvider {
     /// - returns: Stub if registered
     func stub<T>(for resource: Resource<T>) -> Stub?
     
+    /// Return stub for given stubKey
+    ///
+    /// - Parameter stubKey: A key to retrieve a stub
+    /// - returns: Stub if registered
+    func stub(for stubKey: ResourceStubKey) -> Stub?
+    
 }
 
 // MARK: - DefaultStubProvider
@@ -73,13 +74,8 @@ public class DefaultStubProvider: StubProvider {
         store[stubKey] = stub
     }
     
-    public func remove(stub: Stub) {
-        guard let element = store.first(where: { $0.value.id == stub.id }) else { return }
-        store[element.key] = nil
-    }
-    
     public func removeStub<T>(for resource: Resource<T>) {
-        store[resource.stubKey] = nil
+        removeStub(forStubKey: resource.stubKey)
     }
     
     public func removeStub(forStubKey stubKey: ResourceStubKey) {
@@ -91,7 +87,11 @@ public class DefaultStubProvider: StubProvider {
     }
         
     public func stub<T>(for resource: Resource<T>) -> Stub? {
-        return store[resource.stubKey]
+        stub(for: resource.stubKey)
+    }
+    
+    public func stub(for stubKey: ResourceStubKey) -> Stub? {
+        store[stubKey]
     }
     
 }
