@@ -210,18 +210,19 @@ struct CustomStub: Stub {
 
 **Custom StubProvider**
 
-You can create a custom stubProvider by conforming to the [Stub](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/StubProvider/StubProvider.swift) protocol.
+You can create a custom `StubProvider` by conforming to the [StubProvider](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/StubProvider/StubProvider.swift) protocol.
 ```swift
 struct CustomStubProvider: StubProvider {
 ...
 }
 ```
-Init APIClient with custom stubProvider
+Init/Setup APIClient with custom stubProvider
 ```
 let client = APIClient(config: Config(stubProvider: customStubProvider))
+APIClient.shared.setup(with: Config(stubProvider: customStubProvider))
 ```
 
-Replace default StubProvider on APIClient
+Or, replace default StubProvider on APIClient
 ```
 APIClient.shared.setStubProvider(customStubProvider)
 ```
