@@ -35,8 +35,9 @@ class CustomValidationTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            customValidation: testValidation,
-            stub: StubResponse(statusCode: 222, encodable: ModelA(a: "a"), delay: 0.1))
+            customValidation: testValidation)
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 222, encodable: ModelA(a: "a"), delay: 0.1), for: resource)
         
         resource.request { (result) in
             switch result {

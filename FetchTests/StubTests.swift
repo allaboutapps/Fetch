@@ -23,8 +23,9 @@ class StubTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch model")
         let resource = Resource<ModelA>(
             method: .get,
-            path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1), for: resource)
         
         resource.request { (result) in
             switch result {
@@ -43,8 +44,9 @@ class StubTests: XCTestCase {
         let statusCode = 205
         let resource = Resource<ModelA>(
             method: .get,
-            path: "/test",
-            stub: StubResponse(statusCode: statusCode, encodable: ModelA(a: "a"), delay: 0.1))
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: statusCode, encodable: ModelA(a: "a"), delay: 0.1), for: resource)
         
         resource.request { (result) in
             switch result {
@@ -62,8 +64,10 @@ class StubTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch model")
         let resource = Resource<ModelA>(
             method: .get,
-            path: "/test",
-            stub: StubResponse(statusCode: 200, fileName: "modela.json", delay: 0.1, bundle: Bundle(for: type(of: self))))
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, fileName: "modela.json", delay: 0.1, bundle: Bundle(for: type(of: self))), for: resource)
+        
         resource.request { (result) in
             switch result {
             case .success(let response):
@@ -84,8 +88,9 @@ class StubTests: XCTestCase {
             ])
         let resource = Resource<ModelA>(
             method: .get,
-            path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), headers: headers, delay: 0.1))
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), headers: headers, delay: 0.1), for: resource)
         
         resource.request { (result) in
             switch result {
@@ -104,7 +109,10 @@ class StubTests: XCTestCase {
         for i in 1...requestCount {
             let model = ModelA(a: String(i))
             let stub = StubResponse(statusCode: 200, encodable: model, delay: 0.1)
-            let resource = Resource<ModelA>(path: "/test", stub: stub)
+            let stubKey = "MultipleStubsKey-\(i)"
+            let resource = Resource<ModelA>(path: "/test", stubKey: stubKey)
+            APIClient.shared.stubProvider.register(stub: stub, forStubKey: stubKey)
+            
             let expectation = self.expectation(description: "Fetch model id: \(i)")
             
             resource.request { (result) in
@@ -124,8 +132,9 @@ class StubTests: XCTestCase {
         let inputError = NSError(domain: "TestDomain", code: 999, userInfo: nil)
         let resource = Resource<ModelA>(
             method: .get,
-            path: "/test",
-            stub: StubError(error: inputError, delay: 0.1))
+            path: "/test")
+        APIClient.shared.stubProvider.register(stub: StubError(error: inputError, delay: 0.1), for: resource)
+        
         let expectation = self.expectation(description: "Fetch error")
         
         resource.request { (result) in

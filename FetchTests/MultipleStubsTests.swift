@@ -31,8 +31,9 @@ class MultipleStubsTests: XCTestCase {
         let stub = AlternatingStub(stubs: stubs)
         let resource = Resource<Foo>(
             method: .get,
-            path: "/test",
-            stub: stub)
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(stub: stub, for: resource)
         
         for i in 0...9 {
             let expectation = self.expectation(description: "Fetch result")
@@ -64,8 +65,9 @@ class MultipleStubsTests: XCTestCase {
         let stub = RandomStub(stubs: stubs)
         let resource = Resource<Foo>(
             method: .get,
-            path: "/test",
-            stub: stub)
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(stub: stub, for: resource)
         
         for _ in 0...9 {
             let expectation = self.expectation(description: "Fetch result")

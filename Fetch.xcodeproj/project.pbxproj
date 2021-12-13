@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19827A9427672E4500087629 /* Fetch in Frameworks */ = {isa = PBXBuildFile; productRef = 19827A9327672E4500087629 /* Fetch */; };
 		19A24D6A2762051B008EC55C /* StubProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A24D692762051B008EC55C /* StubProviderTests.swift */; };
-		19A24D6D27620CF0008EC55C /* Fetch in Frameworks */ = {isa = PBXBuildFile; productRef = 19A24D6C27620CF0008EC55C /* Fetch */; };
 		19A24D6F27620CFD008EC55C /* Fetch in Frameworks */ = {isa = PBXBuildFile; productRef = 19A24D6E27620CFD008EC55C /* Fetch */; };
 		19A24D7127620E61008EC55C /* Fetch in Frameworks */ = {isa = PBXBuildFile; productRef = 19A24D7027620E61008EC55C /* Fetch */; };
 		397735B7225CC83500E380E8 /* MemoryCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397735B6225CC83500E380E8 /* MemoryCacheTests.swift */; };
@@ -55,9 +55,9 @@
 
 /* Begin PBXFileReference section */
 		0049B0AB894997BBC5248D997C60B1FF /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		19827A9227672E1800087629 /* Fetch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fetch; sourceTree = "<group>"; };
 		19A24D632761EF39008EC55C /* StubProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubProvider.swift; sourceTree = "<group>"; };
 		19A24D692762051B008EC55C /* StubProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubProviderTests.swift; sourceTree = "<group>"; };
-		19A24D6B27620CE3008EC55C /* Fetch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fetch; sourceTree = "<group>"; };
 		3945386223AA358B004B59F8 /* Fetch+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Fetch+Combine.swift"; sourceTree = "<group>"; };
 		3948AD8D22670C9300DA0B85 /* FetchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
 		397735AC225CC36E00E380E8 /* MemoryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCache.swift; sourceTree = "<group>"; };
@@ -94,7 +94,6 @@
 		5C1D607D2265D0850084F6E7 /* CacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheTests.swift; sourceTree = "<group>"; };
 		5C48F2DF22708B6400B85D3D /* ClosureStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosureStub.swift; sourceTree = "<group>"; };
 		5C5E3E3D2268B10000101A4F /* post.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = post.json; sourceTree = "<group>"; };
-		5C6F8D5825CAC110009675AD /* Resource+Stub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Resource+Stub.swift"; sourceTree = "<group>"; };
 		8F67E303E8991613A4D5FB3DFF62CD20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		958C4D8854808AC3BA9039533F7DF325 /* ResourceAPIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceAPIKit.h; sourceTree = "<group>"; };
 		9891D313D796C514ADEFDA0E93FB9424 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
@@ -148,7 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19A24D6D27620CF0008EC55C /* Fetch in Frameworks */,
+				19827A9427672E4500087629 /* Fetch in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +411,7 @@
 		B35403319B2E8DB8EEBF20F115F39A00 = {
 			isa = PBXGroup;
 			children = (
-				19A24D6B27620CE3008EC55C /* Fetch */,
+				19827A9227672E1800087629 /* Fetch */,
 				5C011D732260A65900B7526C /* GithubExample */,
 				EF59E5BBE6D5893D23E3FF972D245A53 /* Example */,
 				0E8E0F07E8BD7723AAFE80843261248D /* Fetch */,
@@ -468,7 +467,6 @@
 				D834F4F2225E327A00D1B3A2 /* RandomStub.swift */,
 				D88B933E2257469100161DB0 /* StubbedURL.swift */,
 				5C48F2DF22708B6400B85D3D /* ClosureStub.swift */,
-				5C6F8D5825CAC110009675AD /* Resource+Stub.swift */,
 			);
 			path = Stub;
 			sourceTree = "<group>";
@@ -523,7 +521,7 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				19A24D6C27620CF0008EC55C /* Fetch */,
+				19827A9327672E4500087629 /* Fetch */,
 			);
 			productName = ResourceAPI;
 			productReference = 0049B0AB894997BBC5248D997C60B1FF /* Example.app */;
@@ -1064,7 +1062,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		19A24D6C27620CF0008EC55C /* Fetch */ = {
+		19827A9327672E4500087629 /* Fetch */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Fetch;
 		};

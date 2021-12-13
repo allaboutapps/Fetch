@@ -64,7 +64,7 @@ class StubProviderTests: XCTestCase {
         
         let stub = StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1)
         APIClient.shared.stubProvider.register(stub: stub, for: resource)
-        APIClient.shared.stubProvider.remove(stub: stub)
+        APIClient.shared.stubProvider.removeStub(for: resource)
         
         resource.request { (result) in
             switch result {

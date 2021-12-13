@@ -14,30 +14,11 @@ class ShouldStubTests: XCTestCase {
 
     override func setUp() {
         APIClient.shared.setup(with: Config(
-            baseURL: URL(string: "https://www.asdf.at")!
+            baseURL: URL(string: "https://www.asdf.at")!,
+            shouldStub: true
         ))
     }
 
-    func testShouldStubInResourceStubs() {
-        let expectation = self.expectation(description: "Fetch model")
-        let resource = Resource<ModelA>(
-            method: .get,
-            path: "/test",
-            shouldStub: true,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
-        
-        resource.request { (result) in
-            switch result {
-            case let .success(value):
-                XCTAssertEqual(value.model.a, "a")
-                expectation.fulfill()
-            default:
-                XCTFail("Request did not return value")
-            }
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
     func testShouldStubSetGlobalStubs() {
         let customApiClient = APIClient(config: Config(
             baseURL: URL(string: "https://www.asdf.at")!,
@@ -47,8 +28,9 @@ class ShouldStubTests: XCTestCase {
         let resource = Resource<ModelA>(
             apiClient: customApiClient,
             method: .get,
-            path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
+            path: "/test")
+        
+        customApiClient.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1), for: resource)
         
         resource.request { (result) in
             switch result {
@@ -62,7 +44,7 @@ class ShouldStubTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testShouldStubInResourceOverwritesGlobalStubs() {
+    func testShouldStubSetGlobalStubsDisabled() {
         let customApiClient = APIClient(config: Config(
             baseURL: URL(string: "https://www.asdf.at")!,
             shouldStub: false
@@ -71,42 +53,20 @@ class ShouldStubTests: XCTestCase {
         let resource = Resource<ModelA>(
             apiClient: customApiClient,
             method: .get,
-            path: "/test",
-            shouldStub: true,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
+            path: "/test")
         
-        resource.request { (result) in
-            switch result {
-            case let .success(value):
-                XCTAssertEqual(value.model.a, "a")
-                expectation.fulfill()
-            default:
-                XCTFail("Request did not return value")
-            }
-        }
-        waitForExpectations(timeout: 5, handler: nil)
-    }
-    
-    func testShouldStubInResourceWithoutStubDoesNotStub() {
-        let expectation = self.expectation(description: "Fetch model")
-        let resource = Resource<ModelA>(
-            apiClient: APIClient(config: Config(
-                baseURL: URL(string: "https://www.asdf.at")!,
-                timeout: 3
-            )),
-            method: .get,
-            path: "/test",
-            shouldStub: true)
+        customApiClient.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1), for: resource)
         
         resource.request { (result) in
             switch result {
             case .success:
-                XCTFail("Request did return value")
-            default:
-                expectation.fulfill()
+                XCTFail("Did not expect a value")
+            case let .failure(error):
+                XCTAssertNotNil(error)
             }
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
 }

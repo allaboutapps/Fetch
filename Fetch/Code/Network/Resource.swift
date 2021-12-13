@@ -38,10 +38,6 @@ open class Resource<T: Decodable>: CacheableResource {
     public let cacheExpiration: Expiration?
     public let customCacheKey: String?
     public let stubKey: ResourceStubKey
-    @available(*, deprecated, message: "Use StubProvider instead")
-    public let shouldStub: Bool?
-    @available(*, deprecated, message: "Use StubProvider instead")
-    public let stub: Stub?
     public let decode: DecodingClosure
     public let encode: EncodingClosure
 
@@ -65,15 +61,6 @@ open class Resource<T: Decodable>: CacheableResource {
         return customCacheKey ?? computeCacheKey()
     }()
     
-    /// Returns a `Stub` if shouldStub is set in the `Resource` or the `APIClient`, if a `Stub` is available
-    public var stubIfNeeded: Stub? {
-        if let stub = self.stub, shouldStub ?? apiClient.config.shouldStub ?? false {
-            return stub
-        } else {
-            return nil
-        }
-    }
-
     /// Initializes a new `Resource`
     ///
     /// - Parameters:
@@ -113,8 +100,6 @@ open class Resource<T: Decodable>: CacheableResource {
                 multipartFormData: MultipartFormData? = nil,
                 customValidation: DataRequest.Validation? = nil,
                 stubKey: ResourceStubKey? = nil,
-                shouldStub: Bool? = nil,
-                stub: Stub? = nil,
                 decode: DecodingClosure? = nil,
                 encode: EncodingClosure? = nil) {
         self.apiClient = apiClient
@@ -132,8 +117,6 @@ open class Resource<T: Decodable>: CacheableResource {
         self.cacheExpiration = cacheExpiration
         self.multipartFormData = multipartFormData
         self.customValidation = customValidation
-        self.shouldStub = shouldStub
-        self.stub = stub
         
         if let decode = decode {
             self.decode = decode
@@ -164,13 +147,7 @@ open class Resource<T: Decodable>: CacheableResource {
     public func asURLRequest() throws -> URLRequest {
         // Merge defaultHeaders and http headers of resource (resource overrides defaultHeaders)
         let resourceHeaders = headers?.dictionary ?? [:]
-        var headers = apiClient.config.defaultHeaders.dictionary.merging(resourceHeaders) { (_, new) in new }
-        
-        // Add request is as http header for stubbing
-        #warning("TODO: remove old stubbing")
-        if let stub = stubIfNeeded {
-            headers[StubbedURL.stubIdHeader] = stub.id.uuidString
-        }
+        let headers = apiClient.config.defaultHeaders.dictionary.merging(resourceHeaders) { (_, new) in new }
         
         // Create request from resource
         var urlRequest = URLRequest(url: url)
