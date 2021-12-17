@@ -66,7 +66,10 @@ class StubTests: XCTestCase {
             method: .get,
             path: "/test")
         
-        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, fileName: "modela.json", delay: 0.1, bundle: Bundle(for: type(of: self))), for: resource)
+//        let bundles = Bundle.allBundles
+        let bundle = Bundle(for: type(of: self))
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, fileName: "modela.json", delay: 0.1, bundle: bundle), for: resource)
         
         resource.request { (result) in
             switch result {
