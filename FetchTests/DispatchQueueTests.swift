@@ -23,8 +23,10 @@ class DispatchQueueTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch model")
         let resource = Resource<ModelA>(
             method: .get,
-            path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1))
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1), for: resource)
+        
         let testQueue = DispatchQueue(label: "test-queue")
         let testQueueKey = DispatchSpecificKey<Void>()
         testQueue.setSpecific(key: testQueueKey, value: ())
@@ -44,8 +46,9 @@ class DispatchQueueTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch model")
         let resource = Resource<ModelA>(
             method: .get,
-            path: "/test",
-            stub: StubResponse(statusCode: 500, encodable: ModelA(a: "a"), delay: 0.1))
+            path: "/test")
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 500, encodable: ModelA(a: "a"), delay: 0.1), for: resource)
+        
         let testQueue = DispatchQueue(label: "test-queue")
         let testQueueKey = DispatchSpecificKey<Void>()
         testQueue.setSpecific(key: testQueueKey, value: ())

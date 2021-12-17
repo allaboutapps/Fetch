@@ -23,9 +23,9 @@ class IgnoreBodyTests: XCTestCase {
         let expectation = self.expectation(description: "Fetch model")
         let resource = Resource<IgnoreBody>(
             method: .get,
-            path: "/test",
-            shouldStub: true,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.0))
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.0), for: resource)
         
         resource.request { (result) in
             switch result {

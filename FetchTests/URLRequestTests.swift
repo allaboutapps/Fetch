@@ -78,12 +78,17 @@ class URLRequestTests: XCTestCase {
         let seconds = date.timeIntervalSince1970
         let resource = Resource<Foo>(
             path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: Foo(seconds: seconds), delay: 0.1),
             decode: { (data: Data) throws -> Foo in
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .secondsSince1970
                 return try decoder.decode(Foo.self, from: data)
         })
+        
+        APIClient.shared
+            .stubProvider
+            .register(stub: StubResponse(statusCode: 200, encodable: Foo(seconds: seconds), delay: 0.1),
+                      for: resource)
+        
         let expectation = self.expectation(description: "Fetch seconds")
         resource.request { (result) in
             switch result {
@@ -110,9 +115,12 @@ class URLRequestTests: XCTestCase {
         
         let resourceA = Resource<ModelA>(
             path: "/test",
-            cachePolicy: .networkOnlyUpdateCache,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "366"), delay: 0.1)
-        )
+            cachePolicy: .networkOnlyUpdateCache)
+        
+        APIClient.shared
+            .stubProvider
+            .register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "366"), delay: 0.1),
+                      for: resourceA)
         
         resourceA.fetch { (result, _) in
             switch result {

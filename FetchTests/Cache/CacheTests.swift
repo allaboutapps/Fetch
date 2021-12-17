@@ -134,8 +134,9 @@ class CacheTests: XCTestCase {
             apiClient: client,
             method: .get,
             path: "/test/detail",
-            cachePolicy: .networkOnlyNoCache,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "123"), encoder: client.config.encoder, delay: 0.1))
+            cachePolicy: .networkOnlyNoCache)
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "123"), encoder: client.config.encoder, delay: 0.1), for: resource)
         
         let expectation = self.expectation(description: "")
         
@@ -160,8 +161,9 @@ class CacheTests: XCTestCase {
             apiClient: client,
             method: .get,
             path: "/test/detail",
-            cachePolicy: .cacheFirstNetworkAlways,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "123"), encoder: client.config.encoder, delay: 0.1))
+            cachePolicy: .cacheFirstNetworkAlways)
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "123"), encoder: client.config.encoder, delay: 0.1), for: resource)
         
         try! resource.cache?.set(ModelA(a: "123"), for: resource)
         
@@ -195,8 +197,9 @@ class CacheTests: XCTestCase {
             apiClient: client,
             method: .get,
             path: "/test/detail",
-            cachePolicy: .cacheFirstNetworkAlways,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1))
+            cachePolicy: .cacheFirstNetworkAlways)
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1), for: resource)
         
         try! resource.cache?.set(ModelA(a: "123"), for: resource)
         
@@ -231,8 +234,9 @@ class CacheTests: XCTestCase {
             method: .get,
             path: "/test/detail",
             cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired,
-            cacheExpiration: .seconds(-1.0),
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1))
+            cacheExpiration: .seconds(-1.0))
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1), for: resource)
         
         try! resource.cache?.set(ModelA(a: "123"), for: resource)
         
@@ -266,8 +270,9 @@ class CacheTests: XCTestCase {
             apiClient: client,
             method: .get,
             path: "/test/detail",
-            cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1))
+            cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired)
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1), for: resource)
         
         try! resource.cache?.set(ModelA(a: "123"), for: resource)
         
@@ -292,8 +297,9 @@ class CacheTests: XCTestCase {
             apiClient: client,
             method: .get,
             path: "/test/detail",
-            cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1))
+            cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired)
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1), for: resource)
         
         let expectation = self.expectation(description: "")
         
@@ -357,15 +363,17 @@ class CacheTests: XCTestCase {
             method: .get,
             path: "/test",
             cachePolicy: .cacheFirstNetworkAlways,
-            cacheGroup: "test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1))
+            cacheGroup: "test")
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1), for: resourceGet)
         
         let resourcePost = Resource<ModelA>(
             apiClient: client,
             method: .post,
             path: "/test",
-            cacheGroup: "test",
-            stub: StubResponse(statusCode: 200, data: Data(), delay: 0.1))
+            cacheGroup: "test")
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, data: Data(), delay: 0.1), for: resourcePost)
         
         let expectation = self.expectation(description: "")
         
@@ -387,15 +395,17 @@ class CacheTests: XCTestCase {
             method: .get,
             path: "/test",
             cachePolicy: .cacheFirstNetworkAlways,
-            cacheGroup: "test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1))
+            cacheGroup: "test")
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "456"), encoder: client.config.encoder, delay: 0.1), for: resourceGet)
         
         let resourcePost = Resource<ModelA>(
             apiClient: client,
             method: .post,
             path: "/test",
-            cacheGroup: "test",
-            stub: StubResponse(statusCode: 200, data: Data(), delay: 0.1))
+            cacheGroup: "test")
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, data: Data(), delay: 0.1), for: resourcePost)
         
         let expectation = self.expectation(description: "")
         
@@ -419,17 +429,20 @@ class CacheTests: XCTestCase {
             apiClient: client,
             path: "/test",
             cachePolicy: .networkOnlyUpdateCache,
-            cacheExpiration: .seconds(-1),
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "912"), encoder: client.config.encoder, delay: 0.1)
+            cacheExpiration: .seconds(-1)
         )
         
         let resourceB = Resource<ModelA>(
             apiClient: client,
             path: "/test1",
             cachePolicy: .networkOnlyUpdateCache,
-            cacheExpiration: .seconds(10),
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "789"), encoder: client.config.encoder, delay: 0.1)
+            cacheExpiration: .seconds(10)
         )
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "912"), encoder: client.config.encoder, delay: 0.1),
+                                               for: resourceA)
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "789"), encoder: client.config.encoder, delay: 0.1),
+                                                                  for: resourceB)
         
         resourceA.fetch { _, _ in
             fetchAExpectation.fulfill()
@@ -445,7 +458,7 @@ class CacheTests: XCTestCase {
         
         XCTAssertNotNil(valueA)
         
-        XCTAssertTrue(valueA!.isExpired)
+        XCTAssertTrue(valueA?.isExpired ?? false)
         
         var valueB: CacheEntry<ModelA>? = try? cache.get(for: resourceB)
         
@@ -470,9 +483,10 @@ class CacheTests: XCTestCase {
         let resourceA = Resource<ModelA>(
             apiClient: client,
             path: "/test",
-            cachePolicy: .networkOnlyUpdateCache,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "366"), encoder: client.config.encoder, delay: 0.1)
+            cachePolicy: .networkOnlyUpdateCache
         )
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "366"), encoder: client.config.encoder, delay: 0.1), for: resourceA)
         
         resourceA.fetch { _, _ in
             fetchAExpectation.fulfill()
@@ -502,9 +516,10 @@ class CacheTests: XCTestCase {
         let resource = Resource<ModelA>(
             apiClient: client,
             path: "/test",
-            cachePolicy: .cacheFirstNetworkRefresh,
-            stub: StubResponse(statusCode: 200, encodable: networkModel, encoder: client.config.encoder, delay: delay)
+            cachePolicy: .cacheFirstNetworkRefresh
         )
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: networkModel, encoder: client.config.encoder, delay: delay), for: resource)
         
         try? resource.cache?.set(cacheModel, for: resource)
         
@@ -546,9 +561,11 @@ class CacheTests: XCTestCase {
         let resource = Resource<ModelA>(
             apiClient: client,
             path: "/test",
-            cachePolicy: .cacheFirstNetworkRefresh,
-            stub: StubResponse(statusCode: 200, encodable: networkModel, encoder: client.config.encoder, delay: delay)
+            cachePolicy: .cacheFirstNetworkRefresh
         )
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: networkModel, encoder: client.config.encoder, delay: delay),
+                                               for: resource)
         
         resource.fetch { result, isFinished in
             XCTAssertTrue(isFinished)
@@ -675,9 +692,11 @@ class CacheTests: XCTestCase {
         
         let resource = Resource<ModelA>(
             apiClient: client,
-            path: "/a",
-            stub: StubResponse(statusCode: 200, encodable: ModelB(b: "asdaskdajs"), encoder: client.config.encoder, delay: 0.1)
+            path: "/a"
         )
+        
+        client.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelB(b: "asdaskdajs"), encoder: client.config.encoder, delay: 0.1),
+                                               for: resource)
         
         resource.fetch(cachePolicy: .cacheFirstNetworkIfNotFoundOrExpired) { result, _ in
             switch result {

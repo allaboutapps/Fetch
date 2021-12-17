@@ -24,10 +24,11 @@ class CancelTests: XCTestCase {
         let expectation = self.expectation(description: "T")
         let resource = Resource<ModelA>(
             method: .get,
-            path: "/test",
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.2))
+            path: "/test")
         
-        guard let stub = resource.stub else {
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.2), for: resource)
+        
+        guard let stub = APIClient.shared.stubProvider.stub(for: resource) else {
             XCTFail("Resource has no stub")
             return
         }
@@ -58,10 +59,11 @@ class CancelTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            cachePolicy: .cacheFirstNetworkAlways,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.2))
+            cachePolicy: .cacheFirstNetworkAlways)
         
-        guard let stub = resource.stub else {
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.2), for: resource)
+        
+        guard let stub = APIClient.shared.stubProvider.stub(for: resource) else {
             XCTFail("Resource has no stub")
             return
         }
@@ -96,10 +98,11 @@ class CancelTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            cachePolicy: .cacheFirstNetworkAlways,
-            stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.2))
+            cachePolicy: .cacheFirstNetworkAlways)
         
-        guard let stub = resource.stub else {
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.2), for: resource)
+        
+        guard let stub = APIClient.shared.stubProvider.stub(for: resource) else {
             XCTFail("Resource has no stub")
             return
         }

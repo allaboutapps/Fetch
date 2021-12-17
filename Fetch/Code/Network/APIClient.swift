@@ -23,6 +23,7 @@ public struct Config {
     public var cache: Cache?
     public var cachePolicy: CachePolicy
     public var protocolClasses: [AnyClass]
+    public var stubProvider: StubProvider
     public var shouldStub: Bool?
     
     /// Initializes a new `Config`
@@ -52,6 +53,7 @@ public struct Config {
                 cache: Cache? = nil,
                 cachePolicy: CachePolicy = .networkOnlyUpdateCache,
                 protocolClasses: [AnyClass] = [],
+                stubProvider: StubProvider = DefaultStubProvider(),
                 shouldStub: Bool? = nil) {
         self.baseURL = baseURL
         self.defaultHeaders = defaultHeaders
@@ -64,6 +66,7 @@ public struct Config {
         self.cache = cache
         self.cachePolicy = cachePolicy
         self.protocolClasses = protocolClasses
+        self.stubProvider = stubProvider
         self.shouldStub = shouldStub
     }
 }
@@ -110,6 +113,15 @@ open class APIClient {
     
     public var session: Session!
     
+    public var stubProvider: StubProvider {
+        config.stubProvider
+    }
+    
+    public func setStubProvider(_ stubProvider: StubProvider) {
+        _config?.stubProvider = stubProvider
+        StubbedURL.stubProvider = _config?.stubProvider
+    }
+    
     let decodingQueue = DispatchQueue(label: "at.allaboutapps.fetch.decodingQueue")
     
     /// Configures an `APIClient` with the given `config`
@@ -123,6 +135,8 @@ open class APIClient {
         let configuration = config.urlSession
         configuration.protocolClasses = config.protocolClasses + [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
+        
+        StubbedURL.stubProvider = config.stubProvider
         
         session = Session(
             configuration: configuration,
@@ -143,11 +157,15 @@ open class APIClient {
     @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping CompletionCallback<T>) -> RequestToken {
         precondition(_config != nil, "Setup of APIClient was not called!")
         
-        register(resource)
-        
-        let urlRequest: URLRequest
+        var urlRequest: URLRequest
         do {
             urlRequest = try resource.asURLRequest()
+            
+            // register stub if needed
+            if config.shouldStub ?? false && stubProvider.stub(for: resource) != nil {
+                urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: resource.stubKey)
+            }
+            
         } catch {
             queue.async {
                 completion(.failure(.other(error: error)))
@@ -216,9 +234,4 @@ open class APIClient {
         }
     }
     
-    private func register<T>(_ resource: Resource<T>) {
-        guard let stub = resource.stubIfNeeded else { return }
-        
-        StubbedURL.registerStub(stub, for: stub.id.uuidString)
-    }
 }

@@ -25,8 +25,10 @@ class NestingTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            rootKeys: ["deep", "5", "result"],
-            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1))
+            rootKeys: ["deep", "5", "result"])
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1), for: resource)
+        
         let expectation = self.expectation(description: "Fetch value")
         
         resource.request { (result) in
@@ -47,8 +49,10 @@ class NestingTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            rootKeys: ["deep", "5", "result", "asdf"],
-            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1))
+            rootKeys: ["deep", "5", "result", "asdf"])
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1), for: resource)
+        
         let expectation = self.expectation(description: "Fetch error")
         
         resource.request { (result) in
@@ -68,8 +72,9 @@ class NestingTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            rootKeys: ["deep", "5"],
-            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1))
+            rootKeys: ["deep", "5"])
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1), for: resource)
+        
         let expectation = self.expectation(description: "Fetch error")
         
         resource.request { (result) in
@@ -89,8 +94,10 @@ class NestingTests: XCTestCase {
         let resource = Resource<ModelA>(
             method: .get,
             path: "/test",
-            rootKeys: [],
-            stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1))
+            rootKeys: [])
+        
+        APIClient.shared.stubProvider.register(stub: StubResponse(statusCode: 200, encodable: nesting, delay: 0.1), for: resource)
+        
         let expectation = self.expectation(description: "Fetch error")
         
         resource.request { (result) in
