@@ -33,7 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		19A24D652761F5B6008EC55C /* Fetch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fetch; path = ..; sourceTree = "<group>"; };
+		19A31BD5278584B20078638C /* Fetch */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Fetch; path = ../..; sourceTree = "<group>"; };
 		19E1DF2D22F4331600ACF220 /* CombineExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CombineExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19E1DF3022F4331600ACF220 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19E1DF3222F4331600ACF220 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		19E1DF2422F4331600ACF220 = {
 			isa = PBXGroup;
 			children = (
-				19A24D652761F5B6008EC55C /* Fetch */,
+				19A31BD5278584B20078638C /* Fetch */,
 				19E1DF2F22F4331600ACF220 /* CombineExample */,
 				19E1DF4622F4331700ACF220 /* CombineExampleTests */,
 				19E1DF2E22F4331600ACF220 /* Products */,

@@ -21,11 +21,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             baseURL: url,
             interceptor: AuthHandler(),
             cache: MemoryCache(defaultExpiration: .seconds(60)),
-            shouldStub: false))
+            shouldStub: true))
+        
+        registerStubs()
         
         CredentialsController.shared.resetOnNewInstallations()
         
         return true
     }
 
+}
+
+private extension AppDelegate {
+    
+    func registerStubs() {
+        let stubProvider = APIClient.shared.stubProvider
+        
+        let stubAuthResponse = StubResponse(statusCode: 200, fileName: "authresponse.json", delay: 3)
+        let stubConditional = ClosureStub { () -> Stub in
+            let unauthorizedStub = StubResponse(statusCode: 401, data: Data(), delay: 2)
+            let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)
+            return CredentialsController.shared.currentCredentials == nil ? unauthorizedStub : okStub
+        }
+        let stubAlternating = AlternatingStub(stubs: [
+            StubResponse(statusCode: 401, data: Data(), delay: 2),
+            StubResponse(statusCode: 200, data: Data(), delay: 2)
+        ])
+        let stubBlog = StubResponse(statusCode: 200, fileName: "posts.json", delay: 1)
+        
+        stubProvider.register(stub: stubAuthResponse, for: API.StubbedAuth.login(username: "", password: ""))
+        stubProvider.register(stub: stubAuthResponse, for: API.StubbedAuth.tokenRefresh(""))
+        stubProvider.register(stub: stubConditional, for: API.StubbedAuth.authorizedRequest())
+        stubProvider.register(stub: stubAlternating, for: API.StubbedAuth.unauthorizedErrorRequest())
+        
+        stubProvider.register(stub: stubBlog, for: API.BlogPosts.list())
+    }
 }

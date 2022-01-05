@@ -21,11 +21,12 @@ public struct API {
                 method: .post,
                 baseURL: baseURL,
                 path: "/api/v1/auth/login",
-                body: [
+                body: .encodable([
                     "username": username,
                     "password": password
-                ], shouldStub: true,
-                stub: StubResponse(statusCode: 200, fileName: "authresponse.json", delay: 3))
+                ]))
+//            , shouldStub: true,
+//                stub: StubResponse(statusCode: 200, fileName: "authresponse.json", delay: 3))
         }
         
         public static func tokenRefresh(_ refreshToken: String) -> Resource<Credentials> {
@@ -33,10 +34,11 @@ public struct API {
                 method: .post,
                 baseURL: baseURL,
                 path: "/api/v1/auth/refresh",
-                body: [
+                body: .encodable([
                     "refreshToken": refreshToken
-                ], shouldStub: true,
-                stub: StubResponse(statusCode: 200, fileName: "authresponse.json", delay: 4))
+                ]))
+//            , shouldStub: true,
+//                stub: StubResponse(statusCode: 200, fileName: "authresponse.json", delay: 4))
         }
         
         public static func authorizedRequest() -> Resource<Data> {
@@ -47,10 +49,11 @@ public struct API {
             }
             
             return Resource(
-                path: "/auth/secret",
-                shouldStub: true,
-                stub: conditionalStub
-            )
+                path: "/auth/secret")
+//            ,
+//                shouldStub: true,
+//                stub: conditionalStub
+//            )
         }
         
         public static func unauthorizedErrorRequest() -> Resource<Data> {
@@ -58,10 +61,11 @@ public struct API {
             let okStub = StubResponse(statusCode: 200, data: Data(), delay: 2)
             
             return Resource(
-                path: "/fail",
-                shouldStub: true,
-                stub: AlternatingStub(stubs: [failingStub, okStub])
-            )
+                path: "/fail")
+//            ,
+//                shouldStub: true,
+//                stub: AlternatingStub(stubs: [failingStub, okStub])
+//            )
         }
     }
     
@@ -70,9 +74,10 @@ public struct API {
         public static func list() -> Resource<[BlogPost]> {
             return Resource(
                 method: .get,
-                path: "/posts",
-                shouldStub: true,
-                stub: StubResponse(statusCode: 200, fileName: "posts.json", delay: 1))
+                path: "/posts")
+//            ,
+//                shouldStub: true,
+//                stub: StubResponse(statusCode: 200, fileName: "posts.json", delay: 1))
         }
     }
 }
