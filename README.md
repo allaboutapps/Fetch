@@ -1,7 +1,6 @@
 # Fetch
 
-![Bitrise](https://app.bitrise.io/app/c7d1932e4398ffc9/status.svg?token=2gddfiJReIY_-JaeahuRAg&branch=master) 
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat)
 
 Fetch is a resource based network abstraction based on [Alamofire](https://github.com/Alamofire/Alamofire) 
 
@@ -301,16 +300,6 @@ resource.fetch(cachePolicy: .cacheFirstNetworkAlways) { (result, finishedLoading
 ```
 
 For an overview of policies check out the implementation in [Cache.swift](https://github.com/allaboutapps/Fetch/blob/master/Fetch/Code/Cache/Cache.swift)
-
-## Carthage
-
-Add the following line to your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile).
-
-```
-github "allaboutapps/Fetch", ~> 1.0
-```
-
-Then run `carthage update`.
 
 ## Swift Package Manager
 

@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.5
 
 import PackageDescription
 
@@ -14,10 +14,16 @@ let package = Package(
         .library(name: "Fetch", targets: ["Fetch"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0")
+        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.5.0")
     ],
     targets: [
-        .target(name: "Fetch", dependencies: ["Alamofire"], path: "Fetch/Code")
+        .target(name: "Fetch",
+                dependencies: ["Alamofire"]),
+        .testTarget(name: "FetchTests",
+                    dependencies: ["Fetch"],
+                    resources: [
+                        .process("modela.json")
+                    ])
     ],
     swiftLanguageVersions: [.v5]
 )
