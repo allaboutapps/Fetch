@@ -1,6 +1,8 @@
 # Fetch
 
 ![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fapple%2Fswift-package-manager%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/apple/swift-package-manager)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fapple%2Fswift-package-manager%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/apple/swift-package-manager)
 
 Fetch is a resource based network abstraction based on [Alamofire](https://github.com/Alamofire/Alamofire) 
 
