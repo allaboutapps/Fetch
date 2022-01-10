@@ -1,6 +1,5 @@
 # Fetch
 
-![Bitrise](https://app.bitrise.io/app/c7d1932e4398ffc9/status.svg?token=2gddfiJReIY_-JaeahuRAg&branch=master)
 ![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat)
 
 Fetch is a resource based network abstraction based on [Alamofire](https://github.com/Alamofire/Alamofire) 
