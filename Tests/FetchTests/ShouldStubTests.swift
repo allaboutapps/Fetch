@@ -47,6 +47,7 @@ class ShouldStubTests: XCTestCase {
     func testShouldStubSetGlobalStubsDisabled() {
         let customApiClient = APIClient(config: Config(
             baseURL: URL(string: "https://www.asdf.at")!,
+            timeout: 1,
             shouldStub: false
         ))
         let expectation = self.expectation(description: "Fetch model")
