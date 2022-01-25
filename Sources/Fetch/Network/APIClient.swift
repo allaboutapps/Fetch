@@ -25,6 +25,8 @@ public struct Config {
     public var protocolClasses: [AnyClass]
     public var stubProvider: StubProvider
     public var shouldStub: Bool?
+    public var serverTrustManager: ServerTrustManager?
+    public var sessionDelegate: SessionDelegate?
     
     /// Initializes a new `Config`
     ///
@@ -53,6 +55,8 @@ public struct Config {
                 cache: Cache? = nil,
                 cachePolicy: CachePolicy = .networkOnlyUpdateCache,
                 protocolClasses: [AnyClass] = [],
+                serverTrustManager: ServerTrustManager? = nil,
+                sessionDelegate: SessionDelegate? = nil,
                 stubProvider: StubProvider = DefaultStubProvider(),
                 shouldStub: Bool? = nil) {
         self.baseURL = baseURL
@@ -68,6 +72,8 @@ public struct Config {
         self.protocolClasses = protocolClasses
         self.stubProvider = stubProvider
         self.shouldStub = shouldStub
+        self.serverTrustManager = serverTrustManager
+        self.sessionDelegate = sessionDelegate
     }
 }
 
@@ -140,8 +146,11 @@ open class APIClient {
         
         session = Session(
             configuration: configuration,
+            delegate: config.sessionDelegate ?? SessionDelegate(),
             interceptor: config.interceptor,
-            eventMonitors: config.eventMonitors)
+            serverTrustManager: config.serverTrustManager,
+            eventMonitors: config.eventMonitors
+        )
     }
     
     public func registerURLProtocolClass(_ someClass: AnyClass) {
