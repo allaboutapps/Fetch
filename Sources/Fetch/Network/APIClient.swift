@@ -130,7 +130,6 @@ open class APIClient {
     
     public func setStubProvider(_ stubProvider: StubProvider) {
         _config?.stubProvider = stubProvider
-        StubbedURL.stubProvider = _config?.stubProvider
     }
     
     /// Configures an `APIClient` with the given `config`
@@ -144,8 +143,6 @@ open class APIClient {
         let configuration = config.urlSession
         configuration.protocolClasses = config.protocolClasses + [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
-        
-        StubbedURL.stubProvider = config.stubProvider
         
         session = Session(
             configuration: configuration,
@@ -168,6 +165,8 @@ open class APIClient {
     
     @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping CompletionCallback<T>) -> RequestToken {
         precondition(_config != nil, "Setup of APIClient was not called!")
+        
+        StubbedURL.stubProvider = config.stubProvider
         
         var urlRequest: URLRequest
         do {
