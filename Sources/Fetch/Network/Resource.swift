@@ -158,8 +158,10 @@ open class Resource<T: Decodable>: CacheableResource {
         if let body = body {
             let (data, contentType) = try encode(body: body)
             urlRequest.httpBody = data
-            if let contentType = contentType {
-                 urlRequest.addValue(contentType.description, forHTTPHeaderField: "Content-Type")
+            
+            if headers["Content-Type"] == nil,
+               let contentType = contentType {
+                urlRequest.addValue(contentType.description, forHTTPHeaderField: "Content-Type")
             }
         }
         
