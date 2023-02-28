@@ -130,7 +130,6 @@ open class APIClient {
     
     public func setStubProvider(_ stubProvider: StubProvider) {
         _config?.stubProvider = stubProvider
-        StubbedURL.stubProvider = _config?.stubProvider
     }
     
     /// Configures an `APIClient` with the given `config`
@@ -144,8 +143,6 @@ open class APIClient {
         let configuration = config.urlSession
         configuration.protocolClasses = config.protocolClasses + [StubbedURL.self]
         configuration.timeoutIntervalForRequest = config.timeout
-        
-        StubbedURL.stubProvider = config.stubProvider
         
         session = Session(
             configuration: configuration,
@@ -175,6 +172,7 @@ open class APIClient {
             
             // register stub if needed
             if config.shouldStub ?? false && stubProvider.stub(for: resource) != nil {
+                StubbedURL.stubProvider = config.stubProvider
                 urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: resource.stubKey)
             }
             
