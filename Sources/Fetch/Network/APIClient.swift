@@ -174,6 +174,7 @@ open class APIClient {
             
             // register stub if needed
             if config.shouldStub ?? false && stubProvider.stub(for: resource) != nil {
+                StubbedURL.stubProvider = _config?.stubProvider
                 urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: resource.stubKey)
             }
             
