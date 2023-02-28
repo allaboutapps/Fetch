@@ -60,7 +60,7 @@ class StubProviderTests: XCTestCase {
     func testRemoveStub() {
         let expectation = self.expectation(description: "Fetch model")
         
-        let resource = Resource<ModelA>(method: .get, path: "/test")
+        let resource = Resource<ModelA>(method: .get, path: "/testRemove")
         
         let stub = StubResponse(statusCode: 200, encodable: ModelA(a: "a"), delay: 0.1)
         APIClient.shared.stubProvider.register(stub: stub, for: resource)
