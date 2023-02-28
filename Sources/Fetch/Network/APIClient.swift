@@ -166,15 +166,13 @@ open class APIClient {
     @discardableResult internal func request<T>(_ resource: Resource<T>, queue: DispatchQueue, completion: @escaping CompletionCallback<T>) -> RequestToken {
         precondition(_config != nil, "Setup of APIClient was not called!")
         
-        StubbedURL.stubProvider = config.stubProvider
-        
         var urlRequest: URLRequest
         do {
             urlRequest = try resource.asURLRequest()
             
             // register stub if needed
             if config.shouldStub ?? false && stubProvider.stub(for: resource) != nil {
-                StubbedURL.stubProvider = _config?.stubProvider
+                StubbedURL.stubProvider = config.stubProvider
                 urlRequest.headers.add(name: StubbedURL.stubIdHeader, value: resource.stubKey)
             }
             
