@@ -39,7 +39,7 @@ class StubProviderTests: XCTestCase {
         }
         
         // update stub
-        waitForExpectations(timeout: 5, handler: nil)
+        wait(for: [expectationA], timeout: 5)
         let expectationB = self.expectation(description: "Fetch model b")
         let stubB = StubResponse(statusCode: 200, encodable: ModelA(a: "b"), delay: 0.1)
         APIClient.shared.stubProvider.register(stub: stubB, for: resource)
@@ -54,7 +54,7 @@ class StubProviderTests: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: 5, handler: nil)
+        wait(for: [expectationB], timeout: 5)
     }
     
     func testRemoveStub() {
