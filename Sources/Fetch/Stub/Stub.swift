@@ -71,7 +71,7 @@ public struct StubResponse: Stub {
     ///   - encodable: The object which will be encoded
     ///   - encoder: The `JSONEncoder` used to encode the `Encodable`
     ///   - delay: Simulated network delay
-    public init(statusCode: StatusCode, encodable: Encodable, encoder: ResourceEncoderProtocol = APIClient.shared.config.encoder, headers: HTTPHeaders = HTTPHeaders(), delay: TimeInterval) {
+    public init(statusCode: StatusCode, encodable: Encodable, encoder: ResourceEncoderProtocol = JSONEncoder(), headers: HTTPHeaders = HTTPHeaders(), delay: TimeInterval) {
         self.init(statusCode: statusCode, data: try! encoder.encode(AnyEncodable(encodable)), headers: headers, delay: delay)
     }
     
