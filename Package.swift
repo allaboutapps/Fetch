@@ -8,13 +8,13 @@ let package = Package(
         .macOS(.v10_12),
         .iOS(.v11),
         .tvOS(.v11),
-        .watchOS(.v3)
+        .watchOS(.v3),
     ],
     products: [
-        .library(name: "Fetch", targets: ["Fetch"])
+        .library(name: "Fetch", targets: ["Fetch"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.5.0")
+        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.5.0"),
     ],
     targets: [
         .target(name: "Fetch",
@@ -22,8 +22,9 @@ let package = Package(
         .testTarget(name: "FetchTests",
                     dependencies: ["Fetch"],
                     resources: [
-                        .process("modela.json")
-                    ])
+                        .process("modela.json"),
+                        .copy("TestFiles")
+                    ]),
     ],
     swiftLanguageVersions: [.v5]
 )
