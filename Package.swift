@@ -14,7 +14,7 @@ let package = Package(
         .library(name: "Fetch", targets: ["Fetch"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.5.0"),
+        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.7.0"),
     ],
     targets: [
         .target(name: "Fetch",
