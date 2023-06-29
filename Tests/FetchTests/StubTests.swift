@@ -80,6 +80,35 @@ class StubTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
+    func testStubbedModelFromFileInDirectory() {
+        let expectation = self.expectation(description: "Fetch model")
+        let resource = Resource<ModelA>(
+            method: .get,
+            path: "/test")
+        
+        APIClient.shared.stubProvider.register(
+            stub: StubResponse(
+                statusCode: 200,
+                fileName: "copyModelA.json",
+                directory: "TestFiles",
+                delay: 0.1,
+                bundle: Bundle.module
+            ),
+            for: resource
+        )
+        
+        resource.request { (result) in
+            switch result {
+            case .success(let response):
+                XCTAssertEqual(response.model.a, "a")
+                expectation.fulfill()
+            case .failure:
+                XCTFail("Request did not return value")
+            }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
     func testStubbedHTTPHeaders() {
         let expectation = self.expectation(description: "Fetch model")
         let headers = HTTPHeaders([

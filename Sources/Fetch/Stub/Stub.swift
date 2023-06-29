@@ -51,10 +51,25 @@ public struct StubResponse: Stub {
     ///   - delay: Simulated network delay
     ///   - bundle: The `Bundle` containing the file, default Bundle.main
     public init(statusCode: StatusCode, fileName: String, headers: HTTPHeaders = HTTPHeaders(), delay: TimeInterval, bundle: Bundle = Bundle.main) {
-        let split = fileName.split(separator: ".")
-        let name = String(split[0])
-        let fileExtension = String(split[1])
+        let fileExtension = fileName.fileExtension
+        let name = fileName.fileName
+        
         let path = bundle.path(forResource: name, ofType: fileExtension)!        
+        var headersToUse = headers
+        
+        if fileExtension == "json" {
+            headersToUse.add(HTTPHeader.contentType("application/json"))
+        }
+        
+        self.init(statusCode: statusCode, data: try! Data(contentsOf: URL(fileURLWithPath: path)), headers: headersToUse, delay: delay)
+    }
+    
+    public init(statusCode: StatusCode, fileName: String, directory: String, headers: HTTPHeaders = .init(), delay: TimeInterval, bundle: Bundle = .main) {
+        let fileExtension = fileName.fileExtension
+        let name = fileName.fileName
+        
+        let path = bundle.path(forResource: name, ofType: fileExtension, inDirectory: directory)!
+        
         var headersToUse = headers
         
         if fileExtension == "json" {
@@ -91,5 +106,15 @@ public struct StubError: Stub {
     public init(error: Error, delay: TimeInterval) {
         self.result = .failure(error)
         self.delay = delay
+    }
+}
+
+private extension String {
+    var fileName: String {
+        URL(fileURLWithPath: self).deletingPathExtension().lastPathComponent
+    }
+    
+    var fileExtension: String {
+        URL(fileURLWithPath: self).pathExtension
     }
 }
