@@ -51,7 +51,7 @@ public class APILogger: EventMonitor {
         output.append("↗️\(isStubbed ? " [STUB]" : "") \(urlRequest.httpMethod ?? "") - \(urlRequest.url?.absoluteString ?? "")")
         
         let spacing = "         "
-        if let headers = urlRequest.allHTTPHeaderFields, verbose {
+        if verbose, let headers = urlRequest.allHTTPHeaderFields {
             output.append("\(spacing)Headers:")
             let formattedHeaders = headers
                 .map { "\(spacing)   \($0.0): \($0.1)" }
@@ -59,7 +59,7 @@ public class APILogger: EventMonitor {
             output.append(formattedHeaders)
         }
         
-        if let body = prettyJSON(data: urlRequest.httpBody), verbose {
+        if verbose, let body = prettyJSON(data: urlRequest.httpBody) {
             output.append("\(spacing)Request Body:")
             output.append(body)
         }
@@ -86,8 +86,9 @@ public class APILogger: EventMonitor {
 
         output.append("\(icon)\(isStubbed ? " [STUB]" : "") \(response.statusCode) \(urlRequest.httpMethod ?? "") - \(urlRequest.url?.absoluteString ?? "")")
 
-        if let data = (request as? DataRequest)?.data,
-            let body = prettyJSON(data: data) ?? String(data: data, encoding: .utf8), verbose {
+        if verbose,
+           let data = (request as? DataRequest)?.data,
+           let body = prettyJSON(data: data) ?? String(data: data, encoding: .utf8) {
             output.append(body)
         }
 
