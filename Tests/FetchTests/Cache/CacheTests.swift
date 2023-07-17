@@ -312,7 +312,7 @@ class CacheTests: XCTestCase {
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             resource.fetch { (result, isFinished) in
                 switch result {
                 case let .success(.cache(value, isExpired)):
