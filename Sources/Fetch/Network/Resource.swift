@@ -40,6 +40,9 @@ open class Resource<T: Decodable>: CacheableResource {
     public let stubKey: ResourceStubKey
     public let decode: DecodingClosure
     public let encode: EncodingClosure
+    
+    /// If not set the timeout of the APIClient.Config is used
+    public let timeout: TimeInterval?
 
     /// The final `URL` used in a network request, using the base URL from the resource or from the `APIClient` and the path
     /// If path is an absolute URL, this URL is used without a base url
@@ -101,7 +104,9 @@ open class Resource<T: Decodable>: CacheableResource {
                 customValidation: DataRequest.Validation? = nil,
                 stubKey: ResourceStubKey? = nil,
                 decode: DecodingClosure? = nil,
-                encode: EncodingClosure? = nil) {
+                encode: EncodingClosure? = nil,
+                timeout: TimeInterval? = nil
+    ) {
         self.apiClient = apiClient
         self.headers = headers
         self.method = method
@@ -117,6 +122,7 @@ open class Resource<T: Decodable>: CacheableResource {
         self.cacheExpiration = cacheExpiration
         self.multipartFormData = multipartFormData
         self.customValidation = customValidation
+        self.timeout = timeout
         
         if let decode = decode {
             self.decode = decode
@@ -153,6 +159,10 @@ open class Resource<T: Decodable>: CacheableResource {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
         urlRequest.allHTTPHeaderFields = headers
+        
+        if let timeout {
+            urlRequest.timeoutInterval = timeout
+        }
         
         // Body
         if let body = body {
